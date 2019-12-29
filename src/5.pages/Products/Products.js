@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React  from 'react';
 import styles from './Products.module.scss';
 
 import {Skeleton} from "../../1.atoms/Skeleton/Skeleton";

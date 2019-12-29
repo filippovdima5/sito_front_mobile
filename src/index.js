@@ -5,10 +5,14 @@ import {App} from './App';
 
 
 
+const GenderContext = React.createContext(0);
+
 
 ReactDOM.render(
     <BrowserRouter>
-        <App/>
+        <GenderContext.Provider value = {+localStorage.getItem('sex')}>
+            <App/>
+        </GenderContext.Provider>
     </BrowserRouter>
     , document.getElementById('root'));
 

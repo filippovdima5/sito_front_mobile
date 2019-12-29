@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
+import React  from 'react';
 import styles from './Header.module.scss';
-import search from './search.svg';
+import {Search} from "../../3.organisms/Search/Search";
 
 function Header() {
-    const [modSearch, setModSearch] = useState(false);
+
 
 
     return (
@@ -30,32 +30,7 @@ function Header() {
                 </span>
             </div>
 
-            <div
-                //onClick={() => {console.log('kdm')}}
-                className={`${styles.search} ${styles.header_item} ${modSearch ? styles.search_active : styles.search_close}`}>
-
-                <div className={styles.Search}>
-                    <div
-                        onClick={() => {setModSearch(!modSearch)}}
-                        className={styles.img}
-                    >
-                        <img
-                            src={search}
-                            alt={'search'}/>
-                    </div>
-
-                    <input
-                        placeholder={'Поиск по ключевому слову'}
-                        className={styles.input}
-                        type={'text'}
-                    />
-
-                    {modSearch && <div className={styles.modal}/>}
-
-                </div>
-
-            </div>
-
+            <Search/>
         </div>
     )
 }

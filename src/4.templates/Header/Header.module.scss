@@ -3,6 +3,10 @@
   height: 100%;
 
 
+
+
+
+
   .header_item{
     position: absolute;
     width: 50px;
@@ -12,16 +16,6 @@
     box-sizing: border-box;
 
   }
-
-
-
-
-
-
-
-
-
-
 
 
   .menu_button{
@@ -150,78 +144,6 @@
 
   }
 
-
-
-
-
-
-
-
-
-
-
-  .search_active{
-    width: 100vw !important;
-    transition: width 100ms ease-out;
-  }
-  .search_close{
-    width: 50px;
-    transition: width 50ms ease-out;
-  }
-
-  .search{
-    max-width: 750px;
-
-    right: 0;
-    box-sizing: border-box;
-
-    background-color: #f2f2f2;
-    box-shadow: none;
-    height: 100%;
-    margin-bottom: 0;
-
-
-
-    .img{
-      height: 50px;
-      width: 50px;
-      position: absolute;
-      box-sizing: border-box;
-      left: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      img{
-        width: 80%;
-      }
-    }
-
-
-    .input{
-      background-color: transparent;
-      height: 50px;
-      width: 100%;
-      box-sizing: border-box;
-      padding-left: 60px;
-      font-size: 18px;
-      line-height: 1;
-      color: #272727;
-      border: none;
-
-    }
-
-    .modal{
-      max-width: 750px;
-      position: fixed;
-      box-sizing: border-box;
-      width: 100vw;
-      height: calc(100vh - 60px);
-      top: 50px;
-      left: 0;
-      background-color: rgba(0, 0, 0, 0.2);
-    }
-  }
 }
 
 
