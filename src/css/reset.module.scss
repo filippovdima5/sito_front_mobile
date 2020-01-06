@@ -392,7 +392,8 @@ textarea {
 }
 
 html,body{
-  -webkit-overflow-scrolling : touch !important;
+  //-webkit-overflow-scrolling : touch !important;
   overflow: auto !important;
   height: 100% !important;
+  //background-color: transparent !important;
 }

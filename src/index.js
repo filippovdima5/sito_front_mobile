@@ -5,7 +5,7 @@ import {App} from './App';
 
 
 
-const GenderContext = React.createContext(0);
+export const GenderContext = React.createContext(0);
 
 
 ReactDOM.render(
