@@ -16,4 +16,4 @@ export const fetchResults = createEffect({
 results.on(fetchResults.done, ((state, {params, result}) => ( Object.entries(result[0]).filter(([key, value]) => (!!value.length)) )))
 
 
-results.watch(state => console.log(state))
+//results.watch(state => console.log(state))

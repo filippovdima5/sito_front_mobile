@@ -14,7 +14,9 @@ function SearchModalAnimate() {
 
 
     return (
-        <TransitionGroup>
+        <TransitionGroup
+
+        >
             {$modSearch &&
             <CSSTransition
                 in = {$modSearch}
