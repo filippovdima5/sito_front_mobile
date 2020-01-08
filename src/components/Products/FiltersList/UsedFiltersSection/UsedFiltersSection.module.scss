@@ -1,0 +1,44 @@
+.UsedFiltersSection {
+  margin-top: 20px;
+
+  .h3{
+    padding: 0 16px 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background-color: #f4f4f4;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    margin: 0;
+    color: rgba(0,0,0,.4);
+  }
+
+  .filters{
+    background: #fff;
+
+    .skip_all{
+      font-size: 12px;
+      width: 100%;
+      color: #ec0000;
+      border-bottom: 1px solid rgba(0,0,0,.1);
+      font-weight: 500;
+      padding: 12px 16px;
+      position: relative;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      text-align: center;
+      white-space: nowrap;
+      outline: 0;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      background: #fff;
+    }
+
+    .list {
+      box-shadow: 0 2px 4px rgba(0, 0, 0, .12);
+    }
+  }
+} 

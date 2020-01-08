@@ -8,6 +8,7 @@ function Header({title, close }) {
     return (
         <div className={styles.Header}>
             <div className={styles.title_wrap}>
+
                 <div className={styles.text_wrap}>
                     <div className={styles.text}>{title}</div>
                 </div>

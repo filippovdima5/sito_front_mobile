@@ -1,14 +1,13 @@
 import React from 'react';
-import styles from '../../filtersListStyles.module.scss';
+import styles from './FilterRow.module.scss';
+import {setVisFilter} from "../../filterListStore";
+import {RightArrow} from "../../../../../img/svg/RightArrow";
 
-import {setVisFilter} from "../../filtersListStore";
-
-
-function FilterItem({title}) {
+function FilterRow({title}) {
     return (
         <div
             onClick={() => (setVisFilter(true))}
-            className={styles.filter_item}>
+            className={styles.filterRow}>
 
             <div className={styles.item_wrap}>
                 <div className={styles.item}>
@@ -23,9 +22,7 @@ function FilterItem({title}) {
                     </div>
 
                     <div className={styles.item_arrow_wrap}>
-                        <svg>
-                            <path fillRule="evenodd" d="M10.007 4.003L18.004 12l-7.997 7.997-1.414-1.414L15.176 12 8.593 5.417z"/>
-                        </svg>
+                        <RightArrow/>
                     </div>
 
                 </div>
@@ -40,4 +37,4 @@ function FilterItem({title}) {
     )
 }
 
-export {FilterItem}
+export {FilterRow}

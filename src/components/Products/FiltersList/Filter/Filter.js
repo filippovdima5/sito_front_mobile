@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './Filter.module.scss';
-import {setVisFilter} from "../../filtersListStore";
-import {Title} from "../../FiltersList/views/Title";
+import { setVisFilter } from "../filterListStore";
 
 
 function Filter() {
@@ -9,9 +8,7 @@ function Filter() {
         <div
             onClick={() => (setVisFilter(false))}
             className={styles.Filter}>
-
-            <Title/>
-
+            Filter
         </div>
     )
 }

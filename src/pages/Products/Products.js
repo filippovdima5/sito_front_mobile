@@ -1,10 +1,10 @@
 import React, {Fragment, useEffect}  from 'react';
 import styles from './Products.module.scss';
-import { setVisFiltersList, fetchFilters } from "../../3.organisms/FiltersList/filtersListStore";
+import { fetchFilters, setVisFiltersList} from "../../components/Products/FiltersList/filterListStore";
 
 
 import {Skeleton} from "../../1.atoms/Skeleton/Skeleton";
-import {FiltersList} from "../../components/Products/FiltersList/FiltersList";
+import {FiltersList} from "../../components/Products/FiltersList/animate/FiltersListAnimate";
 
 
 const data = [];

@@ -1,11 +1,11 @@
-import React, {Fragment}  from 'react';
+import React, {Fragment} from 'react';
 import animate from './animate.module.scss';
-import {useTransitionNames} from "../../../../hooks/useTransitionNames";
+import {useTransitionNames} from "../../../../../hooks/useTransitionNames";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
-import {visFilter} from "../../filtersListStore";
-import { useStore } from "effector-react";
+import {visFilter} from "../../filterListStore";
+import {useStore} from "effector-react";
 
-import {Filter} from "../Filter/Filter";
+import {Filter} from "../Filter";
 
 function FilterAnimate() {
     const $visFilter = useStore(visFilter);
@@ -20,7 +20,7 @@ function FilterAnimate() {
                 classNames = { classNames }
             >
                 <Fragment>
-                  <Filter/>
+                    <Filter/>
                 </Fragment>
             </CSSTransition>
             }
@@ -28,4 +28,4 @@ function FilterAnimate() {
     )
 }
 
-export {FilterAnimate}
+export {FilterAnimate as Filter}

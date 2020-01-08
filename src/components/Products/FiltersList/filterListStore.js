@@ -2,7 +2,7 @@ import {createEffect, createEvent, createStore} from "effector";
 import {api} from "../../../api";
 
 
-export const visFiltersList = createStore(true);
+export const visFiltersList = createStore(false);
 export const setVisFiltersList = createEvent();
 visFiltersList.on(setVisFiltersList, ((state, payload) => (payload)));
 
