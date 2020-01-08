@@ -1,5 +1,5 @@
 import {createEffect, createEvent, createStore} from "effector";
-import {api} from "../../api";
+import {api} from "../../../api";
 
 
 export const modSearch = createStore(false);

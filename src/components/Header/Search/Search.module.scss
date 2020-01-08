@@ -1,0 +1,22 @@
+.search_active{
+  width: 100vw !important;
+  transition: width 100ms ease-out;
+}
+.search_close{
+  width: 50px;
+  transition: width 50ms ease-out;
+}
+
+.Search{
+  max-width: 750px;
+
+  right: 0;
+  box-sizing: border-box;
+
+  background-color: #f2f2f2;
+  box-shadow: none;
+  height: 100%;
+  margin-bottom: 0;
+
+  composes: header_item from '../Header.module.scss';
+}

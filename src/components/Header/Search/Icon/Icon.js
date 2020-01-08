@@ -1,21 +1,21 @@
 import React from 'react';
-import styles from '../searchStyles.module.scss';
-import search from "./search.svg";
+import styles from './Icon.module.scss';
+import search from "../../../../img/svg/search.svg";
 import {setModSearch} from "../searchStore";
 
-const SearchIcon = React.memo(() => {
+function Icon() {
     const handleSetMod = () => (setModSearch());
 
-    return(
+    return (
         <div
             onClick={handleSetMod}
-            className={styles.img}
+            className={styles.Icon}
         >
             <img
                 src={search}
                 alt={'search'}/>
         </div>
     )
-});
+}
 
-export {SearchIcon}
+export {Icon}

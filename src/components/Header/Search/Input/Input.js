@@ -1,11 +1,10 @@
-import React, {useEffect, useRef, useState, useContext} from 'react';
-import styles from '../searchStyles.module.scss';
+import React, {useContext, useEffect, useRef, useState} from 'react';
+import styles from './Input.module.scss';
 import {useStore} from "effector-react";
-import {modSearch} from "../searchStore";
-import {GenderContext} from "../../../index";
-import {fetchResults} from "../searchStore";
+import {fetchResults, modSearch} from "../searchStore";
+import {GenderContext} from "../../../../index";
 
-const SearchInput = React.memo(() => {
+function Input() {
     const inputRef = useRef(null);
     const $modSearch = useStore(modSearch);
     const modSearchRef = useRef($modSearch);
@@ -25,17 +24,16 @@ const SearchInput = React.memo(() => {
         if (modSearchRef.current) fetchResults({sex_id, phrase: value})
     }, [sex_id, value]);
 
-
     return (
         <input
             value = { value }
             onChange = { handleChange }
             ref = { inputRef }
             placeholder={ 'Поиск по ключевому слову' }
-            className={ styles.input }
+            className={ styles.Input }
             type={ 'text' }
         />
     )
-});
+}
 
-export {SearchInput}
+export {Input}

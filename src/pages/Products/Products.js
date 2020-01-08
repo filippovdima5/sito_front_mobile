@@ -1,11 +1,10 @@
 import React, {Fragment, useEffect}  from 'react';
 import styles from './Products.module.scss';
-// import {GenderContext} from "../../index";
 import { setVisFiltersList, fetchFilters } from "../../3.organisms/FiltersList/filtersListStore";
 
 
 import {Skeleton} from "../../1.atoms/Skeleton/Skeleton";
-import {FiltersList} from "../../3.organisms/FiltersList";
+import {FiltersList} from "../../components/Products/FiltersList/FiltersList";
 
 
 const data = [];

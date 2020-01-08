@@ -10,7 +10,7 @@ import {FilterItem} from "./views/FilterItem";
 
 
 
-import {Filter} from "../Filter/animate";
+import {Filter} from "../Filter";
 
 
 const filtersMap = {
@@ -26,7 +26,10 @@ function FiltersList() {
 
     return (
         <div className={styles.Filters}>
-            <Title/>
+            <Title
+                title={'Фильтры'}
+                close={true}
+            />
 
             <div className={styles.wrap}>
                 <div className={styles.scroll}>

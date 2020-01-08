@@ -1,0 +1,60 @@
+.Header{
+  margin-bottom: 4px;
+  box-sizing: border-box;
+  padding: 0;
+
+
+  .title_wrap{
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,.12), 0 0 3px rgba(0,0,0,.12);
+    z-index: 1;
+    position: relative;
+    min-height: 48px;
+    display: flex;
+
+    .text_wrap{
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+
+      .text{
+        font-size: 16px;
+        line-height: 45px;
+      }
+    }
+
+    .btn_wrap{
+      flex: 0 0 auto;
+      justify-content: center;
+      align-items: flex-start;
+      display: flex;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      flex-direction: column;
+      position: relative;
+
+      .btn{
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 48px;
+        height: 48px;
+        background-color: transparent;
+        border: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .svg{
+          height: 60%;
+          fill: rgba(0,0,0,.4);
+          fill-rule: evenodd;
+        }
+      }
+    }
+  }
+}

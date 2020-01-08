@@ -2,10 +2,12 @@ import React, {Fragment}  from 'react';
 import animate from './animate.module.scss';
 import {useTransitionNames} from "../../../../hooks/useTransitionNames";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
-import {setVisFilter, visFilter} from "../../filtersListStore";
+import {visFilter} from "../../filtersListStore";
 import { useStore } from "effector-react";
 
-function Filter() {
+import {Filter} from "../Filter/Filter";
+
+function FilterAnimate() {
     const $visFilter = useStore(visFilter);
     const classNames = useTransitionNames(animate);
 
@@ -18,11 +20,7 @@ function Filter() {
                 classNames = { classNames }
             >
                 <Fragment>
-                    <div
-                        onClick={() => (setVisFilter(false))}
-                        className={animate.main}>
-                        FILTER
-                    </div>
+                  <Filter/>
                 </Fragment>
             </CSSTransition>
             }
@@ -30,4 +28,4 @@ function Filter() {
     )
 }
 
-export {Filter}
+export {FilterAnimate}

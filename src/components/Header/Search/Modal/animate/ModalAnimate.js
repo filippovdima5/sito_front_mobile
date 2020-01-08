@@ -1,17 +1,15 @@
 import React from 'react';
 import animate from './animate.module.scss';
-import {useTransitionNames} from "../../../../hooks/useTransitionNames";
+import {useTransitionNames} from "../../../../../hooks/useTransitionNames";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import {modSearch} from "../../searchStore";
 import {useStore} from "effector-react";
-import { SearchModal } from "../SearchModal";
+import { Modal} from "../Modal";
 
 
 function SearchModalAnimate() {
     const $modSearch = useStore(modSearch);
     const classNames = useTransitionNames(animate);
-
-
 
     return (
         <TransitionGroup
@@ -23,11 +21,11 @@ function SearchModalAnimate() {
                 timeout = {200}
                 classNames = {classNames}
             >
-                <SearchModal/>
+               <Modal/>
             </CSSTransition>
             }
         </TransitionGroup>
     )
 }
 
-export {SearchModalAnimate}
+export {SearchModalAnimate as Modal}

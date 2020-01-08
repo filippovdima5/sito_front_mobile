@@ -1,10 +1,10 @@
 import React from 'react';
-import {Pages} from "./5.pages/index";
+import {Pages} from "./pages/index";
 import styles from './css/App.module.scss';
 import './css/reset.module.scss';
 
-import { Header } from "./4.templates/Header/Header";
-import { Footer } from "./4.templates/Footer/Footer";
+import { Header} from "./components/Header/Header";
+import { Footer } from "./components/Footer/Footer";
 
 
 function App() {
