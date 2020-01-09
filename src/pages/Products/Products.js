@@ -4,6 +4,9 @@ import { fetchFilters, setVisFiltersList} from "../../components/Products/Filter
 
 
 import {Skeleton} from "../../1.atoms/Skeleton/Skeleton";
+
+import { LoadMore } from "../../components/Products/LoadMore/LoadMore";
+
 import {FiltersList} from "../../components/Products/FiltersList/animate/FiltersListAnimate";
 
 
@@ -84,16 +87,7 @@ function Products() {
 
 
 
-
-
-                <div className={styles.loadMore}>
-                    <span className={styles.text}>Вы просмотрели 555 товаров из 7798</span>
-
-                    <button
-                        className={styles.btn}>
-                        Загрузить еще
-                    </button>
-                </div>
+                <LoadMore/>
             </div>
 
             <FiltersList/>

@@ -146,6 +146,7 @@ a:hover {
  */
 
 img {
+  display: block;
   border: 0; /* 1 */
   -ms-interpolation-mode: bicubic; /* 2 */
 }
@@ -200,6 +201,7 @@ button,
 input,
 select,
 textarea {
+  border: none;
   font-size: 100%; /* 1 */
   margin: 0; /* 2 */
   vertical-align: baseline; /* 3 */

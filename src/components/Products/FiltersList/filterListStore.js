@@ -45,7 +45,6 @@ export const usedFilters = activeFilters.map(state => (
 usedFilters.watch(state => {console.log(state)})
 
 
-
 export const fetchFilters = createEffect({
     handler: async (params) => {
         return await api.products.filters(params);

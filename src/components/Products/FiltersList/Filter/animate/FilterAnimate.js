@@ -15,7 +15,7 @@ function FilterAnimate() {
         <TransitionGroup>
             {$visFilter &&
             <CSSTransition
-                in = {$visFilter}
+
                 timeout = { 200 }
                 classNames = { classNames }
             >

@@ -24,6 +24,10 @@ function FiltersList() {
                 <div>
                     <UsedFiltersSection used={true} filtersRow={$usedFilters.use}/>
                     <UsedFiltersSection filtersRow={$usedFilters.unUse}/>
+                    <UsedFiltersSection filtersRow={$usedFilters.unUse}/>
+                    <UsedFiltersSection filtersRow={$usedFilters.unUse}/>
+                    <UsedFiltersSection filtersRow={$usedFilters.unUse}/>
+                    <UsedFiltersSection filtersRow={$usedFilters.unUse}/>
                 </div>
             </div>
 

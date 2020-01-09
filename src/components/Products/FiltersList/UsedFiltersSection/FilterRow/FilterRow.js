@@ -1,12 +1,12 @@
 import React from 'react';
 import styles from './FilterRow.module.scss';
 import {setVisFilter} from "../../filterListStore";
-import {RightArrow} from "../../../../../img/svg/RightArrow";
+import rightArrowSVG from "../../../../../img/svg/rightArrow.svg";
 
 function FilterRow({title}) {
     return (
         <div
-            onClick={() => (setVisFilter(true))}
+            onClick={() => (setVisFilter(title))}
             className={styles.filterRow}>
 
             <div className={styles.item_wrap}>
@@ -22,7 +22,7 @@ function FilterRow({title}) {
                     </div>
 
                     <div className={styles.item_arrow_wrap}>
-                        <RightArrow/>
+                        <img src={rightArrowSVG} alt={'go'} className={styles.svg}/>
                     </div>
 
                 </div>
