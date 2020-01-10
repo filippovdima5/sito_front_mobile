@@ -1,0 +1,23 @@
+.Search {
+  margin: 20px 12px;
+
+  .inputWrap{
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+
+    .input{
+      font-size: 15px;
+      line-height: 20px;
+      font-weight: 400;
+      -webkit-appearance: none;
+      box-sizing: border-box;
+      border-radius: 4px;
+      width: 100%;
+      min-height: 44px;
+      padding: 10px 40px 10px 16px;
+      border: 2px solid #e8e8e8;
+      color: #222;
+    }
+  }
+} 

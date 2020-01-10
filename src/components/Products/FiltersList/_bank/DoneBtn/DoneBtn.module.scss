@@ -1,0 +1,23 @@
+.DoneBtn {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  background-color: transparent;
+
+  .done{
+    padding: 0 15px 20px 15px;
+    background: linear-gradient(180deg,hsla(0,0%,64.3%,0),hsla(0,0%,100%,.8) 63.04%);
+
+    .btn{
+      width: 100%;
+      font-size: 18px;
+      height: 45px;
+      font-weight: 600;
+      line-height: 1;
+      background-color: #272727;
+      color: #ffffff;
+
+      border-radius: 4px;
+    }
+  }
+} 

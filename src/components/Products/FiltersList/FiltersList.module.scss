@@ -8,7 +8,7 @@
 
   .wrap{
     height: calc(100% - 55px);
-    background-color: transparent;
+    background-color: #f2f2f2;
 
     overflow-y: scroll;
     overflow-x: hidden;
@@ -16,5 +16,10 @@
     padding: 0;
 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 3px rgba(0, 0, 0, 0.12);
+
+
+    .space{
+      padding-bottom: 70px;
+    }
   }
 }

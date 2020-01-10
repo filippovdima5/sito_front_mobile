@@ -8,7 +8,7 @@ import {useStore} from "effector-react";
 import {Filter} from "../Filter";
 
 function FilterAnimate() {
-    const $visFilter = useStore(visFilter);
+    const $visFilter = useStore(visFilter).vis;
     const classNames = useTransitionNames(animate);
 
     return (

@@ -59,9 +59,8 @@
       }
 
       .item_arrow_wrap{
-        height: 20px;
-        width: 20px;
-        -webkit-box-flex: 0;
+        height: 15px;
+        width: 15px;
         flex: 0 0 auto;
 
         .svg{
@@ -88,3 +87,7 @@
   border-top: 1px solid rgba(0,0,0,.14);
   z-index: 2;
 }
+
+//.filterRow:first-child::before{
+//  border-top: none !important;
+//}

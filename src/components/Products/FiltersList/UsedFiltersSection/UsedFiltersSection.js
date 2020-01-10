@@ -1,6 +1,8 @@
 import React from 'react';
 import styles from './UsedFiltersSection.module.scss';
 import {FilterRow} from "./FilterRow/FilterRow";
+import {clearAllActiveFilters} from "../filterListStore";
+
 
 const filtersMap = {
     brands: 'Бренды',
@@ -10,6 +12,7 @@ const filtersMap = {
 };
 
 function UsedFiltersSection({used = false, filtersRow = []}) {
+
     return (
         <section className={styles.UsedFiltersSection}>
 
@@ -22,7 +25,9 @@ function UsedFiltersSection({used = false, filtersRow = []}) {
 
                 {
                     used && filtersRow.length > 1 &&
-                    <button className={styles.skip_all}>
+                    <button
+                        onClick = {clearAllActiveFilters}
+                        className={styles.skip_all}>
                         Сбросить всё
                     </button>
                 }
@@ -33,6 +38,7 @@ function UsedFiltersSection({used = false, filtersRow = []}) {
                         <FilterRow
                             key = {item}
                             title = {filtersMap[item]}
+                            typeFilter = {item}
                         />
                     ))}
                 </div>
