@@ -5,19 +5,25 @@
   background-color: transparent;
 
   .done{
+    position: relative;
     padding: 0 15px 20px 15px;
     background: linear-gradient(180deg,hsla(0,0%,64.3%,0),hsla(0,0%,100%,.8) 63.04%);
 
     .btn{
       width: 100%;
-      font-size: 18px;
+      font-size: 17px;
       height: 45px;
       font-weight: 600;
       line-height: 1;
-      background-color: #272727;
+      background-color: rgba(39, 39, 39, 1);
       color: #ffffff;
 
       border-radius: 4px;
+    }
+
+
+    .btn_disabled{
+      background-color: rgba(39, 39, 39, 0.25);
     }
   }
 } 

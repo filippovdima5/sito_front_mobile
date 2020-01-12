@@ -6,7 +6,7 @@ import {setVisFiltersList, usedFilters} from "./filterListStore";
 import {Header} from "./_bank/Header/Header";
 import {Filter} from "./Filter/animate/FilterAnimate";
 import {UsedFiltersSection} from "./UsedFiltersSection/UsedFiltersSection";
-import { DoneBtn } from "./_bank/DoneBtn/DoneBtn";
+import {TotalProductsButton} from "./TotalProductsButton/TotalProductsButton";
 
 
 import {useStore} from "effector-react";
@@ -18,7 +18,6 @@ function FiltersList() {
     const $usedFilters = useStore(usedFilters);
     const [visDone, setVisDone] = useState(false);
     useUpdateEffect(() => {if (!visDone) setVisDone(true)});
-
 
 
     return (
@@ -35,12 +34,8 @@ function FiltersList() {
 
                 <div className={styles.space}/>
 
-                <DoneBtn
-                    title={'Посмотреть 456 предложений'}
-                    zIndex={0}
-                    visIn={visDone}
-                    callback={handleClose}
-                />
+
+                <TotalProductsButton visDone={visDone}/>
             </div>
 
             <Filter/>

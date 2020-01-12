@@ -8,7 +8,9 @@ const filtersMap = {
     brands: 'Бренды',
     categories: 'Категории',
     colors: 'Цвета',
-    sizes: 'Размеры'
+    sizes: 'Размеры',
+    prices: 'Цена',
+    sales: 'Скидка',
 };
 
 function UsedFiltersSection({used = false, filtersRow = []}) {
@@ -17,7 +19,7 @@ function UsedFiltersSection({used = false, filtersRow = []}) {
         <section className={styles.UsedFiltersSection}>
 
             {
-                filtersRow.length > 0 && filtersRow.length < 4 &&
+                filtersRow.length > 0 && filtersRow.length < 6 &&
                 <h3 className={styles.h3}>{used ? 'Используются сейчас' : 'Остальные'}</h3>
             }
 
@@ -39,6 +41,7 @@ function UsedFiltersSection({used = false, filtersRow = []}) {
                             key = {item}
                             title = {filtersMap[item]}
                             typeFilter = {item}
+                            isUsed = {used}
                         />
                     ))}
                 </div>

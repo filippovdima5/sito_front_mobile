@@ -1,40 +1,43 @@
 import React, { useState } from 'react';
 import {useUpdateEffect} from "../../../../hooks/useUpdateEffect";
 import styles from './Filter.module.scss';
-import { setVisFilter, visFilter,  activeFilters, clearActiveFilters, openedFilter} from "../filterListStore";
+import { setDoneFilter, clearActiveFilters, setShowAllItems  } from "../filterListStore";
+import { activeFilters, openedFilter, visLoadMore } from "../filterListStore";
 import {useStore} from "effector-react";
 
 import { Header } from "../_bank/Header/Header";
 import { Search } from "./Search/Search";
 import { ItemsList } from "./ItemsList/ItemsList";
+import { RangeInputs } from "./RangeInputs/RangeInputs";
 import { ButtonMore } from "../../_bank/Button/ButtonMore";
 import { DoneBtn } from "../_bank/DoneBtn/DoneBtn";
 
-export const maxItemsInFilter = 10;
+
+export const maxItemsInFilter = 3;
 
 
 function Filter() {
-    const {title, type} = useStore(visFilter);
-    const {listData} = useStore(openedFilter);
+    const {listData, type, title, rangeData} = useStore(openedFilter);
     const $activeFilters = useStore(activeFilters)[type];
+    const $visLoadMore = useStore(visLoadMore);
 
     const [visDone, setVisDone] = useState(false);
     useUpdateEffect(() => {setVisDone(true)}, [$activeFilters]);
 
-    const handleClose = () => (setVisFilter({vis: false}));
 
 
 
     return (
         <div className={styles.Filter}>
 
-            <Header title={title} prev={handleClose}/>
+            <Header title={title} prev={setDoneFilter}/>
 
             <div className={styles.filterBody}>
 
                 {listData.length > maxItemsInFilter && <Search/>}
 
-                <ItemsList type={type} listData={listData}/>
+                {listData.length > 0 && <ItemsList type={type} listData={listData}/>}
+                {rangeData.length > 0 && <RangeInputs type={type} range={rangeData}/>}
 
                 {
                     $activeFilters.length > 0 &&
@@ -46,9 +49,9 @@ function Filter() {
                 }
 
                 {
-                    listData.length > maxItemsInFilter &&
+                    ($visLoadMore && listData.length > maxItemsInFilter) &&
                     <div className={styles.loadMore}>
-                        <ButtonMore  title={'Показать ещё'}/>
+                        <ButtonMore onClick = { () => setShowAllItems() } title={'Показать ещё'}/>
                     </div>
                 }
 
@@ -59,7 +62,7 @@ function Filter() {
                    title={ 'Готово' }
                    zIndex={4}
                    visIn={visDone}
-                   callback={handleClose}/>
+                   callback={setDoneFilter}/>
 
             </div>
 

@@ -7,7 +7,7 @@ function Item({id, title, count, disabled, type}) {
     const $activeFilters = useStore(activeFilters)[type];
 
     return (
-        <label className={styles.Item}>
+        <label className={`${styles.Item} ${disabled && styles.disabled}`}>
             <input
                 readOnly = {true}
                 checked = {$activeFilters.includes(id)}
