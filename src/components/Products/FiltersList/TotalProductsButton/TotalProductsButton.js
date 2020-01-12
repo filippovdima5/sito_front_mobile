@@ -31,7 +31,7 @@ function TotalProductsButton({visDone}) {
         <DoneBtn
             loading={loading}
             title={title}
-            zIndex={0}
+            zIndex={1}
             visIn={visDone}
             callback={handleClose}
         />
