@@ -117,10 +117,13 @@ export const usedFilters = activeFilters.map(state => (
     }
 ));
 
-export const fetchParams = activeFilters.map((state => (
-    {sex_id: 1, ...Object.fromEntries(Object.entries(state).filter(([key, arr]) => (arr.length > 0)))}
+
+
+export const fetchFiltersParams = activeFilters.map((state => (
+    {...Object.fromEntries(Object.entries(state).filter(([key, arr]) => (arr.length > 0)))}
 )));
 
+fetchFiltersParams.watch(state => console.log(state))
 
 
 export const fetchFilters = createEffect({
@@ -128,13 +131,14 @@ export const fetchFilters = createEffect({
         return await api.products.filters(params);
     }
 });
+
 export const loadingFilters = fetchFilters.pending.map(pending => !pending);
 
-guard({
-    source: fetchParams,
-    filter: loadingFilters,
-    target: fetchFilters
-});
+// guard({
+//     source: fetchParams,
+//     filter: loadingFilters,
+//     target: fetchFilters
+// });
 
 filters.on(fetchFilters.done, ((state, {params, result}) => (result)));
 

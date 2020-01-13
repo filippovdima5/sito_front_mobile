@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import {DoneBtn} from "../_bank/DoneBtn/DoneBtn";
-import {listData, setVisFiltersList} from "../filterListStore";
+import {setVisFiltersList} from "../filterListStore";
 import {productsCountsStore, loadingProducts} from "../../productsStore";
 import {useStore} from "effector-react";
 

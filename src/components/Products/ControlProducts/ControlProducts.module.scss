@@ -1,9 +1,10 @@
 .ControlProducts {
-  box-sizing: border-box;
   position: absolute;
+  top: 0;
+
+  box-sizing: border-box;
   z-index: 998;
   left: 0;
-  top: 0;
   right: 0;
   width: 100%;
 

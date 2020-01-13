@@ -1,0 +1,35 @@
+._enter{
+  position: fixed !important;
+
+  opacity: 0;
+  top: 0 !important;
+}
+
+._enter_active{
+  position: fixed !important;
+
+  opacity: 1;
+  top: 50px !important;
+
+  transition: opacity 300ms, top 300ms;
+}
+
+._enter_is_done{
+  position: fixed !important;
+  opacity: 1;
+  top: 50px !important;
+}
+
+._exit {
+  opacity: 1;
+  top: 0
+}
+
+._exit_active {
+  top: 0;
+  transition: opacity 300ms
+}
+
+._exit_is_done {
+  top: 0;
+}
