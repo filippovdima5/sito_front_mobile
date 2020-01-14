@@ -78,17 +78,32 @@ export const activeFilters = createStore({
     prices: [],
     sales: []
 });
+
+export const setSomeFilters = createEvent();
 export const setFilter = createEvent();
 export const setFilterRange = createEvent();
 export const clearActiveFilters = createEvent();
 export const clearAllActiveFilters = createEvent();
+
+activeFilters.on(setSomeFilters, (state, payload) => {
+
+
+    if (JSON.stringify({...state, ...payload}) !== JSON.stringify(state)) {
+        console.log('JSON !==')
+        return {...activeFilters.defaultState, ...payload};
+    }
+
+
+    else return state;
+
+});
+
 activeFilters.on(setFilter, ((state, payload) => {
     return {
         ...state,
         [payload.type] : (state[payload.type].includes(payload.id) ? state[payload.type].filter(item => (item !== payload.id)) : [...state[payload.type], payload.id])
     }
 }));
-
 
 activeFilters.on(setFilterRange, ((state, {id, index, type}) => {
     const newRange = [];
@@ -104,6 +119,7 @@ activeFilters.on(clearActiveFilters, ((state, {type}) => {
 }));
 activeFilters.on(clearAllActiveFilters, () => (activeFilters.defaultState));
 
+activeFilters.watch(state => console.log(state))
 
 
 export const usedFilters = activeFilters.map(state => (
@@ -123,7 +139,6 @@ export const fetchFiltersParams = activeFilters.map((state => (
     {...Object.fromEntries(Object.entries(state).filter(([key, arr]) => (arr.length > 0)))}
 )));
 
-fetchFiltersParams.watch(state => console.log(state))
 
 
 export const fetchFilters = createEffect({
