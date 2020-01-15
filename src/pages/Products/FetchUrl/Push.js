@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import {useUpdateEffect} from "react-use";
 import useRouter from "use-react-router";
 import {useStore} from "effector-react";
@@ -20,17 +20,22 @@ const createUrl = (params) => {
 };
 
 const Push = React.memo(() => {
-    const {history: {push}} = useRouter();
+    const {history: {push, action}} = useRouter();
     const pushUrl = useRef(push).current;
     const $params = useStore(params);
 
 
-    const mount = useRef(false);
+
+    const actionRef = useRef('');
+
+    useEffect(() => {actionRef.current = action}, [action]);
+
     useUpdateEffect(() => {
-        console.log('PUSH')
-        if (mount.current) pushUrl(createUrl($params), {sex_id, ...$params});
-        else mount.current = true
-    }, [$params])
+        console.log(actionRef)
+         if (actionRef.current !== 'PUSH') pushUrl(createUrl($params), {sex_id, ...$params})
+    }, [ $params ]);
+
+
 });
 
 export {Push}

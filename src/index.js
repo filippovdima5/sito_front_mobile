@@ -4,15 +4,9 @@ import { BrowserRouter } from 'react-router-dom';
 import {App} from './App';
 
 
-
-export const GenderContext = React.createContext(0);
-
-
 ReactDOM.render(
     <BrowserRouter>
-        <GenderContext.Provider value = {+localStorage.getItem('sex')}>
-            <App/>
-        </GenderContext.Provider>
+        <App/>
     </BrowserRouter>
     , document.getElementById('root'));
 

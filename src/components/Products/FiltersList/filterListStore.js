@@ -13,6 +13,7 @@ export const visFilter = createStore({
     type: '',
     title: '',
 });
+
 export const setVisFilter = createEvent();
 export const setDoneFilter = createEvent();
 visFilter.on(setVisFilter, ((state, payload) => ({...state, ...payload})));
@@ -85,17 +86,9 @@ export const setFilterRange = createEvent();
 export const clearActiveFilters = createEvent();
 export const clearAllActiveFilters = createEvent();
 
+
 activeFilters.on(setSomeFilters, (state, payload) => {
-
-
-    if (JSON.stringify({...state, ...payload}) !== JSON.stringify(state)) {
-        console.log('JSON !==')
-        return {...activeFilters.defaultState, ...payload};
-    }
-
-
-    else return state;
-
+   return {...activeFilters.defaultState, ...payload}
 });
 
 activeFilters.on(setFilter, ((state, payload) => {
@@ -119,8 +112,6 @@ activeFilters.on(clearActiveFilters, ((state, {type}) => {
 }));
 activeFilters.on(clearAllActiveFilters, () => (activeFilters.defaultState));
 
-activeFilters.watch(state => console.log(state))
-
 
 export const usedFilters = activeFilters.map(state => (
     {
@@ -134,11 +125,9 @@ export const usedFilters = activeFilters.map(state => (
 ));
 
 
-
 export const fetchFiltersParams = activeFilters.map((state => (
     {...Object.fromEntries(Object.entries(state).filter(([key, arr]) => (arr.length > 0)))}
 )));
-
 
 
 export const fetchFilters = createEffect({
@@ -156,5 +145,21 @@ export const loadingFilters = fetchFilters.pending.map(pending => !pending);
 // });
 
 filters.on(fetchFilters.done, ((state, {params, result}) => (result)));
+
+
+
+
+
+const routeHistoryState = createStore({});
+
+export const pushHistoryState = createEvent();
+routeHistoryState.on(pushHistoryState, (state, payload) => {
+   return {...state, payload: activeFilters.getState}
+});
+
+export const getHistoryState = createEvent();
+activeFilters.on(getHistoryState, (state, payload) => {
+    return routeHistoryState.getState()[payload]
+});
 
 

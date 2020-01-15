@@ -2,14 +2,14 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 import styles from './Input.module.scss';
 import {useStore} from "effector-react";
 import {fetchResults, modSearch} from "../searchStore";
-import {GenderContext} from "../../../../index";
+
 
 function Input() {
     const inputRef = useRef(null);
     const $modSearch = useStore(modSearch);
     const modSearchRef = useRef($modSearch);
 
-    const sex_id = useContext(GenderContext);
+    const sex_id = 1;
 
     useEffect(() => {
         if ($modSearch) inputRef.current.focus();

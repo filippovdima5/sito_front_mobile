@@ -1,9 +1,8 @@
 import React, { useEffect, useState} from 'react';
 import useRouter from "use-react-router";
-import {useUpdateEffect, useMount} from "react-use";
+import {useUpdateEffect} from "react-use";
 import {fetchFilters} from "../../../components/Products/FiltersList/filterListStore";
 import {fetchProducts} from "../../../components/Products/productsStore";
-
 import {setSomeFilters} from "../../../components/Products/FiltersList/filterListStore";
 
 
@@ -35,32 +34,27 @@ const Fetch = React.memo(() => {
     const [sexId, setSexId] = useState(0);
     const [params, setParams] = useState({});
 
+
     useEffect(() => {
         setSexId(detectSex(sex));
     }, [sex]);
 
     useEffect(() => {
-        if (state) setParams(state);
-        else {
+       // if (state) setParams(state);
+       //  else {
             if (search) setParams(parseSearch(search));
             else setParams({});
-        }
-    }, [search, state]);
-
-    // useMount(() => {
-    //     console.log(params)
-    //    setSomeFilters(params)
-    // });
+        // }
+    }, [search]);
 
     useUpdateEffect(() => {
         fetchProducts({sex_id: sexId, ...params});
         fetchFilters({sex_id: sexId, ...params});
 
-        setSomeFilters(params);
+        setSomeFilters(params)
 
-        console.log(params)
+        console.log('FETCH', `sexId:${sexId}`, params)
     }, [sexId, params]);
-
 
 
 
