@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './RangeInputs.module.scss';
-import {validateInputNumber} from "../../../../../helperFuncs/validateInputNumber";
+import {validateInputNumber} from "../../../../../helpers/functions/validateInputNumber";
 import {activeFilters} from "../../filterListStore";
 import {useStore} from "effector-react";
 

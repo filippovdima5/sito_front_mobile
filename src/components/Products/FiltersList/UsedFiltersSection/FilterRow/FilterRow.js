@@ -1,7 +1,7 @@
 import React, { useMemo, useRef, useState, useCallback, useEffect } from 'react';
 import styles from './FilterRow.module.scss';
 import {setVisFilter, activeFilters, clearActiveFilters} from "../../filterListStore";
-import rightArrowSVG from "../../../../../img/svg/rightArrow.svg";
+import rightArrowSVG from "../../../../../media/img/svg/rightArrow.svg";
 import {useStore} from "effector-react";
 
 

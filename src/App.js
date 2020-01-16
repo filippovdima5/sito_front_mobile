@@ -1,13 +1,14 @@
 import React from 'react';
 import {Pages} from "./pages/index";
-import styles from './css/App.module.scss';
-import './css/reset.module.scss';
+import styles from './media/css/App.module.scss';
+import './media/css/reset.module.scss';
 
 import { Header} from "./components/Header/Header";
 import { Footer } from "./components/Footer/Footer";
 
 
-function App() {
+const App = React.memo(function App() {
+
     return (
        <div className={styles.App}>
            <header className={styles.header}>
@@ -23,6 +24,6 @@ function App() {
            </footer>
        </div>
     )
-}
+});
 
 export {App}

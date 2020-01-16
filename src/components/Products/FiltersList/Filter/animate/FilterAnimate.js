@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 import animate from './animate.module.scss';
-import {useTransitionNames} from "../../../../../hooks/useTransitionNames";
+import {useTransitionNames} from "../../../../../helpers/hooks/useTransitionNames";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import {visFilter} from "../../filterListStore";
 import {useStore} from "effector-react";

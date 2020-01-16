@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './Header.module.scss';
 
-import closeSVG from "../../../../../img/svg/close.svg";
-import leftArrowSVG from "../../../../../img/svg/leftArrow.svg";
+import closeSVG from "../../../../../media/img/svg/close.svg";
+import leftArrowSVG from "../../../../../media/img/svg/leftArrow.svg";
 
 
 function Header({title, close, prev }) {

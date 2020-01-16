@@ -3,7 +3,7 @@ import {useScroll} from "react-use";
 import animate from './animate.module.scss';
 import {ControlProducts} from "../ControlProducts";
 import {CSSTransition } from 'react-transition-group';
-import {useTransitionNames} from "../../../../hooks/useTransitionNames";
+import {useTransitionNames} from "../../../../helpers/hooks/useTransitionNames";
 
 
 function ControlProductsAnimate() {
