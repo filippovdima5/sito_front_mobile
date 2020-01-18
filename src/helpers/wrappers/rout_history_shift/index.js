@@ -2,7 +2,7 @@ import React, {Fragment, useContext, useRef} from 'react';
 import {useHistory} from "react-router";
 
 const createSearch = function(params) {
-    if (!params) return '';
+    if (!params) throw Error('Не переданы параметры для формирования search');
 
     return  Object.entries(params)
         .map(([key, value])=>{
@@ -13,6 +13,7 @@ const createSearch = function(params) {
 };
 
 const createUrl = (historyFunc, path, params) => {
+    if (!path) throw Error('Не передан path!');
     historyFunc(path + createSearch(params), params);
 };
 
@@ -35,7 +36,7 @@ const RouterHistoryShift = React.memo(function RouterHistoryShift(props){
 });
 
 const useShiftHistory = function useShiftHistory () {
-    return useContext(ShiftHistory)
+    return  useContext(ShiftHistory);
 };
 
 export {RouterHistoryShift, useShiftHistory}

@@ -4,13 +4,15 @@ import {ProductCard} from "./ProductCard/ProductCard";
 import { productsStore } from "../productsStore";
 import {useStore} from "effector-react";
 
+
 const dataSkeleton = [];
 for (let i = 0; i < 20; i++){
     dataSkeleton.push(i)
 }
 
 
-function ProductsList() {
+
+const ProductsList = React.memo(() => {
     const data = useStore(productsStore);
     //const loader = !useStore(loadingProducts);
 
@@ -18,6 +20,9 @@ function ProductsList() {
 
     return (
         <Fragment>
+
+            {console.log('PRODUCTS_LIST')}
+
             {
                 (data.length === 0) ?
                     <div className={styles.ProductsList}>
@@ -42,6 +47,6 @@ function ProductsList() {
             }
         </Fragment>
     )
-}
+});
 
 export {ProductsList}

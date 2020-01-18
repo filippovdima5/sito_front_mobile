@@ -1,6 +1,7 @@
-import {createEffect, createEvent, createStore, guard, merge } from "effector";
+import {createEffect, createEvent, createStore, merge } from "effector";
 import {api} from "../../../api";
 import {maxItemsInFilter} from "./Filter/Filter";
+import {sharedStateForProducts} from "../../../pages/Products/store";
 
 
 export const visFiltersList = createStore(false);
@@ -18,6 +19,9 @@ export const setVisFilter = createEvent();
 export const setDoneFilter = createEvent();
 visFilter.on(setVisFilter, ((state, payload) => ({...state, ...payload})));
 visFilter.on(setDoneFilter, (state => ({...state, vis: false})));
+
+
+
 
 export const filters = createStore({
     brands: [],
@@ -80,16 +84,17 @@ export const activeFilters = createStore({
     sales: []
 });
 
-export const setSomeFilters = createEvent();
+activeFilters.on(sharedStateForProducts, (state, payload) => {
+
+});
+
+
 export const setFilter = createEvent();
 export const setFilterRange = createEvent();
 export const clearActiveFilters = createEvent();
 export const clearAllActiveFilters = createEvent();
 
 
-activeFilters.on(setSomeFilters, (state, payload) => {
-   return {...activeFilters.defaultState, ...payload}
-});
 
 activeFilters.on(setFilter, ((state, payload) => {
     return {

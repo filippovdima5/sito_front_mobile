@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { useUpdateEffect } from "../../../helpers/hooks/useUpdateEffect";
+import { useUpdateEffect} from "react-use";
 import styles from './FiltersList.module.scss';
 import {setVisFiltersList, usedFilters} from "./filterListStore";
 
