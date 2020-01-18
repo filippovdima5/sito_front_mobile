@@ -22,7 +22,6 @@ function FiltersList() {
 
     return (
         <div className={styles.FiltersList}>
-
             <Header title={'Фильтры'} close={handleClose}/>
 
             <div className={styles.wrap}>

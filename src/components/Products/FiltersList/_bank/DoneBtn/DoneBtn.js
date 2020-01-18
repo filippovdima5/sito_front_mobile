@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 import styles from './DoneBtn.module.scss';
-import {Loader1} from "../../../../../1.atoms/loaders/Loader1/Loader1";
+import {Loader1} from "../../../../../atoms/loaders/Loader1/Loader1";
 
 function DoneBtn({visIn, callback, zIndex, title, loading = false}) {
 

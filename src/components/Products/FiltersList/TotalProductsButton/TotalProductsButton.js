@@ -1,7 +1,8 @@
 import React, {useMemo} from 'react';
 import {DoneBtn} from "../_bank/DoneBtn/DoneBtn";
 import {setVisFiltersList} from "../filterListStore";
-import {productsCountsStore, loadingProducts} from "../../productsStore";
+import { productsCountsStore } from "../../productsStore";
+import  { loadingProducts } from "../../../../pages/Products/store";
 import {useStore} from "effector-react";
 
 const handleClose = () => (setVisFiltersList(false));

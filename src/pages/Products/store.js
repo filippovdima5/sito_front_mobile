@@ -102,12 +102,12 @@ guard({
 });
 
 
-const fetchProducts = createEffect({
+export const fetchProducts = createEffect({
     handler: async (params) => {
         return await api.products.getProducts(params);
     }
 });
-const loadingProducts = fetchProducts.pending.map(pending => !pending);
+export const loadingProducts = fetchProducts.pending.map(pending => !pending);
 productsStore.on(fetchProducts.done, (state, {result: {products}}) => (products));
 guard({
     source: productsFetchParams,

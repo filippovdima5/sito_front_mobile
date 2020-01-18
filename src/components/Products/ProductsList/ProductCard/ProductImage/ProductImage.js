@@ -1,6 +1,6 @@
 import React, {Fragment, useState, useEffect, useRef} from 'react';
 import styles from './ProductImage.module.scss';
-import {Skeleton} from "../../../../../1.atoms/Skeleton/Skeleton";
+import {Skeleton} from "../../../../../atoms/Skeleton/Skeleton";
 
 
 function ProductImage({src, alt, wrapHeight}) {

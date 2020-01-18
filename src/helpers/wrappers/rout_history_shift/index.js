@@ -4,7 +4,7 @@ import {useHistory} from "react-router";
 const createSearch = function(params) {
     if (!params) throw Error('Не переданы параметры для формирования search');
 
-    return  Object.entries(params)
+    return '?' + Object.entries(params)
         .map(([key, value])=>{
             if (Array.isArray(value)) return `${key}=${value.join('|')}`;
             else return `${key}=${value}`

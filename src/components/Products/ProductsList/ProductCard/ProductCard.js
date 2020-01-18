@@ -1,6 +1,6 @@
 import React, {useRef} from 'react';
 import styles from './ProductCard.module.scss';
-import {Skeleton} from "../../../../1.atoms/Skeleton/Skeleton";
+import {Skeleton} from "../../../../atoms/Skeleton/Skeleton";
 import {ProductImage} from "./ProductImage/ProductImage";
 
 function ProductCard({img, title, brand, oldprice, price, sale}) {

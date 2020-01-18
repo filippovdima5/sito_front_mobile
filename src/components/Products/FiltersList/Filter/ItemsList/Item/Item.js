@@ -1,10 +1,11 @@
 import React from 'react';
 import styles from './Item.module.scss';
-import {setFilter, activeFilters} from "../../../filterListStore";
+import {setFilter} from "../../../filterListStore";
+import {filtersState} from "../../../../../../pages/Products/store";
 import {useStore} from "effector-react";
 
 function Item({id, title, count, disabled, type}) {
-    const $activeFilters = useStore(activeFilters)[type];
+    const $activeFilters = useStore(filtersState)[type];
 
     return (
         <label className={`${styles.Item} ${disabled && styles.disabled}`}>

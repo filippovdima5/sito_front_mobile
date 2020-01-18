@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import styles from './Input.module.scss';
 import {useStore} from "effector-react";
 import {fetchResults, modSearch} from "../searchStore";

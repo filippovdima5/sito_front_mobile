@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
 import styles from './ProductsList.module.scss';
 import {ProductCard} from "./ProductCard/ProductCard";
-import { productsStore } from "../productsStore";
+import {productsStore} from "../../../pages/Products/store";
 import {useStore} from "effector-react";
 
 
@@ -11,17 +11,12 @@ for (let i = 0; i < 20; i++){
 }
 
 
-
 const ProductsList = React.memo(() => {
     const data = useStore(productsStore);
     //const loader = !useStore(loadingProducts);
 
-
-
     return (
         <Fragment>
-
-            {console.log('PRODUCTS_LIST')}
 
             {
                 (data.length === 0) ?

@@ -1,13 +1,13 @@
 import React, { useMemo, useRef, useState, useCallback, useEffect } from 'react';
 import styles from './FilterRow.module.scss';
-import {setVisFilter, activeFilters, clearActiveFilters} from "../../filterListStore";
+import {setVisFilter, clearActiveFilters} from "../../filterListStore";
 import rightArrowSVG from "../../../../../media/img/svg/rightArrow.svg";
 import {useStore} from "effector-react";
-
+import { filtersState } from "../../../../../pages/Products/store";
 
 
 function FilterRow({title, typeFilter, isUsed}) {
-    const $activeFilters = useStore(activeFilters)[typeFilter];
+    const $activeFilters = useStore(filtersState)[typeFilter];
 
     const activeFiltersString = useMemo(() => {
         let string =  $activeFilters.join(' | ');

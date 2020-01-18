@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import {useUpdateEffect} from "react-use";
 import styles from './Filter.module.scss';
 import { setDoneFilter, clearActiveFilters, setShowAllItems  } from "../filterListStore";
-import { activeFilters, openedFilter, visLoadMore } from "../filterListStore";
+import { openedFilter, visLoadMore } from "../filterListStore";
+import {filtersState} from "../../../../pages/Products/store";
 import {useStore} from "effector-react";
 
 import { Header } from "../_bank/Header/Header";
@@ -18,7 +19,7 @@ export const maxItemsInFilter = 3;
 
 function Filter() {
     const {listData, type, title, rangeData} = useStore(openedFilter);
-    const $activeFilters = useStore(activeFilters)[type];
+    const $activeFilters = useStore(filtersState)[type];
     const $visLoadMore = useStore(visLoadMore);
 
     const [visDone, setVisDone] = useState(false);

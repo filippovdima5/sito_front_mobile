@@ -1,18 +1,18 @@
 import React from 'react';
 import styles from './RangeInputs.module.scss';
 import {validateInputNumber} from "../../../../../helpers/functions/validateInputNumber";
-import {activeFilters} from "../../filterListStore";
+import {filtersState} from "../../../../../pages/Products/store";
 import {useStore} from "effector-react";
 
 
 import {setFilterRange} from "../../filterListStore";
 
-import {InputText} from "../../../../../1.atoms/Input/InputText";
+import {InputText} from "../../../../../atoms/Input/InputText";
 
 
 function RangeInputs({type, range = [0, 1]}) {
 
-    const activeValues = useStore(activeFilters)[type];
+    const activeValues = useStore(filtersState)[type];
 
     const handleSetFilter = (e, index) => (
        setFilterRange({
