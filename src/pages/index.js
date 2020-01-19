@@ -10,7 +10,7 @@ function Pages() {
     return (
         <Switch>
             <Route exact={true} path={'/'} component={Home}/>
-            <Route path={'/products/:sex?'} component={Products}/>
+            <Route path={'/products/:sex?/:subcategory?'} component={Products}/>
         </Switch>
     )
 }

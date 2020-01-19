@@ -1,6 +1,7 @@
 import React  from 'react';
 import styles from './ControlProducts.module.scss';
 import {setVisFiltersList} from "../FiltersList/filterListStore";
+import {SetSort} from "./SetSort/SetSort";
 
 
 
@@ -8,15 +9,7 @@ function ControlProducts() {
     return (
         <div className={styles.ControlProducts}>
             <div className={styles.wrap}>
-                <div className={styles.select}>
-                    <select
-                        className={styles.select_main}>
-                        <option>По новизне</option>
-                        <option>По цене</option>
-                        <option>По размеру скидики</option>
-                    </select>
-                </div>
-
+                <SetSort/>
 
                 <button
                     onClick={() => (setVisFiltersList(true))}

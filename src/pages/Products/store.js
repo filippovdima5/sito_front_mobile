@@ -43,7 +43,12 @@ export const filtersState = mainState
         prices,
         sales,
     }) => ({categories, brands, sizes, colors, prices, sales}));
+
 export const productsState = mainState.map(({sort, page}) => ({sort, page}));
+export const setPage = createEvent();
+export const setSort = createEvent();
+productsState.on(setPage, (state => ({...state, page: !!state.page ? +state.page + 1 : 2})));
+productsState.on(setSort, (state, payload) => ({...state, sort: payload, page: null}));
 // ------------------
 
 
@@ -69,7 +74,7 @@ const productsFetchParams = combine(filtersFetchParams, clearProductsState, (a, 
 
 // PUSH or REPLACE:
 productsFetchParams.watch(({sex_id, ...params}) => {
-    shiftHistoryEffector.getState() && shiftHistoryEffector.getState().replace( `/products/${sexDetected(sex_id)}`, params)
+    shiftHistoryEffector.getState() && shiftHistoryEffector.getState().replace( `/products/${sexDetected(sex_id)}`, {...params})
 });
 // ----------------------------
 
@@ -108,7 +113,10 @@ export const fetchProducts = createEffect({
     }
 });
 export const loadingProducts = fetchProducts.pending.map(pending => !pending);
-productsStore.on(fetchProducts.done, (state, {result: {products}}) => (products));
+productsStore.on(fetchProducts.done, (state, {params : {page}, result: {products}}) => {
+    if (page === 1 || !page) return products;
+    else return [...state, ...products]
+});
 guard({
     source: productsFetchParams,
     filter: loadingProducts,
@@ -120,7 +128,9 @@ guard({
 
 
 
-// logs:
+//logs:
 //const log = 'Products';
 //mainState.watch(state => {console.log(state, `${log}-mainState`)});
+//productsState.watch(state => {console.log(state, `${log}-productState`)});
+//productsStore.watch(state => {console.log(state, `${log}-productsStore`)});
 //-----

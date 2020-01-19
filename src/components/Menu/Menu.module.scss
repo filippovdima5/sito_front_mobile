@@ -1,0 +1,13 @@
+.Menu {
+  height: 100vh;
+  width: calc(100vw - 50px);
+  position: fixed;
+  z-index: 9999;
+  box-sizing: border-box;
+  background-color: white;
+
+
+  .body{
+    box-sizing: inherit;
+  }
+}

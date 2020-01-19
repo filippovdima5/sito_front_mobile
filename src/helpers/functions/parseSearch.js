@@ -1,3 +1,8 @@
+function toNumber(item) {
+    return ( (+item) ? +item : item )
+}
+
+
 export const parseSearch =  (search) => {
     if (!search) return {};
     return Object.fromEntries(
@@ -6,8 +11,7 @@ export const parseSearch =  (search) => {
             .split('&')
             .map(item => (item.split('=')))
             .map(([key, value]) => (
-                [key, value.split('|')
-                    .map(value => ((+value) ? +value : value))]
+                [key, ['page', 'sort'].includes(key) ? toNumber(value) : value.split('|').map(value => (toNumber(value)))]
             ))
     )
 };

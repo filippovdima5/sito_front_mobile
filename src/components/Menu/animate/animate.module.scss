@@ -1,0 +1,25 @@
+._enter {
+  left: -100%;
+}
+
+._enter_active {
+  left: 0;
+  transition: left 300ms;
+}
+
+._enter_is_done {
+  left: 0;
+}
+
+._exit {
+  left: 0;
+  transition: left 300ms;
+}
+
+._exit_active {
+  left: -100%;
+}
+
+._exit_is_done {
+  left: -100%;
+}

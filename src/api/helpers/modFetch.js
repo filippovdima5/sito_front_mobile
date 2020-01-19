@@ -1,3 +1,4 @@
+
 async function modFetch(path, body) {
 	const fetchObj = {
 		headers: {
@@ -7,6 +8,7 @@ async function modFetch(path, body) {
 	};
 
 	if (!!body) {
+		//body['client'] = client;
 		fetchObj.method = 'POST';
 		fetchObj.body = JSON.stringify(body)
 	}

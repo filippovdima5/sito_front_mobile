@@ -1,5 +1,5 @@
 import { createEvent, createStore, merge } from "effector";
-import { filtersStore, filtersState } from "../../../pages/Products/store";
+import { filtersStore, filtersState, productsState } from "../../../pages/Products/store";
 
 
 import {maxItemsInFilter} from "./Filter/Filter";
@@ -72,6 +72,8 @@ export const setFilterRange = createEvent();
 export const clearActiveFilters = createEvent();
 export const clearAllActiveFilters = createEvent();
 
+
+productsState.on(merge([setFilter, setFilterRange, clearActiveFilters, clearAllActiveFilters]), state => ({...state, page: null}));
 
 
 filtersState.on(setFilter, ((state, payload) => {

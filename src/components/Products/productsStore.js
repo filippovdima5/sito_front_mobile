@@ -1,16 +1,20 @@
-import { createStore} from "effector";
-import { fetchProducts} from "../../pages/Products/store";
-
+import {createStore} from "effector";
+import { fetchProducts, productsState } from "../../pages/Products/store";
 
 export const productsCountsStore = createStore({
+    countOnList: 20,
     total: 0,
-    totalPage: 1
+    totalPages: 1,
+
+    page: 1
 });
 
+export const productsSort = createStore('update_up');
 
-productsCountsStore.on(fetchProducts.done, ((state, {result: {info: [{total, totalPages}]}}) => ({total, totalPages})));
+productsSort.on(productsState, (state, {sort}) => sort);
+
+productsCountsStore.on(productsState, ((state, {page}) => ({...state, page: page})));
+productsCountsStore.on(fetchProducts.done, ((state, {result: {info: [{total, totalPages}]}}) => ({...state, total, totalPages})));
 
 
-
-productsCountsStore.watch(state => {
-    console.log(state);})
+productsCountsStore.watch(state => {console.log(state)})
