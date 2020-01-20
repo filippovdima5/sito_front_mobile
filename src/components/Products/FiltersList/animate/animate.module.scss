@@ -4,7 +4,7 @@
 
 ._enter_active{
   top: 0;
-  transition: top 200ms;
+  transition: top 300ms;
 }
 
 ._enter_is_done{
@@ -17,7 +17,7 @@
 
 ._exit_active{
   top: 100%;
-  transition: top 100ms;
+  transition: top 300ms;
 }
 
 ._exit_is_done{

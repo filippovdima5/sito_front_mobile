@@ -1,8 +1,55 @@
 .Body {
+  background-color: white;
+  position: relative;
+  z-index: 2;
+  height: calc(100% - 50px);
+  overflow-y: scroll;
+
+
 
   .h2{
     font-weight: 400;
-    font-size: 15px;
-    padding: 12px 24px;
+    font-size: 18px;
+    text-transform: uppercase;
+    padding: 10px 20px;
+  }
+
+  .h3{
+    font-weight: 300;
+    font-size: 17px;
+    padding: 8px 20px;
+  }
+
+
+  .ul{
+    margin-bottom: 30px;
+
+    .li:first-child{
+      border-top: 1px solid #f0f0f0;;
+    }
+
+    .li{
+      font-weight: 200;
+      font-size: 16px;
+      padding: 8px 20px;
+      border-bottom: 1px solid #f0f0f0;
+
+      .link{
+        position: relative;
+        display: block;
+
+        .img{
+          position: absolute;
+          right: 0;
+          top: 50%;
+          width: 20px;
+          transform: translateY(-50%);
+        }
+      }
+    }
+  }
+
+  .space{
+    padding-bottom: 40px;
   }
 } 

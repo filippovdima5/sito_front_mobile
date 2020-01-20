@@ -397,6 +397,12 @@ textarea {
   resize: vertical;
 }
 
+a{
+  display: block;
+  text-decoration: none;
+  color: black;
+}
+
 html,body{
   //-webkit-overflow-scrolling : touch !important;
   overflow: auto !important;

@@ -1,25 +1,53 @@
+
+
 ._enter {
   left: -100%;
+
+  >div:last-child{
+    background-color: rgba(0,0,0,0);
+  }
 }
 
 ._enter_active {
   left: 0;
   transition: left 300ms;
+
+  >div:last-child{
+    background-color: rgba(0,0,0, 0.5);
+    transition: background-color 300ms;
+  }
 }
 
 ._enter_is_done {
   left: 0;
+
+  >div:last-child{
+    background-color: rgba(0,0,0,0.5);
+  }
 }
 
 ._exit {
   left: 0;
   transition: left 300ms;
+
+  >div:last-child{
+    background-color: rgba(0,0,0, 0.5);
+    transition: background-color 300ms;
+  }
 }
 
 ._exit_active {
   left: -100%;
+
+  >div:last-child{
+    background-color: rgba(0,0,0,0);
+  }
 }
 
 ._exit_is_done {
   left: -100%;
+
+  >div:last-child{
+    background-color: rgba(0,0,0,0);
+  }
 }

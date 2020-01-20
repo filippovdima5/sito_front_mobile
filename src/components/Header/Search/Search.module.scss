@@ -1,11 +1,11 @@
 .search_active{
   width: 100vw !important;
-  transition: width 100ms ease-out;
+  transition: width 300ms ease-out;
   z-index: 1;
 }
 .search_close{
   width: 50px;
-  transition: width 50ms ease-out;
+  transition: width 300ms ease-out;
   z-index: 0;
 }
 

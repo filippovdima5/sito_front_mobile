@@ -17,7 +17,7 @@ function FiltersListAnimate() {
             {$visFiltersList &&
             <CSSTransition
                 in = {$visFiltersList}
-                timeout = {200}
+                timeout = {300}
                 classNames = {classNames}
             >
                 <FiltersList/>

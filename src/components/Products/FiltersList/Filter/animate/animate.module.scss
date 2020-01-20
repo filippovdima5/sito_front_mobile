@@ -6,7 +6,7 @@
 
 ._enter_active{
   left: 0;
-  transition: left 200ms;
+  transition: left 300ms;
 }
 
 ._enter_is_done{
@@ -20,7 +20,7 @@
 
 ._exit_active{
   left: 100%;
-  transition: left 100ms;
+  transition: left 300ms;
 
 }
 

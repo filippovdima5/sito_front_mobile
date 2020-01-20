@@ -18,7 +18,7 @@ function SearchModalAnimate() {
             {$modSearch &&
             <CSSTransition
                 in = {$modSearch}
-                timeout = {200}
+                timeout = {300}
                 classNames = {classNames}
             >
                <Modal/>

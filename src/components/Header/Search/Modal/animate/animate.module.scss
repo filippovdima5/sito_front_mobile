@@ -6,7 +6,7 @@
 ._enter_active{
   background-color: rgba(0, 0, 0, 0.2);
   opacity: 1;
-  transition: background-color 200ms;
+  transition: background-color 300ms;
 }
 
 ._enter_is_done{
@@ -22,7 +22,7 @@
 ._exit_active{
   opacity: 0;
   background-color: rgba(0, 0, 0, 0);
-  transition: background-color 200ms;
+  transition: background-color 300ms;
 }
 
 ._exit_is_done{

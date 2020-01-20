@@ -16,7 +16,7 @@ function FilterAnimate() {
             {$visFilter &&
             <CSSTransition
 
-                timeout = { 200 }
+                timeout = { 300 }
                 classNames = { classNames }
             >
                 <Fragment>

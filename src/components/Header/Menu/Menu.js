@@ -12,6 +12,7 @@ function Menu() {
     return (
         <div className={`${styles.Menu} ${isShowMenu ? styles.menu_open : styles.menu_close}`}>
             <input
+                checked={isShowMenu}
                 readOnly={true}
                 value={isShowMenu}
                 onChange={handleChange}

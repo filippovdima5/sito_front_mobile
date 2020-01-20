@@ -4,6 +4,8 @@ import {Header} from "./Header/Header";
 import {Body} from "./Body/Body";
 import {$sexId} from "../../stores/user";
 import {useStore} from "effector-react";
+import {showMenuWindow} from "./menuStore";
+import {NextMenu} from "./NextMenu/NextMenu";
 
 function Menu() {
     const sexId = useStore($sexId);
@@ -12,6 +14,12 @@ function Menu() {
         <div className={styles.Menu}>
             <Header sexId={sexId}/>
             <Body sexId={sexId}/>
+
+
+
+
+            <NextMenu/>
+            <div onClick={() => showMenuWindow()} className={`${styles.backLog} back`}/>
         </div>
     )
 }
