@@ -1,25 +1,22 @@
 import React from 'react';
-import styles from './Menu.module.scss';
+import styles from './styles/Menu.module.scss';
 import {Header} from "./Header/Header";
 import {Body} from "./Body/Body";
 import {$sexId} from "../../stores/user";
 import {useStore} from "effector-react";
-import {showMenuWindow} from "./menuStore";
+
 import {NextMenu} from "./NextMenu/NextMenu";
 
 function Menu() {
     const sexId = useStore($sexId);
 
     return (
-        <div className={styles.Menu}>
-            <Header sexId={sexId}/>
-            <Body sexId={sexId}/>
-
-
-
-
+        <div>
+            <div className={styles.Menu}>
+                <Header sexId={sexId}/>
+                <Body sexId={sexId}/>
+            </div>
             <NextMenu/>
-            <div onClick={() => showMenuWindow()} className={`${styles.backLog} back`}/>
         </div>
     )
 }

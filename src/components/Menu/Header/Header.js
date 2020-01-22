@@ -1,11 +1,12 @@
 import React from 'react';
 import styles from './Header.module.scss';
 import {setSexId} from "../../../stores/user";
+import {$sexId} from "../../../stores/user";
+import {useStore} from "effector-react";
 
 
-function Header({sexId}) {
-
-
+const Header = React.memo(() => {
+    const sexId = useStore($sexId);
 
     return (
         <div className={styles.Header}>
@@ -20,6 +21,6 @@ function Header({sexId}) {
             </div>
         </div>
     )
-}
+});
 
 export {Header}

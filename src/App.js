@@ -5,7 +5,7 @@ import './media/css/reset.module.scss';
 import { Header} from "./components/Header/Header";
 import {Pages} from "./pages/index";
 import { Footer } from "./components/Footer/Footer";
-import { Menu } from "./components/Menu/animate/MenuAnimate";
+import { Menu } from "./components/Menu";
 
 
 const App = React.memo(function App() {

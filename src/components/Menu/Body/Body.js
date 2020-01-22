@@ -5,7 +5,7 @@ import {Footer} from "./Footer/Footer";
 import {showMenuWindow} from "../menuStore";
 import {Link} from "react-router-dom";
 import {sexDetected} from "../../../helpers/functions/sexDetected";
-
+import {openNextMenu} from "../menuStore";
 
 
 const catalogList = [
@@ -14,8 +14,8 @@ const catalogList = [
     {title: 'Аксессуары', index: 'accessories'}
 ];
 
+
 const mainList = [
-    {title: 'Бренды', index: 'brands', link: () => ('/brands')},
     {title: 'Избранное', index: 'favorite', link: (sexId) => (`/products/${sexDetected(sexId)}?favorite=1`)},
     {title: 'Товары дня', index: 'top', link: ((sexId )=> (`/products/${sexDetected(sexId)}?top=1`))}
 ];
@@ -38,8 +38,8 @@ function Body({sexId}) {
 
                 <ul className={styles.ul}>
                     {catalogList.map(({title, index}) => (
-                        <Link
-                            to={`/products/${sexDetected(sexId)}/${index}`}
+                        <li
+                            onClick={() => openNextMenu({title, index})}
                             key={index}
                             className={styles.li}
                         >
@@ -47,15 +47,25 @@ function Body({sexId}) {
                             {title}
                             <img className={styles.img} src={arrowRight} alt={'go'}/>
                         </span>
-                        </Link>
+                        </li>
                     ))}
                 </ul>
 
 
                 <ul className={styles.ul}>
+                    <Link
+                        to={'/brands'}
+                        onClick={() => showMenuWindow()}
+                        key={'brands'}
+                        className={styles.li}
+                    >
+                        <span className={styles.link}>
+                            Бренды
+                            <img className={styles.img} src={arrowRight} alt={'go'}/>
+                        </span>
+                    </Link>
                     {mainList.map(({index, title, link}) => (
-                        <Link
-                            to={link(sexId)}
+                        <li
                             onClick={() => showMenuWindow()}
                             key={index}
                             className={styles.li}>
@@ -63,7 +73,7 @@ function Body({sexId}) {
                             {title}
                             <img className={styles.img} src={arrowRight} alt={'go'}/>
                         </span>
-                        </Link>
+                        </li>
                     ))}
                 </ul>
 

@@ -1,0 +1,23 @@
+._enter {
+  .main_menu{ left: -100% }
+}
+
+._enter_active {
+  .main_menu{ left: 0; transition: left 300ms; }
+}
+
+._enter_is_done {
+  .main_menu{ left: 0;}
+}
+
+._exit {
+  .main_menu{ left: 0; transition: left 300ms; }
+}
+
+._exit_active {
+  .main_menu{ left: -100%; }
+}
+
+._exit_is_done {
+  .main_menu{ left: -100%; }
+}

@@ -28,4 +28,4 @@ function MenuAnimate() {
     )
 }
 
-export {MenuAnimate as Menu}
+export {MenuAnimate}
