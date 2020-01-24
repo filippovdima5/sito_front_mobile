@@ -405,7 +405,7 @@ a{
 
 html,body{
   //-webkit-overflow-scrolling : touch !important;
-  overflow: auto !important;
+  overflow: auto;
   height: 100% !important;
   //background-color: transparent !important;
 }

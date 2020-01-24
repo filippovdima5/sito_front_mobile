@@ -16,6 +16,14 @@
     padding: 10px 20px;
   }
 
+  .sexUndefined{
+    position: absolute;
+    height: 99%;
+    width: 99%;
+    background-color: transparent;
+    z-index: 3;
+  }
+
   .h3{
     font-weight: 300;
     font-size: 17px;

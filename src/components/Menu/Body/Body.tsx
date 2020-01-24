@@ -1,33 +1,35 @@
 import React, { useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+// @ts-ignore
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock'
 import arrowRight from '../../../media/img/svg/rightArrow.svg'
 import { showMenuWindow , openNextMenu } from '../menuStore'
-import { sexDetected } from '../../../helpers/functions/sexDetected'
+import { setSignalWithoutSexId } from '../Header/Header'
 import styles from './Body.module.scss'
 import { Footer } from './Footer/Footer'
 
 
-
-
 const catalogList = [
-  { title: 'Одежда', index: '1000' },
-  { title: 'Обувь', index: '2000' },
-  { title: 'Аксессуары', index: '3000' }
+  { title: 'Одежда', index: 1000 },
+  { title: 'Обувь', index: 2000 },
+  { title: 'Аксессуары', index: 3000 }
 ]
 
 
 const mainList = [
-  { title: 'Избранное', index: 'favorite', handler: (sexId) => (`/products/${sexDetected(sexId)}?favorite=1`) },
-  { title: 'Товары дня', index: 'top', handler: ((sexId )=> (`/products/${sexDetected(sexId)}?top=1`)) }
+  { title: 'Избранное', index: 'favorite' },
+  { title: 'Товары дня', index: 'top'}
 ]
 
 const lastList = [
   { title: 'О нас', index: 'about', link: () => ('/about') },
 ]
 
+type Props = {
+  sexId: 1 | 2 | 0,
+}
 
-function Body({ sexId }) {
+function Body({ sexId }: Props) {
   const navRef = useRef(document.getElementById('navRef'))
 
   useEffect(() => {
@@ -45,7 +47,7 @@ function Body({ sexId }) {
         sexId ?
           <h2 className={styles.h2}>{sexId === 1 ? 'Для него' : 'Для неё'}</h2>
           :
-          <div>Выберите пол (кнопка)</div>
+          <div onClick={ () => setSignalWithoutSexId() } className={styles.sexUndefined}/>
       }
 
 
@@ -77,7 +79,7 @@ function Body({ sexId }) {
             {/*<img className={styles.img} src={arrowRight} alt={'go'}/>*/}
           </span>
         </Link>
-        {mainList.map(({ index, title, link }) => (
+        {mainList.map(({ index, title}) => (
           <li
             onClick={() => showMenuWindow()}
             key={index}
@@ -93,7 +95,7 @@ function Body({ sexId }) {
       <ul className={styles.ul}>
         {lastList.map(({ index, title, link }) => (
           <Link
-            to={link(sexId)}
+            to={link()}
             onClick={() => showMenuWindow()}
             key={index}
             className={styles.li}>

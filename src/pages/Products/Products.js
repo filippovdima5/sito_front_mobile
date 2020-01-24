@@ -12,7 +12,7 @@ const Products = React.memo(function Products() {
     <Fragment>
       <HookFirstUrl/>
 
-      <div className={styles.Products}>
+      <div id = {'Products'} className={styles.Products}>
         <ControlProducts/>
         <ProductsList/>
         <LoadMore/>

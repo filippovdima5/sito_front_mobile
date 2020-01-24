@@ -2,7 +2,6 @@ import { combine, createEffect, createEvent, createStore, guard } from 'effector
 import { sexDetected } from '../../helpers/functions/sexDetected'
 import { objCompareJson } from '../../helpers/functions/objСompareJson'
 import { shiftHistoryEffector } from '../../helpers/components/shift-history-in-store'
-import { userInfo } from '../../stores/user/user'
 import { api } from '../../api'
 import { openFromMenu } from '../../components/Menu/NextMenu/Body/Body'
 import { MainState } from './types';
@@ -18,7 +17,7 @@ sharedStateForProducts.on(hookFirstUrl, (state, payload) => (payload))
 // States of Products -> working in components of Products -> back up in this store
 // Вызывают всю цепочку зависимостей:
 const mainState = createStore<MainState>({
-  sex_id: 1,
+  sex_id: 0,
 
   categories: [],
   brands: [],
@@ -27,7 +26,7 @@ const mainState = createStore<MainState>({
   prices: [],
   sales: [],
 
-  sort: null,
+  sort: '',
   page: null
 })
 
@@ -139,4 +138,5 @@ guard({
 //mainState.watch(state => {console.log(state, `${log}-mainState`)});
 //productsState.watch(state => {console.log(state, `${log}-productState`)});
 //productsStore.watch(state => {console.log(state, `${log}-productsStore`)});
+//sharedStateForProducts.watch(state => { console.log(`${log}-sharedStateForProducts`) })
 //-----

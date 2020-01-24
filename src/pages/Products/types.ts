@@ -11,6 +11,6 @@ export type MainState = {
   colors?: Array<string>,
   prices?: Array<number>,
   sales?: Array<number>,
-  sort?: Sort | null,
+  sort?: Sort | '',
   page?: number | null,
 }
