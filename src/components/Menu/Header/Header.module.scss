@@ -3,9 +3,11 @@
   height: 50px;
   border-bottom: 1px solid rgba(16, 24, 31, 0.2);
   display: flex;
-  position: absolute;
-  top: 0;
-  width: 100%;
+
+  position: fixed;
+  width: calc(100% - 50px);
+
+  z-index: 2;
 
   .buttonWrap{
     position: relative;

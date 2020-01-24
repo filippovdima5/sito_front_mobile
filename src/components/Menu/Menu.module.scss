@@ -1,0 +1,21 @@
+.Menu {
+  position: absolute;
+  z-index: 1000;
+  height: 100%;
+  width: calc(100% - 50px);
+
+  box-sizing: border-box;
+  background-color: white;
+  overflow-x: hidden;
+}
+
+.backLog{
+  position: fixed;
+  right: -50px;
+  top: 50px;
+
+  height: calc(75vh);
+  width: 94vw;
+  z-index: 4;
+  transform: translateX(50%);
+}

@@ -1,53 +1,44 @@
-
-
 ._enter {
   left: -100%;
-
-  >div:last-child{
-    background-color: rgba(0,0,0,0);
-  }
 }
 
 ._enter_active {
   left: 0;
   transition: left 300ms;
-
-  >div:last-child{
-    background-color: rgba(0,0,0, 0.5);
-    transition: background-color 300ms;
-  }
 }
 
 ._enter_is_done {
   left: 0;
-
-  >div:last-child{
-    background-color: rgba(0,0,0,0.5);
-  }
 }
 
 ._exit {
   left: 0;
   transition: left 300ms;
-
-  >div:last-child{
-    background-color: rgba(0,0,0, 0.5);
-    transition: background-color 300ms;
-  }
 }
 
 ._exit_active {
   left: -100%;
-
-  >div:last-child{
-    background-color: rgba(0,0,0,0);
-  }
 }
 
 ._exit_is_done {
   left: -100%;
+}
 
-  >div:last-child{
-    background-color: rgba(0,0,0,0);
-  }
+.backLog{
+  position: absolute;
+  transition: background-color 300ms;
+}
+
+.backLog_open{
+  background-color: rgba(0,0,0,0.5);
+  z-index: 999;
+  width: 100%;
+  height: 100%;
+}
+
+.backLog_close{
+  background-color: rgba(0,0,0,0);
+  z-index: -999;
+  width: 0;
+  height: 0;
 }

@@ -6,19 +6,21 @@ import {NextMenu} from "../NextMenu";
 import {useStore} from "effector-react";
 import {$nextMenuState} from "../../menuStore";
 
-function NextMenuAnimate() {
+function NextMenuAnimate({categories}) {
     const classNames = useTransitionNames(animate);
     const { opened } = useStore($nextMenuState);
 
     return (
       <TransitionGroup>
+          <div className={`${animate.backLog} ${opened ? animate.backLog_open : animate.backLog_close}`}/>
+
           {opened &&
           <CSSTransition
               in = { opened }
               timeout = { 300 }
               classNames = { classNames }
           >
-              <NextMenu/>
+              <NextMenu categories = {categories}/>
           </CSSTransition>
           }
       </TransitionGroup>

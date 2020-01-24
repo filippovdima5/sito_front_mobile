@@ -12,9 +12,9 @@ function MenuAnimate() {
     const isShowMenu = useStore($isShowMenu);
 
     return (
-        <TransitionGroup
-            style = {{position: 'absolute'}}
-        >
+        <TransitionGroup>
+            <div className={`${animate.backLog} ${isShowMenu ? animate.backLog_open : animate.backLog_close}`}/>
+
             {isShowMenu &&
             <CSSTransition
                 in = {isShowMenu}
@@ -28,4 +28,4 @@ function MenuAnimate() {
     )
 }
 
-export {MenuAnimate}
+export {MenuAnimate as Menu}

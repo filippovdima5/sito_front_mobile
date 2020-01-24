@@ -9,6 +9,4 @@ export const openNextMenu = createEvent();
 export const closeNextMenu = createEvent();
 $nextMenuState.on(openNextMenu, ((state, {index, title}) => ({opened: true, index, title})));
 $nextMenuState.on(closeNextMenu, (state => ({...state, opened: false})));
-
-$isShowMenu.watch(state => {
-    console.log(state);})
+$nextMenuState.on($isShowMenu, (state, payload) => {if (!payload) return ({...state, opened: false})});

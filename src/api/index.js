@@ -1,6 +1,13 @@
 import {modFetch} from "./helpers/modFetch";
 
 const api = {
+    env: () => {
+        if (localStorage.getItem('@/env')) return localStorage.getItem('env')
+        const env = modFetch('/api/env');
+        localStorage.setItem('@/env', JSON.stringify(env));
+        return env
+    },
+
     search : {
         mainSearch: (body) => modFetch('/api/search/mainSearch', body)
     },

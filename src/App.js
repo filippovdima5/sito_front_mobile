@@ -5,13 +5,16 @@ import './media/css/reset.module.scss';
 import { Header} from "./components/Header/Header";
 import {Pages} from "./pages/index";
 import { Footer } from "./components/Footer/Footer";
-import { Menu } from "./components/Menu";
+import { Menu } from "./components/Menu/animate/MenuAnimate";
 
 
 const App = React.memo(function App() {
 
     return (
         <div className={styles.App}>
+            <Menu/>
+
+
             <header className={styles.header}>
                 <Header/>
             </header>
@@ -24,7 +27,7 @@ const App = React.memo(function App() {
                 <Footer/>
             </footer>
 
-            <Menu/>
+
         </div>
     )
 });
