@@ -1,31 +1,34 @@
-import React from 'react';
-import animate from './animate.module.scss';
-import {Menu} from "../Menu";
-import {TransitionGroup, CSSTransition} from "react-transition-group";
-import {useTransitionNames} from "../../../helpers/hooks/useTransitionNames";
-import {useStore} from "effector-react";
-import {$isShowMenu} from "../menuStore";
+import React from 'react'
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
+import { useStore } from 'effector-react'
+import { Menu } from '../Menu'
+import { useTransitionNames } from '../../../helpers/hooks/useTransitionNames'
+import { $isShowMenu, showMenuWindow } from '../menuStore'
+import animate from './animate.module.scss'
 
 
 function MenuAnimate() {
-    const classNames = useTransitionNames(animate);
-    const isShowMenu = useStore($isShowMenu);
+  const classNames = useTransitionNames(animate)
+  const isShowMenu = useStore($isShowMenu)
 
-    return (
-        <TransitionGroup>
-            <div className={`${animate.backLog} ${isShowMenu ? animate.backLog_open : animate.backLog_close}`}/>
+  return (
+    <TransitionGroup>
+      <div
+        onClick = { () => showMenuWindow() }
+        className={`${animate.backLog} ${isShowMenu ? animate.backLog_open : animate.backLog_close}`}
+      />
 
-            {isShowMenu &&
+      {isShowMenu &&
             <CSSTransition
-                in = {isShowMenu}
-                timeout = {300}
-                classNames = {classNames}
+              in = {isShowMenu}
+              timeout = {300}
+              classNames = {classNames}
             >
-                <Menu/>
+              <Menu/>
             </CSSTransition>
-            }
-        </TransitionGroup>
-    )
+      }
+    </TransitionGroup>
+  )
 }
 
-export {MenuAnimate as Menu}
+export { MenuAnimate as Menu }

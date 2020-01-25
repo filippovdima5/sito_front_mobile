@@ -11,10 +11,9 @@ type Props = {
 }
 
 function NextMenu({ categories, sex_id, topStyle }: Props) {
-    console.log(topStyle)
 
   return (
-    <div style={{ top: topStyle + 100 }} className={styles.NextMenu}>
+    <div style={{ top: topStyle }} className={styles.NextMenu}>
       <Header/>
       <Body  sex_id = {sex_id} categories={categories}/>
     </div>
