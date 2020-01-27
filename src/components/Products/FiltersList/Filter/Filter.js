@@ -1,77 +1,77 @@
-import React, { useState } from 'react';
-import {useUpdateEffect} from "react-use";
-import styles from './Filter.module.scss';
-import { setDoneFilter, clearActiveFilters, setShowAllItems  } from "../filterListStore";
-import { openedFilter, visLoadMore } from "../filterListStore";
-import {filtersState} from "../../../../pages/Products/store";
-import {useStore} from "effector-react";
-
-import { Header } from "../_bank/Header/Header";
-import { Search } from "./Search/Search";
-import { ItemsList } from "./ItemsList/ItemsList";
-import { RangeInputs } from "./RangeInputs/RangeInputs";
-import { ButtonMore } from "../../_bank/Button/ButtonMore";
-import { DoneBtn } from "../_bank/DoneBtn/DoneBtn";
+import React, { useState } from 'react'
+import { useUpdateEffect } from 'react-use'
+import { useStore } from 'effector-react'
+import { setDoneFilter, clearActiveFilters, setShowAllItems  , openedFilter, visLoadMore } from '../store'
+import { filtersState } from '../../../../pages/Products/store'
+import { Header } from '../_bank/Header/Header'
+import { ButtonMore } from '../../_bank/Button/ButtonMore'
+import { DoneBtn } from '../_bank/DoneBtn/DoneBtn'
+import styles from './Filter.module.scss'
 
 
-export const maxItemsInFilter = 3;
+import { Search } from './Search/Search'
+import { ItemsList } from './ItemsList/ItemsList'
+import { RangeInputs } from './RangeInputs/RangeInputs'
+
+
+export const maxItemsInFilter = 3
 
 
 function Filter() {
-    const {listData, type, title, rangeData} = useStore(openedFilter);
-    const $activeFilters = useStore(filtersState)[type];
-    const $visLoadMore = useStore(visLoadMore);
+  const { listData, type, title, rangeData } = useStore(openedFilter)
+  const $activeFilters = useStore(filtersState)[type]
+  const $visLoadMore = useStore(visLoadMore)
 
-    const [visDone, setVisDone] = useState(false);
-    useUpdateEffect(() => {setVisDone(true)}, [$activeFilters]);
-
-
+  const [visDone, setVisDone] = useState(false)
+  useUpdateEffect(() => {setVisDone(true)}, [$activeFilters])
 
 
-    return (
-        <div className={styles.Filter}>
 
-            <Header title={title} prev={setDoneFilter}/>
 
-            <div className={styles.filterBody}>
+  return (
+    <div className={styles.Filter}>
 
-                {listData.length > maxItemsInFilter && <Search/>}
+      <Header title={title} prev={setDoneFilter}/>
 
-                {listData.length > 0 && <ItemsList type={type} listData={listData}/>}
-                {rangeData.length > 0 && <RangeInputs type={type} range={rangeData}/>}
+      <div className={styles.filterBody}>
 
-                {
-                    $activeFilters.length > 0 &&
+        {listData.length > maxItemsInFilter && <Search/>}
+
+        {listData.length > 0 && <ItemsList type={type} listData={listData}/>}
+        {rangeData.length > 0 && <RangeInputs type={type} range={rangeData}/>}
+
+        {
+          $activeFilters.length > 0 &&
                     <div
-                        onClick={() => clearActiveFilters({type})}
-                        className={styles.loadMore}>
-                        <ButtonMore  title={'Сбросить'}/>
+                      onClick={() => clearActiveFilters({ type })}
+                      className={styles.loadMore}>
+                      <ButtonMore  title={'Сбросить'}/>
                     </div>
-                }
+        }
 
-                {
-                    ($visLoadMore && listData.length > maxItemsInFilter) &&
+        {
+          ($visLoadMore && listData.length > maxItemsInFilter) &&
                     <div className={styles.loadMore}>
-                        <ButtonMore onClick = { () => setShowAllItems() } title={'Показать ещё'}/>
+                      <ButtonMore onClick = { () => setShowAllItems() } title={'Показать ещё'}/>
                     </div>
-                }
+        }
 
 
-               <div className={styles.space}/>
+        <div className={styles.space}/>
 
-               <DoneBtn
-                   title={ 'Готово' }
-                   zIndex={4}
-                   visIn={visDone}
-                   callback={setDoneFilter}/>
+        <DoneBtn
+          title={ 'Готово' }
+          zIndex={4}
+          visIn={visDone}
+          callback={setDoneFilter}/>
 
-            </div>
+      </div>
 
-        </div>
-    )
+    </div>
+  )
 }
 
 
 
 
-export {Filter}
+export { Filter }

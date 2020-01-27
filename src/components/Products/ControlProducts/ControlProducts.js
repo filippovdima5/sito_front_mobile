@@ -1,5 +1,5 @@
 import React  from 'react'
-import { setVisFiltersList } from '../FiltersList/filterListStore'
+import { setVisFiltersList } from '../FiltersList/store'
 import styles from './ControlProducts.module.scss'
 import { SetSort } from './SetSort/SetSort'
 

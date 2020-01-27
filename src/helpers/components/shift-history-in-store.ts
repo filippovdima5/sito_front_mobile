@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import  { useEffect, useRef } from 'react'
 import { createEvent, createStore } from 'effector'
 import { useShiftHistory } from '../wrappers/rout_history_shift'
 

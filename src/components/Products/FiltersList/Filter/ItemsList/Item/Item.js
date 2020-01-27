@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Item.module.scss';
-import {setFilter} from "../../../filterListStore";
+import {setFilter} from "../../../store";
 import {filtersState} from "../../../../../../pages/Products/store";
 import {useStore} from "effector-react";
 

@@ -2,7 +2,7 @@ import React from 'react';
 import animate from './animate.module.scss';
 import {useTransitionNames} from "../../../../helpers/hooks/useTransitionNames";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
-import { visFiltersList } from "../filterListStore";
+import { visFiltersList } from "../store";
 import {useStore} from "effector-react";
 import {FiltersList} from "../FiltersList";
 

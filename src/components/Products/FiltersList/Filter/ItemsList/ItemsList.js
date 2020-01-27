@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 import styles from './ItemsList.module.scss';
-import {listData} from "../../filterListStore";
+import {listData} from "../../store";
 import {useStore} from "effector-react";
 
 

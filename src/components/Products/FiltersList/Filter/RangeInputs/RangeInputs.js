@@ -5,7 +5,7 @@ import {filtersState} from "../../../../../pages/Products/store";
 import {useStore} from "effector-react";
 
 
-import {setFilterRange} from "../../filterListStore";
+import {setFilterRange} from "../../store";
 
 import {InputText} from "../../../../../atoms/Input/InputText";
 

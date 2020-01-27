@@ -2,8 +2,8 @@ import React, { useEffect, useRef } from 'react'
 import { useStore } from 'effector-react'
 // @ts-ignore
 import { disableBodyScroll } from 'body-scroll-lock'
-import { createEvent } from 'effector'
 import { $nextMenuState, showMenuWindow } from '../../menuStore'
+import { openFromMenu } from '../../../../pages/Products/store'
 import styles from './Body.module.scss'
 
 
@@ -11,9 +11,6 @@ type Props = {
   categories: Array<string>,
   sex_id: 1 | 2 | 0,
 }
-
-// todo: Добавить в типы все возможные номера категорий
-export const openFromMenu = createEvent<{sex_id: Props['sex_id'], index: number}>()
 
 function Body({ categories , sex_id }: Props) {
   const { index } = useStore($nextMenuState)
@@ -33,7 +30,7 @@ function Body({ categories , sex_id }: Props) {
           index && Object.entries(categories[index]).map(([key, title]) => (
             <li
               onClick={() => {
-                openFromMenu({ sex_id, index: +key })
+                openFromMenu({ sex_id, index: 'categories', value: [+key] })
                 showMenuWindow()
               }}
               key={key}
@@ -48,7 +45,7 @@ function Body({ categories , sex_id }: Props) {
         }
         <li
           onClick={() => {
-            !!index && openFromMenu({ sex_id, index })
+            !!index && openFromMenu({ sex_id, index: 'categories', value: [index] })
             showMenuWindow()
           }}
           className={styles.li}>

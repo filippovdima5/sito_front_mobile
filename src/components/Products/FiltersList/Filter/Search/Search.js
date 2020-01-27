@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import styles from './Search.module.scss';
-import {setSearchPhrase} from "../../filterListStore";
+import {setSearchPhrase} from "../../store";
 
 function Search() {
 

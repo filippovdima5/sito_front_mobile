@@ -13,16 +13,15 @@ function Menu() {
   const [categories, setCategories] = useState<Array<string> | null>(null)
 
   useEffect(() => {
-    if (localStorage.getItem('@/env')) setCategories(JSON.parse(localStorage.getItem('@/env') as string).categories)
-    else {
-      fetch('/api/env')
-        .then(res => res.json())
-        .then(env => {
-          localStorage.setItem('@/env', JSON.stringify(env))
-          setCategories(env.categories)
-        })
-    }
+    fetch('/api/env')
+      .then(res => res.json())
+      .then(env => {
+        localStorage.setItem('@/env', JSON.stringify(env))
+        setCategories(env.categories)
+      })
+  
   }, [sexId])
+
 
   return (
     <div className={styles.Menu}>

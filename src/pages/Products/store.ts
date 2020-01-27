@@ -3,8 +3,7 @@ import { sexDetected } from '../../helpers/functions/sexDetected'
 import { objCompareJson } from '../../helpers/functions/objСompareJson'
 import { shiftHistoryEffector } from '../../helpers/components/shift-history-in-store'
 import { api } from '../../api'
-import { openFromMenu } from '../../components/Menu/NextMenu/Body/Body'
-import { MainState } from './types';
+import { MainState, OpenFromMenu } from './types'
 
 
 // First mount Products -> parse URL -> set to all Products states -> fetches
@@ -27,10 +26,16 @@ const mainState = createStore<MainState>({
   sales: [],
 
   sort: '',
-  page: null
+  page: null,
+
+  favorite: null,
+  likes: null,
 })
 
-mainState.on(openFromMenu, ((state, { sex_id, index }) => ({ ...mainState.defaultState, sex_id: sex_id, categories: [index] })))
+export const openFromMenu = createEvent<OpenFromMenu>()
+mainState.on(openFromMenu, ((state, { sex_id, index, value }) => ({
+  ...mainState.defaultState, sex_id: sex_id, [index]:  value
+})))
 
 mainState.on(sharedStateForProducts, ((state, payload) => {
   if (objCompareJson(state, { ...state, ...payload })) return undefined

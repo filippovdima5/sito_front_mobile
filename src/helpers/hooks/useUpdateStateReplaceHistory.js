@@ -1,7 +1,7 @@
 import {useUpdateEffect} from "react-use";
 import {useShiftHistory} from "../wrappers/rout_history_shift";
 import {useLocation} from "react-use";
-import {fetchFiltersParams} from "../../components/Products/FiltersList/filterListStore";
+import {fetchFiltersParams} from "../../components/Products/FiltersList/store";
 import {useStore} from "effector-react";
 import {useRef, useEffect} from 'react';
 

@@ -5,6 +5,7 @@ import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock'
 import arrowRight from '../../../media/img/svg/rightArrow.svg'
 import { showMenuWindow , openNextMenu } from '../menuStore'
 import { setSignalWithoutSexId } from '../Header/Header'
+import { openFromMenu } from '../../../pages/Products/store'
 import styles from './Body.module.scss'
 import { Footer } from './Footer/Footer'
 
@@ -18,12 +19,10 @@ const catalogList = [
 
 const mainList = [
   { title: 'Избранное', index: 'favorite' },
-  { title: 'Товары дня', index: 'top'}
+  { title: 'Товары дня', index: 'likes' }
 ]
 
-const lastList = [
-  { title: 'О нас', index: 'about', link: () => ('/about') },
-]
+
 
 type Props = {
   sexId: 1 | 2 | 0,
@@ -75,36 +74,33 @@ function Body({ sexId }: Props) {
           className={styles.li}
         >
           <span className={styles.link}>
-                            Бренды
-            {/*<img className={styles.img} src={arrowRight} alt={'go'}/>*/}
+            Бренды
           </span>
         </Link>
-        {mainList.map(({ index, title}) => (
+        {mainList.map(({ index, title }) => (
           <li
-            onClick={() => showMenuWindow()}
+            onClick={() => {
+              openFromMenu({ sex_id: sexId, index: index === 'likes' ? index : 'favorite', value: 1 })
+              showMenuWindow()
+            }}
             key={index}
             className={styles.li}>
             <span className={styles.link}>
               {title}
-              {/*<img className={styles.img} src={arrowRight} alt={'go'}/>*/}
             </span>
           </li>
         ))}
       </ul>
 
       <ul className={styles.ul}>
-        {lastList.map(({ index, title, link }) => (
-          <Link
-            to={link()}
-            onClick={() => showMenuWindow()}
-            key={index}
-            className={styles.li}>
-            <span className={styles.link}>
-              {title}
-              {/*<img className={styles.img} src={arrowRight} alt={'go'}/>*/}
-            </span>
-          </Link>
-        ))}
+        <Link
+          to={'/about'}
+          onClick={() => showMenuWindow()}
+          className={styles.li}>
+          <span className={styles.link}>
+              О нас
+          </span>
+        </Link>
       </ul>
 
       <div className={styles.space}/>
