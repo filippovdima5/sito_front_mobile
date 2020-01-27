@@ -3,7 +3,7 @@ import { sexDetected } from '../../helpers/functions/sexDetected'
 import { objCompareJson } from '../../helpers/functions/objСompareJson'
 import { shiftHistoryEffector } from '../../helpers/components/shift-history-in-store'
 import { api } from '../../api'
-import {booleanCheck} from '../../helpers/functions/booleanCheck'
+import { booleanCheck } from '../../helpers/functions/booleanCheck'
 import { MainState, OpenFromMenu } from './types'
 
 
