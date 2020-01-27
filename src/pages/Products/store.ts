@@ -3,6 +3,7 @@ import { sexDetected } from '../../helpers/functions/sexDetected'
 import { objCompareJson } from '../../helpers/functions/objСompareJson'
 import { shiftHistoryEffector } from '../../helpers/components/shift-history-in-store'
 import { api } from '../../api'
+import {booleanCheck} from '../../helpers/functions/booleanCheck'
 import { MainState, OpenFromMenu } from './types'
 
 
@@ -22,6 +23,7 @@ const mainState = createStore<MainState>({
   brands: [],
   sizes: [],
   colors: [],
+
   prices: [],
   sales: [],
 
@@ -52,7 +54,9 @@ export const filtersState = mainState
     colors,
     prices,
     sales,
-  }) => ({ categories, brands, sizes, colors, prices, sales }))
+    favorite,
+    likes
+  }) => ({ categories, brands, sizes, colors, prices, sales, favorite, likes }))
 
 export const productsState = mainState.map(({ sort, page }) => ({ sort, page }))
 export const setPage = createEvent()
@@ -65,12 +69,12 @@ productsState.on(setSort, (state, payload) => ({ ...state, sort: payload, page: 
 // Clearing states of Products:
 const clearFiltersState = filtersState.map((state) => (
   Object.fromEntries(
-    Object.entries(state).filter(([_, value]) => (value && value.length > 0))
+    Object.entries(state).filter(([_, value]) => (booleanCheck(value)))
   )
 ))
 const clearProductsState = productsState.map(state => (
   Object.fromEntries(
-    Object.entries(state).filter(([_, value]) => (!!value))
+    Object.entries(state).filter(([_, value]) => (booleanCheck(value)))
   )
 ))
 //----------------------------

@@ -10,8 +10,6 @@ import { UsedFiltersSection } from './UsedFiltersSection/UsedFiltersSection'
 import { TotalProductsButton } from './TotalProductsButton/TotalProductsButton'
 
 
-
-
 const handleClose = () => (setVisFiltersList(false))
 
 function FiltersList() {
@@ -32,8 +30,6 @@ function FiltersList() {
 
 
         <div className={styles.space}/>
-
-
         <TotalProductsButton visDone={visDone}/>
       </div>
 

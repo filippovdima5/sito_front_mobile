@@ -1,30 +1,26 @@
-import { createEvent, createStore, merge } from 'effector'
+import { createEvent, createStore, merge, restore } from 'effector'
 import { filtersStore, filtersState, productsState } from '../../../pages/Products/store'
-import { VisFilter } from './types'
-
-
+import { VisFilter, FilerTitles, FilterTypes } from './types'
 import { maxItemsInFilter } from './Filter/Filter'
 
-// display
-export const visFiltersList = createStore(false)
-export const setVisFiltersList = createEvent()
-visFiltersList.on(setVisFiltersList, ((state, payload) => (payload)))
 
+export const setVisFiltersList = createEvent<boolean>()
+export const visFiltersList = restore(setVisFiltersList, false)
 
 export const visFilter = createStore<VisFilter>({
   vis: false,
-  type: '',
-  title: '',
+  type: null,
+  title: null,
 })
 
-
-export const setVisFilter = createEvent()
-export const setDoneFilter = createEvent()
-visFilter.on(setVisFilter, ((state, payload) => ({ ...payload, vis: true })))
-visFilter.on(setDoneFilter, (state => ({ ...state, vis: false })))
-// --------
-
-
+export const setUseFilter = createEvent<{type: FilterTypes, title: FilerTitles}>()
+export const setUnUseFilter = createEvent()
+visFilter.on(setUseFilter, ((state, { title, type }) => ({
+  vis: true,
+  title,
+  type
+})))
+visFilter.on(setUnUseFilter, state => ({ ...state, vis: false }))
 
 
 export const openedFilter = createStore<any>({
