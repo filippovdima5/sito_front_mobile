@@ -6,8 +6,9 @@ import { filtersState } from '../../../../../pages/Products/store'
 import styles from './FilterRow.module.scss'
 
 
-function FilterRow({ title, typeFilter, isUsed }) {
-  const $activeFilters = useStore(filtersState)[typeFilter]
+function FilterRow({ index, title, type, isUsed }: {index: string, title: string, type: string, isUsed: boolean}) {
+  // @ts-ignore
+  const $activeFilters = useStore(filtersState)[index]
 
   const activeFiltersString = useMemo(() => {
     let string =  $activeFilters.join(' | ')

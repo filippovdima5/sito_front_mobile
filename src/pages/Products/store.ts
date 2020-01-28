@@ -31,7 +31,6 @@ const mainState = createStore<MainState>({
   page: null,
 
   favorite: null,
-  likes: null,
 })
 
 export const openFromMenu = createEvent<OpenFromMenu>()
@@ -55,8 +54,7 @@ export const filtersState = mainState
     prices,
     sales,
     favorite,
-    likes
-  }) => ({ categories, brands, sizes, colors, prices, sales, favorite, likes }))
+  }) => ({ categories, brands, sizes, colors, prices, sales, favorite }))
 
 export const productsState = mainState.map(({ sort, page }) => ({ sort, page }))
 export const setPage = createEvent()
@@ -68,14 +66,10 @@ productsState.on(setSort, (state, payload) => ({ ...state, sort: payload, page: 
 
 // Clearing states of Products:
 const clearFiltersState = filtersState.map((state) => (
-  Object.fromEntries(
-    Object.entries(state).filter(([_, value]) => (booleanCheck(value)))
-  )
+  Object.fromEntries(Object.entries(state).filter(([_, value]) => (booleanCheck(value))))
 ))
 const clearProductsState = productsState.map(state => (
-  Object.fromEntries(
-    Object.entries(state).filter(([_, value]) => (booleanCheck(value)))
-  )
+  Object.fromEntries(Object.entries(state).filter(([_, value]) => (booleanCheck(value))))
 ))
 //----------------------------
 

@@ -17,10 +17,6 @@ const catalogList = [
 ]
 
 
-const mainList = [
-  { title: 'Избранное', index: 'favorite' },
-  { title: 'Товары дня', index: 'likes' }
-]
 
 
 
@@ -77,19 +73,28 @@ function Body({ sexId }: Props) {
             Бренды
           </span>
         </Link>
-        {mainList.map(({ index, title }) => (
-          <li
-            onClick={() => {
-              openFromMenu({ sex_id: sexId, index: index === 'likes' ? index : 'favorite', value: 1 })
-              showMenuWindow()
-            }}
-            key={index}
-            className={styles.li}>
-            <span className={styles.link}>
-              {title}
-            </span>
-          </li>
-        ))}
+
+        <li
+          onClick={() => {
+            openFromMenu({ sex_id: sexId, index: 'favorite', value: 1 })
+            showMenuWindow()
+          }}
+          className={styles.li}>
+          <span className={styles.link}>
+              Товары дня
+          </span>
+        </li>
+
+        <Link
+          onClick = {() => showMenuWindow() }
+          className={styles.li}
+          to={'/likes'}
+        >
+          <span className={styles.link}>
+            Избранное
+          </span>
+        </Link>
+     
       </ul>
 
       <ul className={styles.ul}>

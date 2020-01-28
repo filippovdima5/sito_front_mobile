@@ -15,7 +15,6 @@ export type MainState = {
   sort?: Sort | '',
   page?: number | null,
   favorite?: 1 | null,
-  likes?: 1 | null,
 }
 
 export type OpenFromMenu = {
@@ -24,6 +23,6 @@ export type OpenFromMenu = {
   value: Array<number>,
 } | {
   sex_id: SexId,
-  index: 'favorite' | 'likes',
+  index: 'favorite',
   value: 1,
 }

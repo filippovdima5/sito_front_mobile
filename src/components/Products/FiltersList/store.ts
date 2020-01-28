@@ -1,107 +1,69 @@
-import { createEvent, createStore, merge, restore } from 'effector'
-import { filtersStore, filtersState, productsState } from '../../../pages/Products/store'
-import { VisFilter, FilerTitles, FilterTypes } from './types'
-import { maxItemsInFilter } from './Filter/Filter'
+import { createEvent, restore } from 'effector'
+import { filtersState } from '../../../pages/Products/store'
+import { booleanCheck } from '../../../helpers/functions/booleanCheck'
+
+
+const filtersMap = {
+  brands: {
+    title: 'Бренды',
+    type: 'list',
+  },
+  categories: {
+    title: 'Категории',
+    type: 'list',
+  },
+  colors: {
+    title: 'Цвета',
+    type: 'list',
+  },
+  sizes: {
+    title: 'Размеры',
+    type: 'list',
+  },
+  prices: {
+    title: 'Цена',
+    type: 'range'
+  },
+  sales: {
+    title: 'Скидка',
+    type: 'range'
+  },
+  favorite: {
+    title: 'Товары дня',
+    type: 'check'
+  },
+}
+
 
 
 export const setVisFiltersList = createEvent<boolean>()
 export const visFiltersList = restore(setVisFiltersList, false)
 
-export const visFilter = createStore<VisFilter>({
-  vis: false,
-  type: null,
-  title: null,
-})
-
-export const setUseFilter = createEvent<{type: FilterTypes, title: FilerTitles}>()
-export const setUnUseFilter = createEvent()
-visFilter.on(setUseFilter, ((state, { title, type }) => ({
-  vis: true,
-  title,
-  type
-})))
-visFilter.on(setUnUseFilter, state => ({ ...state, vis: false }))
-
-
-export const openedFilter = createStore<any>({
-  type: '',
-  title: '',
-  listData: [],
-  rangeData : [],
-})
-openedFilter.on(visFilter, (state, payload) => {
-  if (payload.vis) {
-    return { ...state, title: payload.title, type: payload.type, listData: filtersStore.getState()[payload.type].list, rangeData: filtersStore.getState()[payload.type].range }
-  }
-  else {return { ...state }}
-})
-
-
-const searchPhrase = createStore('')
-export const visLoadMore = openedFilter.map(({ listData }) => (listData.length > maxItemsInFilter))
-
-export const setSearchPhrase = createEvent()
-export const setShowAllItems = createEvent()
-searchPhrase.on(setSearchPhrase, (state, payload) => (payload))
-
-const triggerLoadMore = merge([setSearchPhrase, setShowAllItems])
-visLoadMore.on(triggerLoadMore, state => (state ? false : state))
-
-
-
-export const listData = openedFilter.map((({ listData }) => {
-  if ((listData.length > maxItemsInFilter)) return listData.slice(0, maxItemsInFilter)
-  else return listData
+// todo: Оптимизировать одним проходом
+// todo: Типизация
+export const $usedFilters = filtersState.map(state => ({
+  useFilters: Object.entries(state)
+    .filter(([_, value]) => booleanCheck(value))
+  // @ts-ignore
+    .map(([key, value]) => ({ index: key, title: filtersMap[key].title, type: filtersMap[key].type, value })),
+  unUseFilters: Object.entries(state)
+    .filter(([_, value]) => !booleanCheck(value))
+  // @ts-ignore
+    .map(([key, value]) => ({ index: key, title: filtersMap[key].title, type: filtersMap[key].type, value })),
 }))
-listData.on(setSearchPhrase, ((state, payload) => (
-  openedFilter.getState().listData
-    .filter(({ title }) => (title.toLowerCase().includes(payload.toLowerCase())))
-)))
-listData.on(setShowAllItems, () => openedFilter.getState().listData)
 
 
-
-
-
-
-export const setFilter = createEvent()
-export const setFilterRange = createEvent()
-export const clearActiveFilters = createEvent()
 export const clearAllActiveFilters = createEvent()
 
 
-productsState.on(merge([setFilter, setFilterRange, clearActiveFilters, clearAllActiveFilters]), state => ({ ...state, page: null }))
+
+filtersState.reset(clearAllActiveFilters)
 
 
-filtersState.on(setFilter, ((state, payload) => ({
-  ...state,
-  [payload.type] : (state[payload.type].includes(payload.id) ? state[payload.type].filter(item => (item !== payload.id)) : [...state[payload.type], payload.id])
-})))
-
-filtersState.on(setFilterRange, ((state, { id, index, type }) => {
-  const newRange = []
-  newRange[index] = id
-  newRange[index ? 0 : 1] = state[type][index ? 0 : 1] ? state[type][index ? 0 : 1] : openedFilter.getState().rangeData[index ? 0 : 1].toString()
-  return {
-    ...state,
-    [type] : newRange
-  }
-}))
-filtersState.on(clearActiveFilters, ((state, { type }) => ({ ...state, [type] : [] })))
-filtersState.on(clearAllActiveFilters, () => (filtersState.defaultState))
 
 
-export const usedFilters = filtersState.map(state => (
-  {
-    use: Object.entries(state)
-      .filter(([key, arr]) => (arr.length > 0))
-      .map(([key, arr]) => (key)),
-    unUse: Object.entries(state)
-      .filter(([key, arr]) => (arr.length === 0))
-      .map(([key, arr]) => (key))
-  }
-))
 
+//const openFilter = createEvent<{index: string, title: string, type: 'range' | 'list'}>()
 
 
 

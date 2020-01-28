@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useUpdateEffect } from 'react-use'
 import { useStore } from 'effector-react'
 import styles from './FiltersList.module.scss'
-import { setVisFiltersList, usedFilters } from './store'
+import { setVisFiltersList, $usedFilters } from './store'
 
 import { Header } from './_bank/Header/Header'
 import { Filter } from './Filter/animate/FilterAnimate'
@@ -13,7 +13,7 @@ import { TotalProductsButton } from './TotalProductsButton/TotalProductsButton'
 const handleClose = () => (setVisFiltersList(false))
 
 function FiltersList() {
-  const $usedFilters = useStore(usedFilters)
+  const { useFilters, unUseFilters } = useStore($usedFilters)
   const [visDone, setVisDone] = useState(false)
   useUpdateEffect(() => {if (!visDone) setVisDone(true)})
 
@@ -24,15 +24,14 @@ function FiltersList() {
 
       <div className={styles.wrap}>
         <div>
-          <UsedFiltersSection  used={true} filtersRow={$usedFilters.use}/>
-          <UsedFiltersSection filtersRow={$usedFilters.unUse}/>
+          <UsedFiltersSection  used={true} filters = { useFilters }/>
+          <UsedFiltersSection used={false} filters = { unUseFilters }/>
         </div>
 
 
         <div className={styles.space}/>
-        <TotalProductsButton visDone={visDone}/>
+        <TotalProductsButton visDone={ visDone }/>
       </div>
-
       <Filter/>
     </div>
   )
