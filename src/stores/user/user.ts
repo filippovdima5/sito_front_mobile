@@ -3,7 +3,11 @@ import { UserInfo, SexId } from './types'
 
 
 export const userInfo = createStore<UserInfo>({
-  sex_id: 0
+  sex_id: 0,
+
+  clothing: [],
+  shoes: [],
+  accessory: []
 })
 
 

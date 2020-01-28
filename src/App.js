@@ -3,7 +3,7 @@ import styles from './media/css/App.module.scss'
 import './media/css/reset.module.scss'
 
 import { Header } from './components/Header/Header'
-import { Pages } from './pages/index'
+import { Pages } from './pages'
 import { Footer } from './components/Footer/Footer'
 import { Menu } from './components/Menu/animate/MenuAnimate'
 

@@ -20,6 +20,7 @@ export const visFilter = createStore<VisFilter>({
 
 export const setVisFilter = createEvent()
 export const setDoneFilter = createEvent()
+// @ts-ignore
 visFilter.on(setVisFilter, ((state, payload) => ({ ...payload, vis: true })))
 visFilter.on(setDoneFilter, (state => ({ ...state, vis: false })))
 // --------
@@ -35,6 +36,8 @@ export const openedFilter = createStore<any>({
 })
 openedFilter.on(visFilter, (state, payload) => {
   if (payload.vis) {
+    // @ts-ignore
+    // eslint-disable-next-line max-len
     return { ...state, title: payload.title, type: payload.type, listData: filtersStore.getState()[payload.type].list, rangeData: filtersStore.getState()[payload.type].range }
   }
   else {return { ...state }}
@@ -57,8 +60,10 @@ export const listData = openedFilter.map((({ listData }) => {
   if ((listData.length > maxItemsInFilter)) return listData.slice(0, maxItemsInFilter)
   else return listData
 }))
+
 listData.on(setSearchPhrase, ((state, payload) => (
   openedFilter.getState().listData
+  // @ts-ignore
     .filter(({ title }) => (title.toLowerCase().includes(payload.toLowerCase())))
 )))
 listData.on(setShowAllItems, () => openedFilter.getState().listData)
@@ -77,32 +82,42 @@ export const clearAllActiveFilters = createEvent()
 productsState.on(merge([setFilter, setFilterRange, clearActiveFilters, clearAllActiveFilters]), state => ({ ...state, page: null }))
 
 
+
 filtersState.on(setFilter, ((state, payload) => ({
   ...state,
+  // @ts-ignore
+  // eslint-disable-next-line max-len
   [payload.type] : (state[payload.type].includes(payload.id) ? state[payload.type].filter(item => (item !== payload.id)) : [...state[payload.type], payload.id])
 })))
 
+// @ts-ignore
 filtersState.on(setFilterRange, ((state, { id, index, type }) => {
   const newRange = []
   newRange[index] = id
+  // @ts-ignore
   newRange[index ? 0 : 1] = state[type][index ? 0 : 1] ? state[type][index ? 0 : 1] : openedFilter.getState().rangeData[index ? 0 : 1].toString()
   return {
     ...state,
     [type] : newRange
   }
 }))
+// @ts-ignore
 filtersState.on(clearActiveFilters, ((state, { type }) => ({ ...state, [type] : [] })))
 filtersState.on(clearAllActiveFilters, () => (filtersState.defaultState))
+
+
 
 
 export const usedFilters = filtersState.map(state => (
   {
     use: Object.entries(state)
-      .filter(([key, arr]) => (arr.length > 0))
-      .map(([key, arr]) => (key)),
+    // @ts-ignore
+      .filter(([_, arr]) => (arr.length > 0))
+      .map(([key, _]) => (key)),
     unUse: Object.entries(state)
-      .filter(([key, arr]) => (arr.length === 0))
-      .map(([key, arr]) => (key))
+    // @ts-ignore
+      .filter(([_, arr]) => (arr.length === 0))
+      .map(([key, _]) => (key))
   }
 ))
 
