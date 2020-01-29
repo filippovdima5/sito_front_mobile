@@ -1,31 +1,31 @@
-import React from 'react';
-import animate from './animate.module.scss';
-import {useTransitionNames} from "../../../../../helpers/hooks/useTransitionNames";
-import {CSSTransition, TransitionGroup} from "react-transition-group";
-import {modSearch} from "../../searchStore";
-import {useStore} from "effector-react";
-import { Modal} from "../Modal";
+import React from 'react'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
+import { useStore } from 'effector-react'
+import { useTransitionNames } from '../../../../../helpers/hooks/useTransitionNames'
+import { modSearch } from '../../searchStore'
+import { Modal } from '../Modal'
+import animate from './animate.module.scss'
 
 
 function SearchModalAnimate() {
-    const $modSearch = useStore(modSearch);
-    const classNames = useTransitionNames(animate);
+  const $modSearch = useStore(modSearch)
+  const classNames = useTransitionNames(animate)
 
-    return (
-        <TransitionGroup
+  return (
+    <TransitionGroup
 
-        >
-            {$modSearch &&
+    >
+      {$modSearch &&
             <CSSTransition
-                in = {$modSearch}
-                timeout = {300}
-                classNames = {classNames}
+              in = {$modSearch}
+              timeout = {300}
+              classNames = {classNames}
             >
-               <Modal/>
+              <Modal/>
             </CSSTransition>
-            }
-        </TransitionGroup>
-    )
+      }
+    </TransitionGroup>
+  )
 }
 
-export {SearchModalAnimate as Modal}
+export { SearchModalAnimate as Modal }
