@@ -34,7 +34,7 @@ const mainState = createStore<MainState>({
 
 export const openFromMenu = createEvent<OpenFromMenu>()
 mainState.on(openFromMenu, ((state, { sex_id, index, value }) => ({
-  ...mainState.defaultState, sex_id: sex_id, [index]:  value
+  ...mainState.defaultState, sex_id: sex_id ?? 1, [index]:  value
 })))
 
 mainState.on(sharedStateForProducts, ((state, payload) => {

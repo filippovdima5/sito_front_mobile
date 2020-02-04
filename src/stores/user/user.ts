@@ -2,18 +2,16 @@ import { createEvent, createStore } from 'effector'
 import { UserInfo, SexId } from './types'
 
 
-export const userInfo = createStore<UserInfo>({
-  sex_id: 0,
+export const $userInfo = createStore<UserInfo>({
+  sex_id: null,
 
-  clothing: [],
-  shoes: [],
-  accessory: []
+
 })
 
 
-export const $sexId  = userInfo.map(({ sex_id }) => (sex_id))
+export const $sexId  = $userInfo.map(({ sex_id }) => (sex_id))
 export const setSexId = createEvent<SexId>()
-userInfo.on(setSexId, (state, payload) => ({ ...state, sex_id: payload }))
+$userInfo.on(setSexId, (state, payload) => ({ ...state, sex_id: payload }))
 
 
 

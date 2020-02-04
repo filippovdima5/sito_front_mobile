@@ -6,7 +6,6 @@ import { ShiftHistoryInStore } from './helpers/components/shift-history-in-store
 import { App } from './App'
 
 
-
 ReactDOM.render(
   <BrowserRouter>
     <RouterHistoryShift>

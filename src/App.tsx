@@ -14,7 +14,6 @@ const App = React.memo(function App() {
     <div id={'app'} className={styles.App}>
       <Menu/>
 
-
       <header className={styles.header}>
         <Header/>
       </header>
@@ -26,10 +25,8 @@ const App = React.memo(function App() {
       <footer className={styles.footer}>
         <Footer/>
       </footer>
-
-
     </div>
   )
-})
+});
 
 export { App }

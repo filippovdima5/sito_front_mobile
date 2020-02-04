@@ -25,9 +25,9 @@ function Menu() {
 
   return (
     <div className={styles.Menu}>
-      <Header sexId={sexId}/>
-      <Body sexId={sexId}/>
-      <NextMenu sex_id = {sexId} categories = {categories && categories[sexId]}/>
+      <Header sexId={sexId ?? 1}/>
+      <Body sexId={sexId ?? 1}/>
+      <NextMenu sex_id = {sexId} categories = {categories && categories[sexId ?? 1]}/>
     </div>
   )
 }

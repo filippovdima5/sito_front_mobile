@@ -5,7 +5,7 @@ type Sort = 'update_up' | 'price_up' | 'sale_up'
 
 // todo: Добавить в типы все возможные номера категорий
 export type MainState = {
-  sex_id: SexId,
+  sex_id: 1 | 2 | 0,
   categories?: Array<number>,
   brands?: Array<string>,
   sizes?: Array<string>,
@@ -19,11 +19,11 @@ export type MainState = {
 }
 
 export type OpenFromMenu = {
-  sex_id: SexId,
+  sex_id: 1 | 2 | 0,
   index: 'categories',
   value: Array<number>,
 } | {
-  sex_id: SexId,
+  sex_id: 1 | 2 | 0,
   index: 'favorite' | 'likes',
   value: 1,
 }

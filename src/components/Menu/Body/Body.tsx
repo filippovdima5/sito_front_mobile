@@ -80,7 +80,7 @@ function Body({ sexId }: Props) {
         {mainList.map(({ index, title }) => (
           <li
             onClick={() => {
-              openFromMenu({ sex_id: sexId, index: index === 'likes' ? index : 'favorite', value: 1 })
+              openFromMenu({ sex_id:  1 , index: index === 'likes' ? index : 'favorite', value: 1 })
               showMenuWindow()
             }}
             key={index}
