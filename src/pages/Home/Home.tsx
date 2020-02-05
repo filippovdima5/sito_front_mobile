@@ -1,16 +1,22 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useStore } from 'effector-react'
-import { $userInfo } from '../../stores/user/user'
+import { $userInfo, setSexId } from '../../stores/user/user'
 import styles from './Home.module.scss'
 import { GenderDetected } from './GenderDetected/GenderDetected'
+import { HomePage } from './HomePage/HomePage'
 
 
 function HomeWrap() {
   const { sex_id } = useStore($userInfo)
+  useEffect(() => {
+    // todo: Вместо local - будет isomorphicStorage!
+    const sexId = localStorage.getItem('sex_id')
+    if (sexId === '1' || sexId === '2') setSexId(sexId === '1' ? 1 : 2)
+  }, [])
 
 
-  if (localStorage.getItem('sex_id') || sex_id) return (
-    <div>homePage {localStorage.getItem('sex_id')}</div>
+  if (sex_id) return (
+    <HomePage sexId = {sex_id} />
   )
 
   return (

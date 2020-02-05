@@ -1,6 +1,5 @@
 import React from 'react'
 import { setSexId } from '../../../stores/user/user'
-import { genderDetected } from '../../../constants/home-page'
 import styles from './GenderDetected.module.scss'
 
 
@@ -11,17 +10,14 @@ const data = [
 
 export function GenderDetected() {
 
-  const handleSetSexId = (sex_id: 1 | 2) => {
-    setSexId(sex_id)
-    localStorage.setItem('sex_id', sex_id.toString())
-  }
+  const handleSetSexId = (sex_id: 1 | 2) => setSexId(sex_id)
 
   return (
     <>
       {data.map(({ index, title }) => (
         <div onClick = {() => handleSetSexId(index)} key={index} className={styles.genderWrap}>
           <div className={styles.gender}>
-            <img src={genderDetected.page[index]} alt={title} className={styles.img}/>
+            <img src={`http://localhost:8080/images/genderDetected/page/${index}.jpg`} alt={title} className={styles.img}/>
 
             <div className={styles.titleWrap}>
               <div className={styles.title}>{title}</div>
