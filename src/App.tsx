@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from './media/css/App.module.scss'
 import './media/css/reset.module.scss'
+import { api } from './api/api'
 
 import { Header } from './components/Header/Header'
 import { Pages } from './pages'
@@ -9,6 +10,9 @@ import { Menu } from './components/Menu/animate/MenuAnimate'
 
 
 const App = React.memo(function App() {
+  useEffect(() => {
+    api.env.main()
+  }, [])
 
   return (
     <div id={'app'} className={styles.App}>
@@ -27,6 +31,6 @@ const App = React.memo(function App() {
       </footer>
     </div>
   )
-});
+})
 
 export { App }
