@@ -7,12 +7,13 @@ import { HookFirstUrl } from './hook-first-url'
 import styles from './Products.module.scss'
 
 
+
 const Products = React.memo(function Products() {
   return (
     <Fragment>
       <HookFirstUrl/>
 
-      <div id = {'Products'} className={styles.Products}>
+      <div id = "Products" className={styles.Products}>
         <ControlProducts/>
         <ProductsList/>
         <LoadMore/>

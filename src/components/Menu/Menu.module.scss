@@ -9,6 +9,17 @@
   overflow-x: hidden;
 }
 
+.wrapGender{
+  position: relative;
+  z-index: 999;
+  top: 60px;
+  background-color: white;
+  height: calc(100% - 110px);
+
+  & > div{margin-bottom: 10px}
+  & > div:last-child{margin-bottom: 0 !important;}
+}
+
 .backLog{
   position: fixed;
   right: -50px;

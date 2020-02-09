@@ -7,7 +7,7 @@ import { $nextMenuState, showMenuWindow } from '../../menuStore'
 import animate from './animate.module.scss'
 
 
-function NextMenuAnimate({ categories, sex_id }) {
+function NextMenuAnimate({ categories = [], sex_id }) {
   const classNames = useTransitionNames(animate)
   const { opened } = useStore($nextMenuState)
 

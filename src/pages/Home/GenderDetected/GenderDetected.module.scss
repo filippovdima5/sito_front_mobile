@@ -1,9 +1,8 @@
-.genderWrap:last-child{
-  margin-top: 10px;
+.genderWrap{
+  overflow: hidden;
 }
 
 .gender{
-  padding-top: 66%;
   position: relative;
 
   .img{

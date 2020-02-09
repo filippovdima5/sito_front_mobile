@@ -2,9 +2,9 @@ import {modFetch} from "./helpers/modFetch";
 
 const api = {
     env: () => {
-        if (localStorage.getItem('@/env')) return localStorage.getItem('env')
-        const env = modFetch('/api/env');
-        localStorage.setItem('@/env', JSON.stringify(env));
+        if (localStorage.getItem('@/env2')) return localStorage.getItem('env')
+        const env = modFetch('/api/env2');
+        localStorage.setItem('@/env2', JSON.stringify(env));
         return env
     },
 

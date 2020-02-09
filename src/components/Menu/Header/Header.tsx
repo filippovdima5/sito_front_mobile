@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { createEvent, createStore } from 'effector'
 import { useStore } from 'effector-react'
-import { setSexId } from '../../../stores/user/user'
+import { setGender } from '../../../stores/env'
 import styles from './Header.module.scss'
 
 
@@ -41,11 +41,11 @@ function Header ({ sexId }: HeaderProps) {
   return (
     <div className={styles.Header}>
       <div className={styles.buttonWrap}>
-        <button onClick={() => (setSexId(1))} className={`${styles.button} ${signal === 1 && styles.buttonScale}`}>Мужское</button>
+        <button onClick={() => (setGender(1))} className={`${styles.button} ${signal === 1 && styles.buttonScale}`}>Мужское</button>
         <div className={`${styles.bottomLine} ${sexId === 1 ? styles.bottomLine_true : styles.bottomLine_false}`}/>
       </div>
 
-      <div onClick={() => (setSexId(2))} className={styles.buttonWrap}>
+      <div onClick={() => (setGender(2))} className={styles.buttonWrap}>
         <button className={`${styles.button} ${signal === 2 && styles.buttonScale}`}>Женское</button>
         <div className={`${styles.bottomLine} ${sexId === 2 ? styles.bottomLine_true : styles.bottomLine_false}`}/>
       </div>

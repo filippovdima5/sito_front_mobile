@@ -1,9 +1,6 @@
-import { SexId } from '../../stores/user/types'
-
-
 type Sort = 'update_up' | 'price_up' | 'sale_up'
 
-// todo: Добавить в типы все возможные номера категорий
+
 export type MainState = {
   sex_id: 1 | 2 | 0,
   categories?: Array<number>,

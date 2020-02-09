@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import { useStore } from 'effector-react'
-import { $sexId } from '../../stores/user/user'
+import React from 'react'
 import styles from './Menu.module.scss'
 import { Header } from './Header/Header'
 import { Body } from './Body/Body'
@@ -9,25 +7,20 @@ import { NextMenu } from './NextMenu/animate/NextMenuAnimate'
 
 
 function Menu() {
-  const sexId = useStore($sexId)
-  const [categories, setCategories] = useState<Array<string> | null>(null)
-
-  useEffect(() => {
-    fetch('/api/env')
-      .then(res => res.json())
-      .then(env => {
-        localStorage.setItem('@/env', JSON.stringify(env))
-        setCategories(env.categories)
-      })
-  
-  }, [sexId])
-
-
   return (
     <div className={styles.Menu}>
-      <Header sexId={sexId ?? 1}/>
-      <Body sexId={sexId ?? 1}/>
-      <NextMenu sex_id = {sexId} categories = {categories && categories[sexId ?? 1]}/>
+      <Header sexId={1}/>
+
+      {/*{*/}
+      {/*  !genderInfo && (*/}
+      {/*    <div className={styles.wrapGender}>*/}
+      {/*      <GenderDetected height={30}/>*/}
+      {/*    </div>*/}
+      {/*  )*/}
+      {/*}*/}
+
+      <Body sexId={1}/>
+      <NextMenu sex_id = {1}/>
     </div>
   )
 }
