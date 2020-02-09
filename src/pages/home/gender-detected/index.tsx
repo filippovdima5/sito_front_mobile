@@ -1,6 +1,6 @@
 import React from 'react'
 import { setGender } from '../../../stores/env'
-import styles from './GenderDetected.module.scss'
+import styles from './styles.module.scss'
 
 
 

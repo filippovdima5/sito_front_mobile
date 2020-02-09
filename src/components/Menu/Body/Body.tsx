@@ -5,7 +5,7 @@ import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock'
 import arrowRight from '../../../media/img/svg/rightArrow.svg'
 import { showMenuWindow , openNextMenu } from '../menuStore'
 import { setSignalWithoutSexId } from '../Header/Header'
-import { openFromMenu } from '../../../pages/Products/store'
+// import { openFromMenu } from '../../../pages/products/store'
 import styles from './Body.module.scss'
 import { Footer } from './Footer/Footer'
 
@@ -80,7 +80,7 @@ function Body({ sexId }: Props) {
         {mainList.map(({ index, title }) => (
           <li
             onClick={() => {
-              openFromMenu({ sex_id:  1 , index: index === 'likes' ? index : 'favorite', value: 1 })
+              //openFromMenu({ sex_id:  1 , index: index === 'likes' ? index : 'favorite', value: 1 })
               showMenuWindow()
             }}
             key={index}

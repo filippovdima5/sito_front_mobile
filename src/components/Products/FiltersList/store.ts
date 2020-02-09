@@ -1,5 +1,5 @@
 import { createEvent, createStore, merge } from 'effector'
-import { filtersStore, filtersState, productsState } from '../../../pages/Products/store'
+//import { filtersStore, filtersState, productsState } from '../../../pages/products/store'
 import { VisFilter } from './types'
 
 
@@ -78,49 +78,49 @@ export const setFilterRange = createEvent()
 export const clearActiveFilters = createEvent()
 export const clearAllActiveFilters = createEvent()
 
-
-productsState.on(merge([setFilter, setFilterRange, clearActiveFilters, clearAllActiveFilters]), state => ({ ...state, page: null }))
-
-
-
-filtersState.on(setFilter, ((state, payload) => ({
-  ...state,
-  // @ts-ignore
-  // eslint-disable-next-line max-len
-  [payload.type] : (state[payload.type].includes(payload.id) ? state[payload.type].filter(item => (item !== payload.id)) : [...state[payload.type], payload.id])
-})))
-
-// @ts-ignore
-filtersState.on(setFilterRange, ((state, { id, index, type }) => {
-  const newRange = []
-  newRange[index] = id
-  // @ts-ignore
-  newRange[index ? 0 : 1] = state[type][index ? 0 : 1] ? state[type][index ? 0 : 1] : openedFilter.getState().rangeData[index ? 0 : 1].toString()
-  return {
-    ...state,
-    [type] : newRange
-  }
-}))
-// @ts-ignore
-filtersState.on(clearActiveFilters, ((state, { type }) => ({ ...state, [type] : [] })))
-filtersState.on(clearAllActiveFilters, () => (filtersState.defaultState))
-
-
-
-
-export const usedFilters = filtersState.map(state => (
-  {
-    use: Object.entries(state)
-    // @ts-ignore
-      .filter(([_, arr]) => (arr.length > 0))
-      .map(([key, _]) => (key)),
-    unUse: Object.entries(state)
-    // @ts-ignore
-      .filter(([_, arr]) => (arr.length === 0))
-      .map(([key, _]) => (key))
-  }
-))
-
-
+//
+// productsState.on(merge([setFilter, setFilterRange, clearActiveFilters, clearAllActiveFilters]), state => ({ ...state, page: null }))
+//
+//
+//
+// filtersState.on(setFilter, ((state, payload) => ({
+//   ...state,
+//   // @ts-ignore
+//   // eslint-disable-next-line max-len
+//   [payload.type] : (state[payload.type].includes(payload.id) ? state[payload.type].filter(item => (item !== payload.id)) : [...state[payload.type], payload.id])
+// })))
+//
+// // @ts-ignore
+// filtersState.on(setFilterRange, ((state, { id, index, type }) => {
+//   const newRange = []
+//   newRange[index] = id
+//   // @ts-ignore
+//   newRange[index ? 0 : 1] = state[type][index ? 0 : 1] ? state[type][index ? 0 : 1] : openedFilter.getState().rangeData[index ? 0 : 1].toString()
+//   return {
+//     ...state,
+//     [type] : newRange
+//   }
+// }))
+// // @ts-ignore
+// filtersState.on(clearActiveFilters, ((state, { type }) => ({ ...state, [type] : [] })))
+// filtersState.on(clearAllActiveFilters, () => (filtersState.defaultState))
+//
+//
+//
+//
+// export const usedFilters = filtersState.map(state => (
+//   {
+//     use: Object.entries(state)
+//     // @ts-ignore
+//       .filter(([_, arr]) => (arr.length > 0))
+//       .map(([key, _]) => (key)),
+//     unUse: Object.entries(state)
+//     // @ts-ignore
+//       .filter(([_, arr]) => (arr.length === 0))
+//       .map(([key, _]) => (key))
+//   }
+// ))
+//
+//
 
 

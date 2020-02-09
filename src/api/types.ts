@@ -1,4 +1,4 @@
-import { categoryKeys } from '../../constants/category-keys'
+import { categoryKeys } from '../constants/category-keys'
 
 //region Env:
 export interface SexId {
@@ -22,7 +22,7 @@ export interface Env {
 // endregion Env
 
 
-// region Products:
+// region products:
 export interface ShortProduct {
   id: string,
   title: string,

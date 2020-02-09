@@ -1,5 +1,6 @@
 import { createEffect, createEvent, createStore, merge } from 'effector'
-import { api } from '../../api/api'
+
+import { api } from '../../api'
 import { 
   GenderInfo
 } from './types'
@@ -10,17 +11,22 @@ import {
 export const $genderInfo = createStore<GenderInfo>(null)
 
 export const setGender = createEvent<1 | 2>()
+export const setGenderLine = createEvent<'men' | 'women'>()
 export const fetchSexId = createEffect({
   handler: api.env.getSexId
 })
 const fetchSexIdDone = fetchSexId.done.map(i => i.result.data.sexId)
-const targetSetGender = merge([setGender, fetchSexIdDone])
+const targetSetGender = merge([setGender, setGenderLine, fetchSexIdDone])
 
 
 $genderInfo.on(targetSetGender, (_, payload) => {
   switch (payload) {
-    case 1: return { sexId: payload, inlineSex: 'men' }
-    case 2:  return { sexId: 2, inlineSex: 'women' }
+    case 1:
+    case 'men': return { sexId: 1, inlineSex: 'men' }
+
+    case 2:
+    case 'women':  return { sexId: 2, inlineSex: 'women' }
+
     default: return null
   }
 })
@@ -32,4 +38,5 @@ export const $sexId = $genderInfo.map(state => {
   else return 1
 })
 //endregion Gender
+
 

@@ -2,7 +2,7 @@ import React, { useMemo, useRef, useState, useCallback, useEffect } from 'react'
 import { useStore } from 'effector-react'
 import { setVisFilter, clearActiveFilters } from '../../store'
 import rightArrowSVG from '../../../../../media/img/svg/rightArrow.svg'
-import { filtersState } from '../../../../../pages/Products/store'
+import { filtersState } from '../../../../../pages/products/store'
 import styles from './FilterRow.module.scss'
 
 

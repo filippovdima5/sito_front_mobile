@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './SetSort.module.scss';
 import {useStore} from "effector-react";
 import {productsSort} from "../../productsStore";
-import {setSort} from "../../../../pages/Products/store";
+import {setSort} from "../../../../pages/products/store";
 
 function SetSort() {
     const sort = useStore(productsSort);

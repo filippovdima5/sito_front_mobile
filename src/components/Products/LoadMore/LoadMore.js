@@ -3,7 +3,7 @@ import styles from './LoadMore.module.scss';
 import {productsCountsStore} from "../productsStore";
 import {useStore} from "effector-react";
 import {ButtonMore} from "../_bank/Button/ButtonMore";
-import {setPage} from "../../../pages/Products/store";
+import {setPage} from "../../../pages/products/store";
 
 
 

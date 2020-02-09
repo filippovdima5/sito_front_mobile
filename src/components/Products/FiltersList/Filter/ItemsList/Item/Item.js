@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Item.module.scss';
 import {setFilter} from "../../../store";
-import {filtersState} from "../../../../../../pages/Products/store";
+import {filtersState} from "../../../../../../pages/products/store";
 import {useStore} from "effector-react";
 
 function Item({id, title, count, disabled, type}) {

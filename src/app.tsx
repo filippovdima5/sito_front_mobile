@@ -5,13 +5,15 @@ import { Header } from './components/Header/Header'
 import { Pages } from './pages'
 import { Footer } from './components/Footer/Footer'
 import { Menu } from './components/Menu/animate/MenuAnimate'
+// eslint-disable-next-line import/order
+import { useHistory } from 'react-router'
 import { fetchSexId } from './stores/env'
+
 
 
 
 const App = React.memo(function App() {
   useEffect(() => {fetchSexId()}, [])
-
 
   return (
     <div id={'app'} className={styles.App}>

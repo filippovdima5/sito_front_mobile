@@ -1,15 +1,15 @@
 import React from 'react'
 import styles from './Menu.module.scss'
-import { Header } from './Header/Header'
-import { Body } from './Body/Body'
-import { NextMenu } from './NextMenu/animate/NextMenuAnimate'
+// import { Header } from './Header/Header'
+// import { Body } from './Body/Body'
+// import { NextMenu } from './NextMenu/animate/NextMenuAnimate'
 
 
 
 function Menu() {
   return (
     <div className={styles.Menu}>
-      <Header sexId={1}/>
+      {/*<Header sexId={1}/>*/}
 
       {/*{*/}
       {/*  !genderInfo && (*/}
@@ -19,8 +19,8 @@ function Menu() {
       {/*  )*/}
       {/*}*/}
 
-      <Body sexId={1}/>
-      <NextMenu sex_id = {1}/>
+      {/*<Body sexId={1}/>*/}
+      {/*<NextMenu sex_id = {1}/>*/}
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import { createStore } from 'effector'
-import { fetchProducts, productsState } from '../../pages/Products/store'
+import { fetchProducts, productsState } from '../../pages/products/store'
 
 
 export const productsCountsStore = createStore({

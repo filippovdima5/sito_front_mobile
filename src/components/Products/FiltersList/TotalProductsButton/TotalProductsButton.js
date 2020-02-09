@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import {DoneBtn} from "../_bank/DoneBtn/DoneBtn";
 import {setVisFiltersList} from "../store";
 import { productsCountsStore } from "../../productsStore";
-import  { loadingProducts } from "../../../../pages/Products/store";
+import  { loadingProducts } from "../../../../pages/products/store";
 import {useStore} from "effector-react";
 
 const handleClose = () => (setVisFiltersList(false));

@@ -1,5 +1,5 @@
 import axios, { AxiosPromise } from 'axios'
-import config from '../../config'
+import config from '../config'
 import {
   Env,
   SexId,

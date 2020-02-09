@@ -1,9 +1,9 @@
 import React from 'react'
 import { useStore } from 'effector-react'
 import { $genderInfo } from '../../stores/env'
-import styles from './Home.module.scss'
-import { GenderDetected } from './GenderDetected/GenderDetected'
-import { HomePage } from './HomePage/HomePage'
+import styles from './styles.module.scss'
+import { GenderDetected } from './gender-detected'
+import { HomePage } from './home-page'
 
 
 function HomeWrap() {

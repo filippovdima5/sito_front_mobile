@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { useStore } from 'effector-react'
-import { productsStore } from '../../../pages/Products/store'
+import { productsStore } from '../../../pages/products/store'
 import styles from './ProductsList.module.scss'
 import { ProductCard } from './ProductCard/ProductCard'
 
