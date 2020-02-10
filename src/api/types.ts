@@ -50,9 +50,9 @@ export interface ProductsReqParams {
   sale_from?: number,
   sale_to?: number,
 
-  page: number,
-  sort: 'update_up' | 'price_up' | 'sale_up',
-  limit: number,
+  page?: number,
+  sort?: 'update_up' | 'price_up' | 'sale_up',
+  limit?: number,
 
   favorite?: boolean,
 }

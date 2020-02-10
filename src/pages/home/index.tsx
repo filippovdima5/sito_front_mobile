@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useStore } from 'effector-react'
-import { $genderInfo } from '../../stores/env'
+import { $genderInfo, fetchSexId } from '../../stores/env'
 import styles from './styles.module.scss'
 import { GenderDetected } from './gender-detected'
 import { HomePage } from './home-page'
 
 
+
 function HomeWrap() {
+  useEffect(() => {fetchSexId()}, [])
   const genderInfo = useStore($genderInfo)
 
   if (genderInfo === null) return <GenderDetected height={66}/>

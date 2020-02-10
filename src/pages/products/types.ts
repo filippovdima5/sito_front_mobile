@@ -10,8 +10,14 @@ export type FiltersState = {
   favorite: boolean | null,
 }
 
+export type ProductsState = {
+  page: number | null,
+  sort: 'update_up' | 'price_up' | 'sale_up' | null,
+  limit: number | null,
+}
 
-export type AfterParseUrl = {
+
+export type AfterDecodeUrl = {
   sexId: 1 | 2,
   categories?: Array<number>,
   brands?: Array<string>,
@@ -22,8 +28,10 @@ export type AfterParseUrl = {
   price_to?: number,
   sale_from?: number,
   sale_to?: number,
-  page?: number,
 
-  sort?: 'update_up' | 'price_up' | 'sale_up',
   favorite?: boolean,
+
+  page?: number,
+  sort?: 'update_up' | 'price_up' | 'sale_up',
 }
+
