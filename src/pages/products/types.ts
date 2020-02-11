@@ -1,4 +1,5 @@
-export type FiltersState = {
+export type MainState = {
+  sexId: 1 | 2 | null,
   categories: Array<number> | null,
   brands: Array<string> | null,
   sizes: Array<string> | null,
@@ -8,13 +9,11 @@ export type FiltersState = {
   sale_from: number | null,
   sale_to: number | null,
   favorite: boolean | null,
-}
-
-export type ProductsState = {
   page: number | null,
   sort: 'update_up' | 'price_up' | 'sale_up' | null,
   limit: number | null,
 }
+
 
 
 export type AfterDecodeUrl = {

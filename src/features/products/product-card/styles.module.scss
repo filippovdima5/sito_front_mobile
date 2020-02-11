@@ -1,8 +1,4 @@
-.ProductCard:nth-last-child(2), .ProductCard:nth-last-child(1){
-  border: none;
-}
-
-.ProductCard {
+.card {
   cursor: pointer;
   width: 50%;
   box-sizing: border-box;
@@ -54,7 +50,7 @@
         margin-right: 4px;
         font-family: LyHeading,Helvetica Neue,Helvetica,Arial,sans-serif;
         color: #021135;
-        text-decoration: none;
+        text-decoration: line-through;
         position: relative;
       }
 
@@ -71,5 +67,4 @@
       color: #6d7288;
     }
   }
-
-} 
+}

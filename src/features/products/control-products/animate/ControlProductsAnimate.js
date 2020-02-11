@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useScroll } from 'react-use'
 import { CSSTransition } from 'react-transition-group'
-import { ControlProducts } from '../ControlProducts'
+import { ControlProducts } from '../control-products'
 import { useTransitionNames } from '../../../../helpers/hooks/useTransitionNames'
 import animate from './animate.module.scss'
 
@@ -32,4 +32,4 @@ function ControlProductsAnimate() {
   )
 }
 
-export { ControlProductsAnimate as ControlProducts }
+export { ControlProductsAnimate }
