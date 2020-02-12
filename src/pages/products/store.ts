@@ -1,9 +1,9 @@
-import {combine, createEffect, createEvent, createStore, guard, merge, restore} from 'effector'
+import { combine, createEffect, createEvent, createStore, guard, restore } from 'effector'
 import { RouteComponentProps } from 'react-router'
-import { setGender, $genderInfo } from '../../stores/env'
-import {ProductsReqParams, FilterReqParams, ProductsRequest} from '../../api/types'
+import { setGender } from '../../stores/env'
+import { ProductsReqParams, FilterReqParams, ProductsRequest, PaginateInfo  } from '../../api/types'
 import { api } from '../../api'
-import { MainState, AfterDecodeUrl } from './types'
+import { MainState, AfterDecodeUrl, TypeSet } from './types'
 
 
 
@@ -16,8 +16,9 @@ routeHistory.on(initRouteHistory, (_, payload) => payload)
 
 
 //region main_state:
-const setTypeSet = createEvent<'set_url' | 'set_filter' | 'set_products'>()
-const typeSet = restore(setTypeSet, 'set_url')
+const setTypeSet = createEvent<TypeSet>()
+const $typeSet = restore(setTypeSet, { type: 'set_url' })
+
 
 
 const mainState = createStore<MainState>({
@@ -42,11 +43,11 @@ sexId.updates.watch((state) => {
   setGender(state)
 })
 
-const filtersState = mainState.map(({ sexId, categories, brands, sizes, colors, price_to, price_from, sale_to, sale_from, favorite }) => ({
+export const filtersState = mainState.map(({ sexId, categories, brands, sizes, colors, price_to, price_from, sale_to, sale_from, favorite }) => ({
   sexId, categories, brands, sizes, colors, price_to, price_from, sale_to, sale_from, favorite
 }))
 
-const productsState = mainState.map(({ limit, page, sort }) => ({ limit, sort, page }))
+export const productsState = mainState.map(({ limit, page, sort }) => ({ limit, sort, page }))
 
 /**Результаты первичного парсинга URL*/
 const setFromDecodeUrl = createEvent<AfterDecodeUrl>()
@@ -59,8 +60,7 @@ mainState.on(setFromDecodeUrl, (state, payload) => ({ ...state, ...payload }))
 //region set decode_url_state_SET:
 routeHistory.updates.watch(state => {
   if (state === null) return undefined
-
-  setTypeSet('set_url')
+  setTypeSet({ type: 'set_url' })
 
   const { pathname, search } = state.location
 
@@ -109,9 +109,12 @@ routeHistory.updates.watch(state => {
 
 // region set event_state_SET:
 export const setFilter = createEvent<{key: keyof Omit<MainState, 'sort' | 'limit' | 'page' | 'sexId'>, value: string | number | boolean}>()
+setFilter.watch(({ key }) => {setTypeSet({ key, type: 'set_filter' })})
+
 export const setProductsState = createEvent<{
   key: keyof Pick<MainState, 'sort' | 'limit' | 'page' >, value: 'update_up' | 'price_up' | 'sale_up' | number,
 }>()
+setProductsState.watch(({ key }) => { setTypeSet({ key, type: 'set_products' }) })
 
 
 
@@ -194,12 +197,9 @@ const fetchFiltersParams = filtersState.map(state => {
 
 guard({
   source: fetchFiltersParams.updates,
-  filter: typeSet.map(state => (state !== 'set_products')),
+  filter: $typeSet.map(({ type }) => type !== 'set_products'),
   target: fetchFilters
 })
-
-const fetchFiltersDone = fetchFilters.done.map(payload => payload.result.data)
-
 //endregion fetchFilters
 
 
@@ -209,19 +209,29 @@ const fetchProducts = createEffect({
   handler: (params: ProductsReqParams) => api.products.getProducts(params)
 })
 
+// todo ! Нужно убрать! Это как то задеюствует фильтры и они апдейтятся
 const fetchProductsParams = combine({ fetchFiltersParams, productsState }).map(({ fetchFiltersParams, productsState }) => {
   if (fetchFiltersParams ===  undefined) return
   const fetchParams: ProductsReqParams = { ...fetchFiltersParams }
   if (productsState.sort) fetchParams.sort = productsState.sort
   if (productsState.limit) fetchParams.limit = productsState.limit
-  if (productsState.page !== null) {
-    if (typeSet.getState() === 'set_url') {
+  if (productsState.page) fetchParams.page = productsState.page
+
+  const typeSet = $typeSet.getState()
+
+  // todo Это должно делаться на этапе сета, так как нужно менять эти штуки во всем стейте. иначе не дублируется на url!
+  switch( typeSet.type ){
+    case 'set_url': {
       fetchParams.page = 1
-      fetchParams.limit = productsState.page * 20
+      fetchParams.limit = productsState.page ? productsState.page * 20 : 20
+      return fetchParams
     }
-    else {fetchParams.page = productsState.page}
+    case 'set_products': {
+      if (typeSet.key === 'sort') fetchParams.page = 1
+      return fetchParams
+    }
+    default: return fetchParams
   }
-  return fetchParams
 })
 
 guard({
@@ -229,16 +239,44 @@ guard({
   filter: fetchProducts.pending.map(pending => !pending),
   target: fetchProducts
 })
-
-const fetchProductsDone = fetchProducts.done.map(payload => payload.result.data)
-
 //endregion fetchProducts
 
 
 
 // region encode_url_state:
+mainState.updates.watch((payload) => {
+  if ($typeSet.getState().type === 'set_url') return undefined
+  if (payload.sexId === null) return undefined
+  const newUrl = '/products/' + (payload.sexId === 1) ? 'men' : 'women'
 
+  //todo типы!
+  const encode = Object.entries(payload).filter(([_, value]) => (value !== null))
+  //as Array<[keyof AfterDecodeUrl, any]>
+  
+  let search: string
+  if (encode.length === 0) search = ''
+  else {
+    search = '?' + encode
+      .filter(([ key, value ]) => {
+        switch (key) {
+          case 'sexId': return false
+          case 'sort': return value !== 'update_up'
+          default: return true
+        }
+      })
+      .map(([ key, value ] ) => {
+        if (Array.isArray(value)) return key + '=' + value.join('|')
+        switch (typeof value) {
+          case 'number': return key + '=' + value.toString()
+          case 'string': return key + '=' + value
+          case 'boolean': return key + '=' + (value ? '1' : '0')
+        }
+      })
+      .join('&')
+  }
 
+  routeHistory.getState()?.replace(newUrl + search)
+})
 // endregion encode_url_state
 
 
@@ -252,6 +290,17 @@ filtersStore.on(fetchProducts.done, (state, { result: { data: { products } } }) 
 
 //region productsStore:
 export const $productsStore = createStore<ProductsRequest['products']>([])
-$productsStore.on(fetchProducts.done, (state, { result: { data: { products } } }) => [...state, ...products])
+$productsStore.on(fetchProducts.done, (state, { result: { data: { products } } }) => {
+  const typeSet = $typeSet.getState()
+  if ( typeSet.type === 'set_products' && typeSet.key === 'sort' ) return products
+  return [...state, ...products]
+})
+
+export const $productsInfoStore = createStore<PaginateInfo>({
+  total: 0,
+  total_pages: 0
+})
+$productsInfoStore.on(fetchProducts.done, ((state, { result: { data: { info } } }) => info))
 //endregion productsStore
 
+$productsInfoStore.watch(state => console.log(state))

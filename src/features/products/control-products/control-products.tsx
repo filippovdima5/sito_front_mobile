@@ -1,5 +1,5 @@
 import React from 'react'
-import { SetSort } from './set-sort/SetSort'
+import { SetSort } from './set-sort'
 import styles from './styles.module.scss'
 
 

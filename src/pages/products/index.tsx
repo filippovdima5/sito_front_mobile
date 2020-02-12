@@ -1,14 +1,8 @@
 import React from 'react'
 import { RouteComponentProps } from 'react-router'
-import { ProductsList, ControlProducts } from '../../features/products'
+import { ProductsList, ControlProducts, LoadMore } from '../../features/products'
 import styles from './styles.module.scss'
 import { initRouteHistory } from './store'
-
-
-// import { LoadMore } from '../../components/Products/LoadMore/LoadMore'
-// import { FiltersList } from '../../components/Products/FiltersList/animate/FiltersListAnimate'
-
-
 
 
 
@@ -29,7 +23,7 @@ export class Products extends React.Component<RouteComponentProps<{ sex: string 
         <div id = "Products" className={styles.Products}>
           <ControlProducts/>
           <ProductsList/>
-
+          <LoadMore/>
 
           {/*<ControlProducts/>*/}
           {/*<ProductsList/>*/}
