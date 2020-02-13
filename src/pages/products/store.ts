@@ -109,16 +109,14 @@ routeHistory.updates.watch(state => {
 
 // region set event_state_SET:
 export const setFilter = createEvent<{key: keyof Omit<MainState, 'sort' | 'limit' | 'page' | 'sexId'>, value: string | number | boolean}>()
-setFilter.watch(({ key }) => {setTypeSet({ key, type: 'set_filter' })})
 
 export const setProductsState = createEvent<{
   key: keyof Pick<MainState, 'sort' | 'limit' | 'page' >, value: 'update_up' | 'price_up' | 'sale_up' | number,
 }>()
-setProductsState.watch(({ key }) => { setTypeSet({ key, type: 'set_products' }) })
-
 
 
 mainState.on(setFilter, (state, { key, value }) => {
+  setTypeSet({ key, type: 'set_filter' } )
   switch (key) {
     case 'categories': {
       if (state[key] === null) return { ...state, [key]: [Number(value)] }
@@ -146,11 +144,14 @@ mainState.on(setFilter, (state, { key, value }) => {
 })
 
 mainState.on(setProductsState, (state, { key, value }) => {
+  setTypeSet({ type: 'set_products', key })
   switch (key) {
     case 'limit':
     case 'page': return { ...state, page: Number(value) }
     case 'sort': {
-      if (value === 'price_up' || value === 'sale_up' || value === 'update_up') return { ...state, sort: value }
+      if (value === 'price_up' || value === 'sale_up' || value === 'update_up') {
+        return { ...state, sort: value, page: 1 }
+      }
       else return undefined
     }
     default: return undefined
@@ -210,27 +211,30 @@ const fetchProducts = createEffect({
 })
 
 // todo ! Нужно убрать! Это как то задеюствует фильтры и они апдейтятся
-const fetchProductsParams = combine({ fetchFiltersParams, productsState }).map(({ fetchFiltersParams, productsState }) => {
-  if (fetchFiltersParams ===  undefined) return
-  const fetchParams: ProductsReqParams = { ...fetchFiltersParams }
-  if (productsState.sort) fetchParams.sort = productsState.sort
-  if (productsState.limit) fetchParams.limit = productsState.limit
-  if (productsState.page) fetchParams.page = productsState.page
+const fetchProductsParams = mainState.map(state => {
+  if (state.sexId === null) return undefined
+  const params: ProductsReqParams = { sex_id: state.sexId }
+  if (state.categories !== null) params.categories = state.categories
+  if (state.brands !== null) params.brands = state.brands
+  if (state.colors !== null) params.colors = state.colors
+  if (state.sizes !== null) params.sizes = state.sizes
+  if (state.favorite !== null) params.favorite = state.favorite
+  if (state.price_from != null) params.price_from = state.price_from
+  if (state.price_to !== null) params.price_to = state.price_to
+  if (state.sale_from != null) params.sale_from = state.sale_from
+  if (state.sale_to != null) params.sale_to = state.sale_to
+  if (state.page !== null) params.page = state.page
+  if (state.limit !== null) params.limit = state.limit
+  if (state.sort !== null) params.sort = state.sort
 
   const typeSet = $typeSet.getState()
-
-  // todo Это должно делаться на этапе сета, так как нужно менять эти штуки во всем стейте. иначе не дублируется на url!
   switch( typeSet.type ){
     case 'set_url': {
-      fetchParams.page = 1
-      fetchParams.limit = productsState.page ? productsState.page * 20 : 20
-      return fetchParams
+      params.page = 1
+      params.limit = state.page ? state.page * 20 : 20
+      return params
     }
-    case 'set_products': {
-      if (typeSet.key === 'sort') fetchParams.page = 1
-      return fetchParams
-    }
-    default: return fetchParams
+    default: return params
   }
 })
 
@@ -261,6 +265,7 @@ mainState.updates.watch((payload) => {
         switch (key) {
           case 'sexId': return false
           case 'sort': return value !== 'update_up'
+          case 'page': return value !== 1
           default: return true
         }
       })
@@ -292,8 +297,8 @@ filtersStore.on(fetchProducts.done, (state, { result: { data: { products } } }) 
 export const $productsStore = createStore<ProductsRequest['products']>([])
 $productsStore.on(fetchProducts.done, (state, { result: { data: { products } } }) => {
   const typeSet = $typeSet.getState()
-  if ( typeSet.type === 'set_products' && typeSet.key === 'sort' ) return products
-  return [...state, ...products]
+  if ( typeSet.type === 'set_products' && typeSet.key === 'page' ) return [...state, ...products]
+  return products
 })
 
 export const $productsInfoStore = createStore<PaginateInfo>({
@@ -303,4 +308,3 @@ export const $productsInfoStore = createStore<PaginateInfo>({
 $productsInfoStore.on(fetchProducts.done, ((state, { result: { data: { info } } }) => info))
 //endregion productsStore
 
-$productsInfoStore.watch(state => console.log(state))
