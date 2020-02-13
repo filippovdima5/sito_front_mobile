@@ -1,30 +1,31 @@
-import React from 'react';
-import animate from './animate.module.scss';
-import {useTransitionNames} from "../../../../helpers/hooks/useTransitionNames";
-import {CSSTransition, TransitionGroup} from "react-transition-group";
-import { visFiltersList } from "../store";
-import {useStore} from "effector-react";
-import {FiltersList} from "../FiltersList";
+import React from 'react'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
+import { useStore } from 'effector-react'
+import { useTransitionNames } from '../../../../helpers/hooks/useTransitionNames'
+import { visFiltersList } from '../store'
+import { FiltersList } from '../FiltersList'
+import animate from './animate.module.scss'
+
 
 function FiltersListAnimate() {
-    const $visFiltersList = useStore(visFiltersList);
-    const classNames = useTransitionNames(animate);
+  const $visFiltersList = useStore(visFiltersList)
+  const classNames = useTransitionNames(animate)
 
-    return (
-        <TransitionGroup
-            style = {{position: 'absolute'}}
-        >
-            {$visFiltersList &&
+  return (
+    <TransitionGroup
+      style = {{ position: 'absolute' }}
+    >
+      {$visFiltersList &&
             <CSSTransition
-                in = {$visFiltersList}
-                timeout = {300}
-                classNames = {classNames}
+              in = {$visFiltersList}
+              timeout = {300}
+              classNames = {classNames}
             >
-                <FiltersList/>
+              <FiltersList/>
             </CSSTransition>
-            }
-        </TransitionGroup>
-    )
+      }
+    </TransitionGroup>
+  )
 }
 
-export {FiltersListAnimate as FiltersList}
+export { FiltersListAnimate as FiltersList }
