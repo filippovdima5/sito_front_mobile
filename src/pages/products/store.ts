@@ -249,9 +249,12 @@ guard({
 
 // region encode_url_state:
 mainState.updates.watch((payload) => {
+
   if ($typeSet.getState().type === 'set_url') return undefined
   if (payload.sexId === null) return undefined
-  const newUrl = '/products/' + (payload.sexId === 1) ? 'men' : 'women'
+  let newUrl = '/products/'
+  const lineSex = payload.sexId === 1 ? 'men' : 'women'
+  newUrl = newUrl + lineSex
 
   //todo типы!
   const encode = Object.entries(payload).filter(([_, value]) => (value !== null))
