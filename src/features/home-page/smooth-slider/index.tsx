@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Title } from '../../atoms/Title'
+import { Title } from '../../../atoms/Title'
 import styles from './styles.module.scss'
 import {  Props } from './types'
 

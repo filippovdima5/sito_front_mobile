@@ -1,6 +1,6 @@
 import React  from 'react'
-import { SmoothSlider } from '../../../assets/smooth-slider'
-import { ScrollSlider } from '../../../assets/scroll-slider'
+import { SmoothSlider } from '../smooth-slider'
+import { ScrollSlider } from '../scroll-slider'
 
 
 type Props = {

@@ -24,13 +24,7 @@ export class Products extends React.Component<RouteComponentProps<{ sex: string 
           <ControlProducts/>
           <ProductsList/>
           <LoadMore/>
-
-          {/*<ControlProducts/>*/}
-          {/*<ProductsList/>*/}
-          {/*<LoadMore/>*/}
         </div>
-
-        {/*<FiltersList/>*/}
       </>
     )
   }

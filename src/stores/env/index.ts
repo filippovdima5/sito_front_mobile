@@ -1,9 +1,6 @@
 import { createEffect, createEvent, createStore, merge } from 'effector'
-
 import { api } from '../../api'
-import { 
-  GenderInfo
-} from './types'
+import { GenderInfo } from './types'
 
 
 

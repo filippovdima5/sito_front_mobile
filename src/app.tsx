@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './media/css/App.module.scss'
+import styles from './media/css/app.module.scss'
 import './media/css/reset.module.scss'
 import { Header } from './components/Header/Header'
 import { Pages } from './pages'
