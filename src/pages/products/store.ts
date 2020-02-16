@@ -21,7 +21,7 @@ const $typeSet = restore(setTypeSet, { type: 'set_url' })
 
 
 
-const mainState = createStore<MainState>({
+export const mainState = createStore<MainState>({
   sexId: null,
   categories: null,
   brands: null,
@@ -160,19 +160,6 @@ mainState.on(setProductsState, (state, { key, value }) => {
 
 // endregion event_state_SET
 
-
-
-//region view_state:
-export const $filtersView = filtersState.map(state => ({
-  categories: state.categories,
-  brands: state.brands,
-  colors: state.colors,
-  sizes: state.sizes,
-  prices: (state.price_to === null && state.price_from === null) ? null : { price_from: state.price_from, price_to: state.price_to },
-  sales: (state.sale_to === null && state.price_from === null) ? null : { sale_from: state.sale_from, sale_to: state.sale_to },
-  favorite: state.favorite
-}))
-// endregion view_state
 
 
 

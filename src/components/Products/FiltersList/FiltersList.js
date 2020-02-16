@@ -32,8 +32,6 @@ function FiltersList() {
 
 
         <div className={styles.space}/>
-
-
         <TotalProductsButton visDone={visDone}/>
       </div>
 
