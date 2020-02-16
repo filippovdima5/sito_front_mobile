@@ -1,25 +1,27 @@
 import { createEvent, restore } from 'effector'
 import { namesCategory } from '../../../constants/category-keys'
-import { filtersState } from '../../../pages/products/store'
-import { MainState } from '../../../pages/products/types'
+import { filtersState, mainState, setTypeSet } from '../../../pages/products/store'
 
 
 export const setShowFilters = createEvent<boolean>()
 export const $showFilters = restore(setShowFilters, true)
 
-
-type FiltersView = {
-  name: Omit<MainState, 'page' | 'sort' | 'limit'>,
-  type: 'list' | 'range' | 'bool',
-  active: true,
-  data: Array<string> | [number, number] | number,
-} |
-{
-  name: Omit<MainState, 'page' | 'sort' | 'limit'>,
-  type: 'list',
-  active: false,
-  data: null,
-}
+export const skipAllFilters = createEvent()
+mainState.on(skipAllFilters, state => {
+  setTypeSet({ type: 'set_filter' })
+  return ({
+    ...state,
+    sizes: null,
+    colors: null,
+    brands: null,
+    price_to: null,
+    price_from: null,
+    sale_to: null,
+    sale_from: null,
+    favorite: null,
+    categories: null,
+  })
+})
 
 export const $filtersView = filtersState
   .map(state => ({
@@ -59,7 +61,8 @@ export const $filtersView = filtersState
           type: 'bool' as 'bool'
         })
       }
-    }))
+    })
+  )
 
 
 

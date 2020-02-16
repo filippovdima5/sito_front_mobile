@@ -25,3 +25,15 @@ export function Close(props: Props) {
     </svg>
   )
 }
+
+export function Arrow(props: Props) {
+  return(
+    <svg
+      {...defaultProps}
+      fill={props.fill}
+      className={props.className}
+    >
+      <path d="M13.993 19.997L5.996 12l7.997-7.997 1.414 1.414L8.824 12l6.583 6.583z"/>
+    </svg>
+  )
+}

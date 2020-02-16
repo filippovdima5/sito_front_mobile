@@ -15,17 +15,18 @@ const filtersMap = {
 type Props = {
   title: keyof typeof filtersMap,
   check: boolean,
+  disabled: boolean,
   event: () => void,
 }
 
 export function CheckRow(props: Props) {
   return (
-    <label className={`${styles.checkRow} ${props.check && styles.disabled}`}>
+    <label className={`${styles.checkRow} ${props.disabled && styles.disabled}`}>
       <input
         readOnly={true}
         checked={props.check}
         onClick={props.event}
-        disabled={props.check}
+        disabled={props.disabled}
         type={'checkbox'}
         className={styles.checkbox}
       />

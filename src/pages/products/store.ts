@@ -16,7 +16,7 @@ routeHistory.on(initRouteHistory, (_, payload) => payload)
 
 
 //region main_state:
-const setTypeSet = createEvent<TypeSet>()
+export const setTypeSet = createEvent<TypeSet>()
 const $typeSet = restore(setTypeSet, { type: 'set_url' })
 
 
@@ -108,7 +108,7 @@ routeHistory.updates.watch(state => {
 
 
 // region set event_state_SET:
-export const setFilter = createEvent<{key: keyof Omit<MainState, 'sort' | 'limit' | 'page' | 'sexId'>, value: string | number | boolean}>()
+export const setFilter = createEvent<{key: keyof Omit<MainState, 'sort' | 'limit' | 'page' | 'sexId'>, value: string | number | boolean | null}>()
 
 export const setProductsState = createEvent<{
   key: keyof Pick<MainState, 'sort' | 'limit' | 'page' >, value: 'update_up' | 'price_up' | 'sale_up' | number,
@@ -117,6 +117,7 @@ export const setProductsState = createEvent<{
 
 mainState.on(setFilter, (state, { key, value }) => {
   setTypeSet({ key, type: 'set_filter' } )
+  if (value == null) return ({ ...state, [key] : null })
   switch (key) {
     case 'categories': {
       if (state[key] === null) return { ...state, [key]: [Number(value)] }
@@ -256,6 +257,7 @@ mainState.updates.watch((payload) => {
           case 'sexId': return false
           case 'sort': return value !== 'update_up'
           case 'page': return value !== 1
+          case 'favorite': return Boolean(value)
           default: return true
         }
       })

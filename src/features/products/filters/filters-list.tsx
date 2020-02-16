@@ -4,6 +4,7 @@ import styles from './styles.module.scss'
 import { Header } from './atoms/header'
 import { AllFilters } from './organisms/all-filters'
 import { $showFilters, setShowFilters } from './store'
+import { Filter } from './filter'
 
 
 
@@ -12,10 +13,13 @@ function FiltersList({ sexId }: {sexId: 1 | 2}) {
     <div className={`${styles.wrap} ${styles.filtersList}`}>
       <Header title={'Фильтры'} event={() => setShowFilters(false)} type={'close'}/>
 
+
       <div className={styles.body}>
         <AllFilters sexId = {sexId}/>
       </div>
 
+
+      <Filter sexId={sexId}/>
     </div>
   )
 }

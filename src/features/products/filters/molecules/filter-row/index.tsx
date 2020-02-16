@@ -1,42 +1,17 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { namesCategory } from '../../../../../constants/category-keys'
 import rightArrowSVG from '../../../../../media/img/svg/rightArrow.svg'
+import { setFilter } from '../../../../../pages/products/store'
+import { filtersMap, ViewFilter } from '../../types'
 import styles from './styles.module.scss'
 
 
 export { UnuseFilterRow } from './unuse-filter-row'
 
 
-const filtersMap = {
-  brands: 'Бренды',
-  categories: 'Категории',
-  colors: 'Цвета',
-  sizes: 'Размеры',
-  prices: 'Цена',
-  sales: 'Скидка',
-  favorite: 'Топовые'
-} as const
 
 
-type Props = {
-  sexId: 1 | 2,
-  type: 'list-translate',
-  data: Array<keyof typeof namesCategory['1' | '2']>,
-  title: keyof typeof filtersMap,
-} | {
-  sexId: 1 | 2,
-  type: 'range',
-  data:  [number, number],
-  title: keyof typeof filtersMap,
-} | {
-  sexId: 1 | 2,
-  type: 'list',
-  data: Array<string>,
-  title: keyof typeof filtersMap,
-}
-
-
-export function FilterRow(props: Props) {
+export function FilterRow(props: ViewFilter) {
   const activeFiltersString = useMemo(() => {
     let string: string
     switch (props.type) {
@@ -89,7 +64,31 @@ export function FilterRow(props: Props) {
       elem?.removeEventListener('touchend', handleTouchEnd)
     }
   }, [handleTouchStart, handleTouchMove, handleTouchEnd])
-  
+
+
+  const skipFilter = useCallback(() => {
+    switch (props.title) {
+      case 'prices': {
+        setFilter({ key: 'price_from', value: null })
+        setFilter({ key: 'price_to', value: null })
+        break
+      }
+      case 'sales': {
+        setFilter({ key: 'sale_from', value: null })
+        setFilter({ key: 'sale_to', value: null })
+        break
+      }
+      default: setFilter({ key: props.title, value: null })
+    }
+  }, [props.title])
+
+
+  useEffect(() => {
+    if (skipLength === rowRef.current?.clientWidth ){
+      const timer = setTimeout(skipFilter, 150)
+      return () => clearTimeout(timer)
+    }
+  }, [ props.title, skipLength, skipFilter ])
 
 
   return (
@@ -116,6 +115,7 @@ export function FilterRow(props: Props) {
       </div>
 
       <button
+        onClick={() => skipFilter()}
         style={{ width: `${skipLength}px` }}
         className={styles.skip_one}
       >

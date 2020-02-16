@@ -1,31 +1,44 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useStore } from 'effector-react'
-import { $filtersView } from '../../store'
+import { $filtersView, skipAllFilters } from '../../store'
+import { setFilter } from '../../../../../pages/products/store'
 import { FilterRow, UnuseFilterRow } from '../../molecules/filter-row'
 import { CheckRow } from '../../molecules/check-row'
 import styles from './styles.module.scss'
 
 
+function TitleTypeList({ count, title, allCount }: {count: number, title: string, allCount: number}) {
+  if (count > 0 && count < allCount) return (
+    <h3 className={styles.h3}>{title}</h3>
+  )
+  else return null
+}
+
 
 export function AllFilters({ sexId }: {sexId: 1 | 2}) {
   const filtersView = useStore($filtersView)
-
-
+  
+  const [ usageFilters, unusedFilters ] = useMemo(() => [
+    filtersView.filter(({ data }) => (!!data)),
+    filtersView.filter(({ data }) => (!data)),
+  ], [filtersView])
 
   return (
     <>
       <div>
-
         <div className={styles.filtersList}>
           
-          <h3 className={styles.h3}>Используются сейчас</h3>
+          <TitleTypeList count={usageFilters.length} title={'Используются сейчас'} allCount={usageFilters.length + unusedFilters.length}/>
           
           <div className={styles.filters}>
             
-            <button className={styles.skipAll}>Сбросить всё</button>
+            {
+              usageFilters.length > 1 &&
+              <button className={styles.skipAll} onClick={() => skipAllFilters()}>Сбросить всё</button>
+            }
             
             <div className={styles.list}>
-              {filtersView.filter(({ data }) => (!!data)).map(({ name, type, data }) => {
+              {usageFilters.map(({ name, type, data }) => {
                 if (type !== 'bool') {
                   return (
                     <div key = {name} className={styles.itemList}>
@@ -41,7 +54,7 @@ export function AllFilters({ sexId }: {sexId: 1 | 2}) {
                 }
                 return (
                   <div key={name}  className={styles.itemList}>
-                    <CheckRow title={name} check={Boolean(data)} event={() => {console.log('f')}}/>
+                    <CheckRow title={name} check={Boolean(data)} disabled={false} event={() => {setFilter({ key: 'favorite', value: !data })}}/>
                   </div>
                 )
               })}
@@ -54,13 +67,13 @@ export function AllFilters({ sexId }: {sexId: 1 | 2}) {
 
 
         <div className={styles.filtersList}>
-          
-          <h3 className={styles.h3}>Остальные</h3>
+
+          <TitleTypeList count={unusedFilters.length} title={'Остальные'} allCount={usageFilters.length + unusedFilters.length}/>
           
           <div className={styles.filters}>
 
             <div className={styles.list}>
-              {filtersView.filter(({ data }) => (!data)).map(({ name, type, data }) => {
+              {unusedFilters.map(({ name, type, data }) => {
                 if (type !== 'bool') return (
                   <div key={name}  className={styles.itemList}>
                     <UnuseFilterRow key = {name} title={name}/>
@@ -68,7 +81,12 @@ export function AllFilters({ sexId }: {sexId: 1 | 2}) {
                 )
                 return (
                   <div key={name}  className={styles.itemList}>
-                    <CheckRow key={name} title={name} check={Boolean(data)} event={() => {console.log('f')}}/>
+                    <CheckRow
+                      key={name}
+                      title={name}
+                      disabled={false}
+                      check={Boolean(data)}
+                      event={() => {setFilter({ key: 'favorite', value: !data })}}/>
                   </div>
                 )
               })}

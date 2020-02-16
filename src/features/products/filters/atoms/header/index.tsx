@@ -1,6 +1,7 @@
 import React from 'react'
-import { Close } from '../../../../../media/img/svg/icons'
+import { Close, Arrow } from '../../../../../media/img/svg/icons'
 import styles from './styles.module.scss'
+
 
 
 type Props = {
@@ -16,7 +17,7 @@ export function Header({ title, type, event }: Props) {
 
         {type === 'back' &&
         <div onClick={event} className={`${styles.btn} ${styles.btn_left}`}>
-
+          <Arrow />
         </div>
         }
 
