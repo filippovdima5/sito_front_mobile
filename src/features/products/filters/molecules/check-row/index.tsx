@@ -2,8 +2,18 @@ import React from 'react'
 import styles from './styles.module.scss'
 
 
+const filtersMap = {
+  brands: 'Бренды',
+  categories: 'Категории',
+  colors: 'Цвета',
+  sizes: 'Размеры',
+  prices: 'Цена',
+  sales: 'Скидка',
+  favorite: 'Топовые'
+} as const
+
 type Props = {
-  title: string,
+  title: keyof typeof filtersMap,
   check: boolean,
   event: () => void,
 }
@@ -20,7 +30,7 @@ export function CheckRow(props: Props) {
         className={styles.checkbox}
       />
       <span className={styles.icon}/>
-      <span>{props.title}</span>
+      <span className={styles.title}>{filtersMap[props.title]}</span>
     </label>
   )
 }

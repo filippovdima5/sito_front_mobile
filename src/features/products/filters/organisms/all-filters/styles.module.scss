@@ -39,6 +39,17 @@
 
     .list {
       box-shadow: 0 2px 4px rgba(0, 0, 0, .12);
+
+      .itemList{
+        height: 48px;
+        display: flex;
+        align-items: center;
+        border-bottom:   1px solid rgba(0,0,0,.14);
+
+        font-size: 16px;
+        line-height: 24px;
+        color: rgba(0,0,0,.87);
+      }
     }
   }
 }

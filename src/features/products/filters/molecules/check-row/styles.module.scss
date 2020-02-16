@@ -4,7 +4,7 @@
 }
 
 .checkRow{
-  height: 60px;
+  height: auto;
   box-sizing: border-box;
 
   position: relative;
@@ -14,7 +14,6 @@
   -webkit-box-align: center;
   align-items: center;
 
-  font-weight: bold;
 
   .checkbox{
     box-sizing: border-box;
@@ -57,11 +56,8 @@
   }
 
   .title{
-    font-size: 15px;
     display: block;
-    margin-left: 13px;
-    opacity: 0.9;
-    line-height: 1;
+    margin-left: 15px;
   }
 }
 
@@ -71,5 +67,4 @@
   right: 0;
   left: 0;
   content: "";
-  border-bottom: 1px solid rgba(0,0,0,.1);
 }

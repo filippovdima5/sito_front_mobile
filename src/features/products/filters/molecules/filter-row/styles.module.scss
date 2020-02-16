@@ -9,11 +9,10 @@
   position: relative;
   transition: all .3s cubic-bezier(.22,.61,.36,1);
   background: #fff;
+  width: 100%;
 
   .skip_one{
     width: 0;
-    //transition: width 0.4s ease-in-out;
-
     cursor: pointer;
     position: absolute;
     top: 0;
@@ -39,8 +38,6 @@
 
   .item_wrap{
     left: 0;
-    //transition: left 0.4s ease-in-out;
-
     padding: 12px 6px 12px 16px;
     box-sizing: border-box;
     cursor: pointer;
@@ -73,9 +70,6 @@
         flex: 1;
 
         .title_filter_wrap{
-          font-size: 16px;
-          line-height: 24px;
-          color: rgba(0,0,0,.87);
           margin-right: 12px;
           white-space: nowrap;
         }
@@ -107,17 +101,3 @@
 
   }
 }
-
-.filterRow::before{
-  position: absolute;
-  top: 0;
-  content: "";
-  left: 0;
-  right: 0;
-  border-top: 1px solid rgba(0,0,0,.14);
-  z-index: 2;
-}
-
-//.filterRow:first-child::before{
-//  border-top: none !important;
-//}

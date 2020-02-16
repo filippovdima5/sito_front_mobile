@@ -28,18 +28,21 @@ export function AllFilters({ sexId }: {sexId: 1 | 2}) {
               {filtersView.filter(({ data }) => (!!data)).map(({ name, type, data }) => {
                 if (type !== 'bool') {
                   return (
-                    <FilterRow
-                      type={type}
-                      title = {name}
-                      sexId = {sexId}
-                      key = {name}
-                      // @ts-ignore
-                      data={data}
-                    />
+                    <div key = {name} className={styles.itemList}>
+                      <FilterRow
+                        type={type}
+                        title = {name}
+                        sexId = {sexId}
+                        // @ts-ignore
+                        data={data}
+                      />
+                    </div>
                   )
                 }
                 return (
-                  <CheckRow key={name} title={name} check={Boolean(data)} event={() => {console.log('f')}}/>
+                  <div key={name}  className={styles.itemList}>
+                    <CheckRow title={name} check={Boolean(data)} event={() => {console.log('f')}}/>
+                  </div>
                 )
               })}
             </div>
@@ -59,10 +62,14 @@ export function AllFilters({ sexId }: {sexId: 1 | 2}) {
             <div className={styles.list}>
               {filtersView.filter(({ data }) => (!data)).map(({ name, type, data }) => {
                 if (type !== 'bool') return (
-                  <UnuseFilterRow key = {name} title={name}/>
+                  <div key={name}  className={styles.itemList}>
+                    <UnuseFilterRow key = {name} title={name}/>
+                  </div>
                 )
                 return (
-                  <CheckRow key={name} title={name} check={Boolean(data)} event={() => {console.log('f')}}/>
+                  <div key={name}  className={styles.itemList}>
+                    <CheckRow key={name} title={name} check={Boolean(data)} event={() => {console.log('f')}}/>
+                  </div>
                 )
               })}
             </div>
