@@ -16,7 +16,7 @@ export function FilterRow(props: ViewFilter) {
     let string: string
     switch (props.type) {
       case 'list-translate': string = props.data.map(i => namesCategory[props.sexId][i]).join(', '); break
-      case 'list': string = props.data.join(', '); break
+      case 'list': string = props.data!.join(', '); break
       case 'range': string = `от ${props.data[0]} до ${props.data[1]}`
     }
     string = string.length > 37 ? string.substr(0, 34) + '...' : string
@@ -92,7 +92,10 @@ export function FilterRow(props: ViewFilter) {
 
 
   return (
-    <div ref = { rowRef } className={`${styles.filterRow} ${skipStyle}`}>
+    <div
+      ref = { rowRef }
+      className={`${styles.filterRow} ${skipStyle}`}
+    >
       <div
         ref = { skipRowRef }
         style={{ left: `-${skipLength}px` }}

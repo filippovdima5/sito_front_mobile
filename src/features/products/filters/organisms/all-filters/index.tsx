@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { useStore } from 'effector-react'
-import { $filtersView, skipAllFilters } from '../../store'
+import { $filtersView, skipAllFilters, setShowFilter } from '../../store'
 import { setFilter } from '../../../../../pages/products/store'
 import { FilterRow, UnuseFilterRow } from '../../molecules/filter-row'
 import { CheckRow } from '../../molecules/check-row'
@@ -41,7 +41,7 @@ export function AllFilters({ sexId }: {sexId: 1 | 2}) {
               {usageFilters.map(({ name, type, data }) => {
                 if (type !== 'bool') {
                   return (
-                    <div key = {name} className={styles.itemList}>
+                    <div onClick={() => setShowFilter(name)} key = {name} className={styles.itemList}>
                       <FilterRow
                         type={type}
                         title = {name}
@@ -75,7 +75,7 @@ export function AllFilters({ sexId }: {sexId: 1 | 2}) {
             <div className={styles.list}>
               {unusedFilters.map(({ name, type, data }) => {
                 if (type !== 'bool') return (
-                  <div key={name}  className={styles.itemList}>
+                  <div onClick={() => setShowFilter(name)} key={name}  className={styles.itemList}>
                     <UnuseFilterRow key = {name} title={name}/>
                   </div>
                 )

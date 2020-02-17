@@ -1,7 +1,7 @@
 import {  createEffect, createEvent, createStore, guard, restore } from 'effector'
 import { RouteComponentProps } from 'react-router'
 import { setGender } from '../../stores/env'
-import { ProductsReqParams, FilterReqParams, ProductsRequest, PaginateInfo  } from '../../api/types'
+import {ProductsReqParams, FilterReqParams, ProductsRequest, PaginateInfo, FiltersRequest} from '../../api/types'
 import { api } from '../../api'
 import { MainState, AfterDecodeUrl, TypeSet } from './types'
 
@@ -279,8 +279,8 @@ mainState.updates.watch((payload) => {
 
 
 //region filtersStore:
-export const filtersStore = createStore<ProductsRequest['products']>([])
-filtersStore.on(fetchProducts.done, (state, { result: { data: { products } } }) => [...state, ...products])
+export const $filtersStore = createStore<FiltersRequest | null>(null)
+$filtersStore.on(fetchFilters.done, (state, { result: { data } }) => data)
 //endregion filtersStore
 
 

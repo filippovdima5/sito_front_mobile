@@ -13,7 +13,7 @@ const filtersMap = {
 } as const
 
 type Props = {
-  title: keyof typeof filtersMap,
+  title: 'favorite' | string,
   check: boolean,
   disabled: boolean,
   event: () => void,
@@ -31,7 +31,7 @@ export function CheckRow(props: Props) {
         className={styles.checkbox}
       />
       <span className={styles.icon}/>
-      <span className={styles.title}>{filtersMap[props.title]}</span>
+      <span className={styles.title}>{props.title === 'favorite' ? filtersMap[props.title] : props.title}</span>
     </label>
   )
 }
