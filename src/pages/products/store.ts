@@ -122,16 +122,24 @@ mainState.on(setFilter, (state, { key, value }) => {
     case 'categories': {
       if (state[key] === null) return { ...state, [key]: [Number(value)] }
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      if (state[key]!.includes(Number(key))) return { ...state, [key]: state[key]!.filter(i => i !== value) }
+      if (state[key]!.includes(Number(value))) {
+        let newState: null | Array<number> = state[key]!.filter(i => i !== value)
+        if (newState.length === 0) newState = null
+        return { ...state, [key]: newState }
+      }
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       else return { ...state, [key]: [...state[key]!, Number(value)] }
     }
     case 'brands':
     case 'sizes':
     case 'colors': {
-      if (state[key] === null) return { ...state, [key] : Number(value) }
+      if (state[key] === null) return { ...state, [key] : [value.toString()] }
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      if (state[key]!.includes(key.toString())) return { ...state, [key]: state[key]!.filter(i => i !== value) }
+      if (state[key]!.includes(value.toString())) {
+        let newState: null | Array<string> = state[key]!.filter(i => i !== value.toString())
+        if (newState.length === 0) newState = null
+        return { ...state, [key]: newState }
+      }
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       else return { ...state, [key]: [...state[key]!, value.toString()] }
     }

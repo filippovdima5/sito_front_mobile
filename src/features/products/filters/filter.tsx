@@ -18,7 +18,7 @@ function FilterBody({ name, sexId }: {name: keyof typeof filtersMap, sexId: 1 | 
     case 'categories':
     case 'colors':
     case 'sizes': return (
-      <ListFilter storeData = { filterStore[name] }  stateData = { filtersSate[name] } sexId = {sexId} />
+      <ListFilter storeData = { filterStore[name] }  stateData = { filtersSate[name] } filter = { name } sexId = {sexId} />
     )
     default: return null
   }

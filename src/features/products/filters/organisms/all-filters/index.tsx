@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { useStore } from 'effector-react'
-import { $filtersView, skipAllFilters, setShowFilter } from '../../store'
-import { setFilter } from '../../../../../pages/products/store'
+import { $filtersView, skipAllFilters, setShowFilter, setShowFilters } from '../../store'
+import { setFilter, $productsInfoStore } from '../../../../../pages/products/store'
 import { FilterRow, UnuseFilterRow } from '../../molecules/filter-row'
 import { CheckRow } from '../../molecules/check-row'
 import styles from './styles.module.scss'
@@ -17,7 +17,8 @@ function TitleTypeList({ count, title, allCount }: {count: number, title: string
 
 export function AllFilters({ sexId }: {sexId: 1 | 2}) {
   const filtersView = useStore($filtersView)
-  
+  const { total } = useStore($productsInfoStore)
+
   const [ usageFilters, unusedFilters ] = useMemo(() => [
     filtersView.filter(({ data }) => (!!data)),
     filtersView.filter(({ data }) => (!data)),
@@ -99,6 +100,9 @@ export function AllFilters({ sexId }: {sexId: 1 | 2}) {
       </div>
 
       <div className={styles.space}/>
+
+      {/*//todo Написать хелпер для склонений взависимости от кол - ва*/}
+      <button onClick={() => setShowFilters(false)}>{`Посмотреть ${total} предложения`}</button>
 
     </>
   )
