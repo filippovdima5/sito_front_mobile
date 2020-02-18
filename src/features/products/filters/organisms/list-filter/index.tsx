@@ -1,4 +1,4 @@
-import React, {useState, useMemo, useEffect} from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import { FiltersItemNumber, FiltersItemString, FiltersRequest } from '../../../../../api/types'
 import { CheckRow } from '../../molecules/check-row'
 import { setFilter } from '../../../../../pages/products/store'
