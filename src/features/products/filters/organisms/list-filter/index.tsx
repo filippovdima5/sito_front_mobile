@@ -4,6 +4,8 @@ import { CheckRow } from '../../molecules/check-row'
 import { setFilter } from '../../../../../pages/products/store'
 import { namesCategory } from '../../../../../constants/category-keys'
 import { setShowFilters, skipThisFilter } from '../../store'
+import { Input } from '../../atoms/input'
+import styles from '../filter-layout.module.scss'
 
 
 type Props = {
@@ -54,11 +56,19 @@ export function ListFilter({ sexId, stateData, storeData, filter }: Props) {
     <>
       {
         storeData.length > maxItemsView && filter !== 'categories' &&(
-          <input
-            onChange={(event => { setSearchPhrase( event.currentTarget.value ) })}
-            type={'text'}
-            placeholder={'Поиск'}
-          />
+
+          <div className={styles.header}>
+            <div className={styles.inputWrap}>
+
+              <Input
+                onChange={(event => { setSearchPhrase( event.currentTarget.value ) })}
+                type={'text'}
+                placeholder={'Поиск'}
+              />
+
+            </div>
+          </div>
+
         )
       }
 

@@ -1,21 +1,98 @@
-import React from 'react'
+import React, {useCallback, useEffect, useMemo, useState} from 'react'
+import { useEffectSafe } from '../../../../../helpers/hooks/use-effect-safe'
 import { setShowFilters } from '../../store'
-
+import styles from '../filter-layout.module.scss'
+import { Input } from '../../atoms/input'
+import { setFilter } from '../../../../../pages/products/store'
 
 
 type Props = {
-  storeData: Array<number | null> | null,
+  storeData: Array<number>,
   stateData: Array<number | null> | null,
   filter_to: 'price_to' | 'sale_to',
   filter_from: 'price_from' | 'sale_from',
 }
 
+const initValue = (store: Props['storeData'], state: Props['stateData'], type: 0 | 1): number => {
+  if (state === null) return store[type]
+  if (state[type] === null) return store[type]
 
-export function RangeFilter({storeData, stateData, filter_from, filter_to}: Props) {
+  return state[type] as NonNullable<number>
+}
+
+
+export function RangeFilter({ storeData, stateData, filter_from, filter_to }: Props) {
+  const [ isHolderMin, setIsHolderMin ] = useState<boolean>(false)
+  const [ isHolderMax, setIsHolderMax ] = useState<boolean>(false)
+
+  const [min, setMin] = useState<number | null>(initValue(storeData, stateData, 0))
+  const [max, setMax] = useState<number | null>(initValue(storeData, stateData, 1))
+
+  const handleSetMin = useCallback((newValue: string) => {
+    const str = newValue.split(' ')
+    if ( str[1] ) {
+      const newValue = Number(str[1])
+      if (isNaN(newValue)) return setMin(null)
+      else return setMin(newValue)
+    }
+    else setMin(null)
+  }, [])
+
+  // todo: Ответ бека не должен зависеть от изменяемой цены!!
+  const handleBlurMin = useCallback(() => {
+    if (min === null) return
+    if (min <= storeData[0]) {
+      setMin(storeData[0])
+      setIsHolderMin(true)
+      setFilter({ key: filter_from, value: null })
+    } else {
+      setFilter({ key: filter_from, value: min })
+    }
+  }, [min, filter_from, storeData])
+
+
+  useEffectSafe(() => {
+    if (min === storeData[0]) setIsHolderMin(true)
+    else setIsHolderMin(false)
+  }, [min])
+
+  useEffectSafe(() => {
+    if (max === storeData[1]) setIsHolderMax(true)
+    else setIsHolderMax(false)
+  }, [max])
+
+
+
+
+
   return (
     <>
-      <input value={stateData[0]} type={'tel'}/>
-      <input value={stateData[1]} type={'tel'}/>
+      <div className={styles.header}>
+        <div className={styles.inputWrap}>
+
+          <Input
+            onBlur={handleBlurMin}
+            onChange={(event => {handleSetMin(event.currentTarget.value)})}
+            value={`от ${min ?? ''}`}
+            type={'tel'}
+            isPlaceholder={isHolderMin}
+          />
+
+        </div>
+
+        <div className={styles.inputWrap}>
+
+          <Input
+            value={`до ${max}`}
+            type={'tel'}
+            isPlaceholder={isHolderMax}
+          />
+
+        </div>
+      </div>
+
+
+
 
       <br/>
 
