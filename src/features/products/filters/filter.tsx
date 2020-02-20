@@ -1,12 +1,15 @@
 import React from 'react'
 import { useStore } from 'effector-react'
-import { $filtersStore, filtersState } from '../../../pages/products/store'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
+import { $filtersStore  } from '../../../pages/products/store'
+import { useTransitionNames } from '../../../helpers/hooks/useTransitionNames'
 import styles from './styles.module.scss'
 import { Header } from './atoms/header'
 import { $showFilter, setShowFilter, $filtersViewRecord } from './store'
 import { filtersMap } from './types'
 import { ListFilter } from './organisms/list-filter'
 import { RangeFilter } from './organisms/range-filter'
+import animateStyles from './animate/filter.module.scss'
 
 
 function FilterBody({ name, sexId }: {name: keyof typeof filtersMap, sexId: 1 | 2 }) {
@@ -56,8 +59,22 @@ function Filter({ sexId, name }: { sexId: 1 | 2, name: keyof typeof filtersMap})
 
 function ShowFilter({ sexId }: { sexId: 1 | 2 }) {
   const showFilter = useStore($showFilter)
-  if (showFilter !== null) return <Filter name = {showFilter} sexId={sexId}/>
-  else return null
+  const classNames = useTransitionNames(animateStyles)
+
+  return (
+    <TransitionGroup>
+      {
+        showFilter !== null &&
+          <CSSTransition 
+            timeout={300}
+            classNames={classNames}
+          >
+            <Filter name = {showFilter} sexId={sexId}/>
+          </CSSTransition>
+      }
+    </TransitionGroup>
+  )
+  
 }
 
 

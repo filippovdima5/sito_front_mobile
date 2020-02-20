@@ -1,6 +1,9 @@
 import React from 'react'
 import { useStore } from 'effector-react'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
+import { useTransitionNames } from '../../../helpers/hooks/useTransitionNames'
 import styles from './styles.module.scss'
+import animateStyles from './animate/filters-list.module.scss'
 import { Header } from './atoms/header'
 import { AllFilters } from './organisms/all-filters'
 import { $showFilters, setShowFilters } from './store'
@@ -26,6 +29,20 @@ function FiltersList({ sexId }: {sexId: 1 | 2}) {
 
 export function Filters({ sexId }: {sexId: 1 | 2}) {
   const showFilters = useStore($showFilters)
-  if (showFilters) return <FiltersList sexId = {sexId}/>
-  return null
+  const classNames = useTransitionNames(animateStyles)
+  
+  return (
+    <TransitionGroup
+      style = {{ position: 'absolute' }}
+    >
+      {showFilters &&
+      <CSSTransition 
+        timeout={300}
+        classNames={classNames}
+      >
+        <FiltersList sexId = {sexId}/>
+      </CSSTransition>
+      }
+    </TransitionGroup>
+  )
 }

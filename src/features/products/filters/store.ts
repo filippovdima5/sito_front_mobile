@@ -1,12 +1,12 @@
 import { createEvent, restore } from 'effector'
 import { namesCategory } from '../../../constants/category-keys'
 import { filtersState, mainState, setTypeSet } from '../../../pages/products/store'
+import { MainState } from '../../../pages/products/types'
 import { filtersMap } from './types'
-import {MainState} from '../../../pages/products/types'
 
 
 export const setShowFilters = createEvent<boolean>()
-export const $showFilters = restore(setShowFilters, true)
+export const $showFilters = restore(setShowFilters, false)
 
 export const setShowFilter = createEvent< keyof typeof filtersMap | null>()
 export const $showFilter = restore(setShowFilter, null)

@@ -3,6 +3,7 @@
   "version": "2.1.1",
   "private": true,
   "dependencies": {
+    "@types/react-transition-group": "^4.2.3",
     "@types/use-subscription": "^1.0.0",
     "axios": "^0.19.2",
     "body-scroll-lock": "^2.6.4",
