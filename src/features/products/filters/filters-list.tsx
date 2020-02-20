@@ -14,7 +14,7 @@ function FiltersList({ sexId }: {sexId: 1 | 2}) {
       <Header title={'Фильтры'} event={() => setShowFilters(false)} type={'close'}/>
 
 
-      <div className={styles.body}>
+      <div  className={styles.body}>
         <AllFilters sexId = {sexId}/>
       </div>
 

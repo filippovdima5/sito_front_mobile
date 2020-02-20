@@ -100,4 +100,8 @@
     }
 
   }
+
+  .skipAnimate{
+    transition: left 600ms ease-out;
+  }
 }

@@ -1,9 +1,10 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react'
+import React, { useCallback,  useState }  from 'react'
 import { useEffectSafe } from '../../../../../helpers/hooks/use-effect-safe'
 import { setShowFilters } from '../../store'
 import styles from '../filter-layout.module.scss'
 import { Input } from '../../atoms/input'
 import { setFilter } from '../../../../../pages/products/store'
+import {BtnDone} from '../../atoms/btn-done'
 
 
 type Props = {
@@ -38,10 +39,19 @@ export function RangeFilter({ storeData, stateData, filter_from, filter_to }: Pr
     else setMin(null)
   }, [])
 
-  // todo: Ответ бека не должен зависеть от изменяемой цены!!
+  const handleSetMax = useCallback((newValue: string) => {
+    const str = newValue.split(' ')
+    if ( str[1] ) {
+      const newValue = Number(str[1])
+      if (isNaN(newValue)) return setMax(null)
+      else return setMax(newValue)
+    }
+    else setMax(null)
+  }, [])
+
+
   const handleBlurMin = useCallback(() => {
-    if (min === null) return
-    if (min <= storeData[0]) {
+    if (min === null || min <= storeData[0]) {
       setMin(storeData[0])
       setIsHolderMin(true)
       setFilter({ key: filter_from, value: null })
@@ -49,6 +59,16 @@ export function RangeFilter({ storeData, stateData, filter_from, filter_to }: Pr
       setFilter({ key: filter_from, value: min })
     }
   }, [min, filter_from, storeData])
+
+  const handleBlurMax = useCallback(() => {
+    if (max === null || max >= storeData[1]) {
+      setMax(storeData[1])
+      setIsHolderMax(true)
+      setFilter({ key: filter_to, value: null })
+    } else {
+      setFilter({ key: filter_to, value: max })
+    }
+  }, [max, filter_to, storeData])
 
 
   useEffectSafe(() => {
@@ -62,42 +82,37 @@ export function RangeFilter({ storeData, stateData, filter_from, filter_to }: Pr
   }, [max])
 
 
-
-
-
   return (
     <>
+
       <div className={styles.header}>
         <div className={styles.inputWrap}>
-
           <Input
             onBlur={handleBlurMin}
+            onFocus={() => setMin(null)}
             onChange={(event => {handleSetMin(event.currentTarget.value)})}
             value={`от ${min ?? ''}`}
             type={'tel'}
             isPlaceholder={isHolderMin}
           />
-
         </div>
 
         <div className={styles.inputWrap}>
-
           <Input
-            value={`до ${max}`}
+            onBlur={handleBlurMax}
+            onChange={(event => {handleSetMax(event.currentTarget.value)})}
+            value={`до ${max ?? ''}`}
+            onFocus={() => setMax(null)}
             type={'tel'}
             isPlaceholder={isHolderMax}
           />
-
         </div>
       </div>
 
 
 
-
-      <br/>
-
-      <button onClick={() => setShowFilters(false)}>Готово</button>
-
+      <div className={styles.space}/>
+      <BtnDone onClick={() => setShowFilters(false)} title={'Готово'}/>
     </>
   )
 }

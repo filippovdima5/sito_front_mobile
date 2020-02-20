@@ -46,7 +46,7 @@ function Filter({ sexId, name }: { sexId: 1 | 2, name: keyof typeof filtersMap})
   return (
     <div className={`${styles.wrap} ${styles.filter}`}>
       <Header title={filtersMap[name]} event={() => setShowFilter(null)} type={'back'}/>
-      <div className={styles.body}>
+      <div style={{ background: 'white' }} className={styles.body}>
         <FilterBody sexId={sexId} name={name}/>
       </div>
     </div>

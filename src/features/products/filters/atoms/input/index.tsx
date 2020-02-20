@@ -13,6 +13,7 @@ type Props = {
   className?: string,
   ariaLabel?: string,
   onBlur?: () => void,
+  onFocus?: () => void,
 }
 
 export function Input(props: Props) {
@@ -24,6 +25,7 @@ export function Input(props: Props) {
         type={props.type}
 
         onBlur={props.onBlur}
+        onFocus={props.onFocus}
 
         aria-label={props.ariaLabel}
         onChange={props.onChange}

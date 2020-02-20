@@ -6,6 +6,8 @@ import { namesCategory } from '../../../../../constants/category-keys'
 import { setShowFilters, skipThisFilter } from '../../store'
 import { Input } from '../../atoms/input'
 import styles from '../filter-layout.module.scss'
+import { BtnDone } from '../../atoms/btn-done'
+import { BtnHelp } from '../../atoms/btn-help'
 
 
 type Props = {
@@ -23,7 +25,7 @@ const titleVew = (title: number | string | null, sexId: 1 | 2): string => {
   }
 }
 
-const maxItemsView = 10
+const maxItemsView = 35
 
 export function ListFilter({ sexId, stateData, storeData, filter }: Props) {
   const [showAll, setShowAll] = useState<boolean>(storeData.length < maxItemsView)
@@ -75,25 +77,26 @@ export function ListFilter({ sexId, stateData, storeData, filter }: Props) {
 
       <div>
         {(dataList as Array<FiltersItemString | FiltersItemNumber>).map(({ available, value }) => (
-          <CheckRow
-            key = {value}
-            title={titleVew(value, sexId)}
-            check={stateData === null ? false : stateData.includes(value)}
-            disabled={!available}
-            event={() => (setFilter({ key: filter, value }))}/>
+          <div
+            className={styles.wrapInputCheck}
+            key = {value}>
+            <CheckRow
+              title={titleVew(value, sexId)}
+              check={stateData === null ? false : stateData.includes(value)}
+              disabled={!available}
+              event={() => (setFilter({ key: filter, value }))}/>
+          </div>
         ))}
       </div>
 
 
-      {!showAll && <button onClick={() => (setShowAll(true))}>Показать ещё</button>}
+      <BtnHelp title={'Показать ещё'} onClick={() => (setShowAll(true))} visible={!showAll}/>
 
-      <br/>
+      <BtnHelp title={'Сбросить'} onClick={() => skipThisFilter({ key: filter })}/>
 
-      <button onClick={() => skipThisFilter({ key: filter })}>Сбросить</button>
+      <div className={styles.space}/>
 
-      <br/>
-
-      <button onClick={() => setShowFilters(false)}>Готово</button>
+      <BtnDone onClick={() => setShowFilters(false)} title={'Готово'}/>
 
     </>
   )

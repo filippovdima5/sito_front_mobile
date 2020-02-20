@@ -5,6 +5,7 @@ import { setFilter, $productsInfoStore } from '../../../../../pages/products/sto
 import { FilterRow, UnuseFilterRow } from '../../molecules/filter-row'
 import { CheckRow } from '../../molecules/check-row'
 import styles from './styles.module.scss'
+import { BtnDone } from '../../atoms/btn-done'
 
 
 function TitleTypeList({ count, title, allCount }: {count: number, title: string, allCount: number}) {
@@ -39,11 +40,12 @@ export function AllFilters({ sexId }: {sexId: 1 | 2}) {
             }
             
             <div className={styles.list}>
-              {usageFilters.map(({ name, type, data }) => {
+              {usageFilters.map(({ name, type, data }, index) => {
                 if (type !== 'bool') {
                   return (
                     <div onClick={() => setShowFilter(name)} key = {name} className={styles.itemList}>
                       <FilterRow
+                        isFirst={index === 0}
                         type={type}
                         title = {name}
                         sexId = {sexId}
@@ -102,7 +104,11 @@ export function AllFilters({ sexId }: {sexId: 1 | 2}) {
       <div className={styles.space}/>
 
       {/*//todo Написать хелпер для склонений взависимости от кол - ва*/}
-      <button onClick={() => setShowFilters(false)}>{`Посмотреть ${total} предложения`}</button>
+
+      <BtnDone
+        onClick={() => setShowFilters(false)}
+        title={`Посмотреть ${total} предложения`}/>
+
 
     </>
   )

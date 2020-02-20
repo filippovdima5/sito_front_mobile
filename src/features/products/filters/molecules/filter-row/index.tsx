@@ -17,7 +17,11 @@ export function FilterRow(props: ViewFilter) {
     switch (props.type) {
       case 'list-translate': string = props.data.map(i => namesCategory[props.sexId][i]).join(', '); break
       case 'list': string = props.data.join(', '); break
-      case 'range': string = `от ${props.data[0]} до ${props.data[1]}`
+      case 'range': {
+        const min = props.data[0] ? `от ${props.data[0]}` : ''
+        const max = props.data[1] ? ` до ${props.data[1]}` : ''
+        string = min + max
+      }
     }
     string = string.length > 37 ? string.substr(0, 34) + '...' : string
     return string
@@ -28,9 +32,10 @@ export function FilterRow(props: ViewFilter) {
   const xPosition = useRef(0)
   const [skipLength, setSkip] = useState(0)
   const [skipStyle, setSkipStyle] = useState('')
-
+  const [skipAnimate, setSkipAnimate ] = useState<boolean>(true)
 
   const handleTouchStart = useCallback((e) => {
+    setSkipAnimate(false)
     xPosition.current = e.touches[0].pageX + skipLength
     setSkipStyle('')
   }, [skipLength])
@@ -50,6 +55,24 @@ export function FilterRow(props: ViewFilter) {
     if (percentSkip > 0.5) setSkip(elemRow.clientWidth)
   }, [skipLength])
 
+
+
+
+  useEffect(() => {
+    let timerIn: any, timerOut: any
+    if (props.isFirst)  {
+      const elemRow = rowRef.current as HTMLDivElement
+      timerIn = setTimeout(() => setSkip(0.4 * elemRow.clientWidth), 2000)
+      timerOut = setTimeout(() => setSkip(0), 5000)
+    }
+
+    return () => {
+      if (props.isFirst) {
+        clearTimeout(timerIn)
+        clearTimeout(timerOut)
+      }
+    }
+  }, [props.isFirst])
 
 
   useEffect(() => {
@@ -83,6 +106,7 @@ export function FilterRow(props: ViewFilter) {
   }, [props.title])
 
 
+
   useEffect(() => {
     if (skipLength === rowRef.current?.clientWidth ){
       const timer = setTimeout(skipFilter, 150)
@@ -99,7 +123,7 @@ export function FilterRow(props: ViewFilter) {
       <div
         ref = { skipRowRef }
         style={{ left: `-${skipLength}px` }}
-        className={styles.item_wrap}
+        className={`${styles.item_wrap} ${skipAnimate && styles.skipAnimate}`}
       >
 
         <div className={styles.item}>
