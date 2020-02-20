@@ -2,10 +2,9 @@ import React from 'react'
 import styles from './Skeleton.module.scss'
 
 
-function Skeleton({ customStyle }) {
+export function Skeleton({ customStyle }) {
   return (<div
     {...!!customStyle && { style: customStyle }}
     className={`${styles.Skeleton}`}/>)
 }
 
-export { Skeleton }
