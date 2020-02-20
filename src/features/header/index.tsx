@@ -1,16 +1,14 @@
 import React  from 'react'
-import styles from './Header.module.scss'
 import { Link } from 'react-router-dom'
-import { Menu } from './Menu/Menu'
-import { Search } from './Search/Search'
+import { Menu } from '../menu'
+import { Search } from '../search/Search'
+import styles from './styles.module.scss'
 
 
-function Header() {
-
-
+export function Header() {
   return (
     <div className={styles.Header}>
-      <Menu/>
+      {/*<Menu/>*/}
 
       <Link to = {'/'} className={`${styles.logo} ${styles.header_item}`}>
         <span className={styles.a}>
@@ -23,4 +21,3 @@ function Header() {
   )
 }
 
-export { Header }

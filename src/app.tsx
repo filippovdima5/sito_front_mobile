@@ -1,9 +1,9 @@
 import React from 'react'
 import styles from './media/css/app.module.scss'
 import './media/css/reset.module.scss'
-import { Header } from './components/Header/Header'
+import { Header } from './features/header'
 import { Pages } from './pages'
-import { Footer } from './components/Footer/Footer'
+import { Footer } from './features/footer'
 import { Menu } from './components/Menu/animate/MenuAnimate'
 
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Icon.module.scss';
-import search from "../../../../media/img/svg/search.svg";
+import search from "../../../media/img/svg/search.svg";
 import {setModSearch} from "../searchStore";
 
 function Icon() {

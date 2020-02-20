@@ -20,5 +20,5 @@
   height: 100%;
   margin-bottom: 0;
 
-  composes: header_item from '../Header.module.scss';
+  composes: header_item from '../header/styles.module.scss';
 }
