@@ -118,3 +118,10 @@ export const menuLinks = {
   likes: 'Избранное',
   blog: 'Блог'
 } as const
+
+
+export const subcategories = {
+  clothes: 'Одежда',
+  shoes: 'Обувь',
+  accessories: 'Аксессуары'
+} as const

@@ -1,18 +1,81 @@
 .nextMenu{
   position: absolute;
-  top: 50px;
+  top: 0;
   box-sizing: border-box;
   height: calc(100% - 50px);
   width: 100%;
   z-index: 2;
+  background-color: white;
 
 
 
-  background-color: red;
+  .header{
+    width: 100%;
+    font-weight: 400;
+    font-size: 18px;
+    text-transform: uppercase;
+    padding: 10px 20px 10px 50px;
+    position: relative;
+    box-sizing: border-box;
+
+    .img{
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+    }
+
+    .span{
+      display: block;
+      position: relative;
+    }
+  }
+
+
+  .body {
+    background-color: white;
+    width: 100%;
+    height: calc(100% - 54px);
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+
+    .ul{
+      margin-bottom: 30px;
+
+      .li:first-child{
+        border-top: 1px solid #f0f0f0;;
+      }
+
+      .li{
+        font-weight: 200;
+        font-size: 16px;
+        padding: 8px 20px;
+        border-bottom: 1px solid #f0f0f0;
+
+        .link{
+          position: relative;
+          display: block;
+
+          .img{
+            position: absolute;
+            right: 0;
+            top: 50%;
+            width: 20px;
+            transform: translateY(-50%);
+          }
+        }
+      }
+    }
+
+    .space{
+      padding-bottom: 110px;
+    }
+  }
 }
 
 .backLogNextMenu{
-  top: 50px;
+  top: 0;
   position: absolute;
   height: calc(100% - 50px);
   left: 0;

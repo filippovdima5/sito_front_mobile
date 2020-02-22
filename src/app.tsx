@@ -4,7 +4,6 @@ import './media/css/reset.module.scss'
 import { Header } from './features/header'
 import { Pages } from './pages'
 import { Footer } from './features/footer'
-import { Menu } from './components/Menu/animate/MenuAnimate'
 
 
 
@@ -13,7 +12,6 @@ import { Menu } from './components/Menu/animate/MenuAnimate'
 const App = React.memo(function App() {
   return (
     <div id={'app'} className={styles.App}>
-      <Menu/>
 
       <header className={styles.header}>
         <Header/>
