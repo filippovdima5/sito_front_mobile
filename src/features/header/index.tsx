@@ -1,7 +1,7 @@
 import React  from 'react'
 import { Link } from 'react-router-dom'
-import { Menu } from '../menu'
-import { Search } from '../search/Search'
+// import { Menu } from '../menu'
+import { Search } from '../search'
 import styles from './styles.module.scss'
 
 

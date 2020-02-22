@@ -1,12 +1,13 @@
 import axios, { AxiosPromise } from 'axios'
 import config from '../config'
 import {
-  Env,
   SexId,
   ProductsReqParams,
   ProductsRequest,
   FilterReqParams,
-  FiltersRequest
+  FiltersRequest,
+  MainSearchReqParams,
+  MainSearchResultItem
 } from './types'
 
 
@@ -32,15 +33,22 @@ export const apiPost = axios.create({
 export const api = {
   env: {
     getSexId: (): AxiosPromise<SexId> => apiGet.get('/env/gender'),
+    
     setInfo: (key: string | number, value: string | number) => apiPost(`/user?${key.toString()}=${value.toString()}`),
-
-    main: (): AxiosPromise<Env> => apiGet.get('/env2/main'),
   },
 
+  
   products: {
     getProducts: (params: ProductsReqParams): AxiosPromise<ProductsRequest> => apiPost
       .post('/products/products-list', params),
+    
     getFilters: (params: FilterReqParams): AxiosPromise<FiltersRequest> => apiPost
       .post('/products/facet-filters', params)
+  },
+
+  
+  search: {
+    mainSearch: (params: MainSearchReqParams): AxiosPromise<Array<MainSearchResultItem>> => apiPost
+      .post('/search/main-search', params)
   }
 }

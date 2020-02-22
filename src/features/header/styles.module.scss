@@ -2,8 +2,6 @@
   position: relative;
   height: 100%;
 
-
-
   .header_item{
     position: absolute;
     width: 50px;
@@ -11,23 +9,17 @@
     top: 0;
     bottom: 0;
     box-sizing: border-box;
-
   }
-
-
-
 
   .logo{
     left: 50%;
     transform: translateX(-50%);
-
 
     .a{
       text-decoration: none;
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-
 
       .text{
         color: #060a0f;
@@ -39,9 +31,7 @@
         font-size: 36px;
       }
     }
-
   }
-
 }
 
 

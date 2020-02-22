@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 // @ts-ignore
-import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock'
+
 import arrowRight from '../../../media/img/svg/rightArrow.svg'
 import { showMenuWindow , openNextMenu } from '../menuStore'
 import { setSignalWithoutSexId } from '../Header/Header'
@@ -31,11 +31,11 @@ type Props = {
 function Body({ sexId }: Props) {
   const navRef = useRef(document.getElementById('navRef'))
 
-  useEffect(() => {
-    navRef.current = document.getElementById('navRef')
-    disableBodyScroll(navRef.current)
-    return () => {clearAllBodyScrollLocks(navRef.current)}
-  }, [])
+  // useEffect(() => {
+  //   navRef.current = document.getElementById('navRef')
+  //   disableBodyScroll(navRef.current)
+  //   return () => {clearAllBodyScrollLocks(navRef.current)}
+  // }, [])
 
   return (
     <nav

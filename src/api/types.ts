@@ -101,3 +101,25 @@ export interface FilterReqParams {
   favorite?: boolean,
 }
 // endregion
+
+
+
+//region mainSearch
+export interface MainSearchReqParams {
+  sex_id: 1 | 2 | 0,
+  phrase: string,
+}
+
+export const typeMainSearchResultItem = {
+  brand: ' Бренд',
+} as const
+
+
+export interface MainSearchResultItem {
+  title: string,
+  count: number,
+  type: keyof typeof typeMainSearchResultItem,
+}
+
+
+//endregion mainSearch

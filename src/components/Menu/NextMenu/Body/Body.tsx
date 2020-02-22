@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { useStore } from 'effector-react'
 // @ts-ignore
-import { disableBodyScroll } from 'body-scroll-lock'
+// import { disableBodyScroll } from 'body-scroll-lock'
 import { $nextMenuState, showMenuWindow } from '../../menuStore'
 //import { openFromMenu } from '../../../../pages/products/store'
 import styles from './Body.module.scss'
@@ -17,10 +17,10 @@ function Body({ categories , sex_id }: Props) {
   const nextMenuRef = useRef(document.getElementById('nextMenu'))
 
 
-  useEffect(() => {
-    nextMenuRef.current = document.getElementById('nextMenu')
-    disableBodyScroll(nextMenuRef.current)
-  }, [])
+  // useEffect(() => {
+  //   nextMenuRef.current = document.getElementById('nextMenu')
+  //   disableBodyScroll(nextMenuRef.current)
+  // }, [])
 
 
   return (
