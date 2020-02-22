@@ -11,9 +11,6 @@ export const $showFilters = restore(setShowFilters, false)
 export const setShowFilter = createEvent< keyof typeof filtersMap | null>()
 export const $showFilter = restore(setShowFilter, null)
 
-$showFilter.on($showFilters.updates, (_, payload) => {
-  if (!payload) return null
-})
 
 export const skipAllFilters = createEvent()
 mainState.on(skipAllFilters, state => {

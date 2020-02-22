@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom'
 
 import arrowRight from '../../../media/img/svg/rightArrow.svg'
 import { showMenuWindow , openNextMenu } from '../menuStore'
-import { setSignalWithoutSexId } from '../Header/Header'
+import { setSignalWithoutSexId } from '../../../features/menu/molecules/header'
 // import { openFromMenu } from '../../../pages/products/store'
 import styles from './Body.module.scss'
-import { Footer } from './Footer/Footer'
+
 
 
 const catalogList = [
@@ -104,7 +104,6 @@ function Body({ sexId }: Props) {
       </ul>
 
       <div className={styles.space}/>
-      <Footer/>
     </nav>
   )
 }

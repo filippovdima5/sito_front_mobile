@@ -1,6 +1,7 @@
 .Header{
   position: relative;
   height: 100%;
+  box-sizing: border-box;
 
   .header_item{
     position: absolute;

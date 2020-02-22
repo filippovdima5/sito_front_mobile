@@ -1,6 +1,6 @@
 import React  from 'react'
 import { Link } from 'react-router-dom'
-// import { Menu } from '../menu'
+import { Menu } from '../menu'
 import { Search } from '../search'
 import styles from './styles.module.scss'
 
@@ -8,7 +8,7 @@ import styles from './styles.module.scss'
 export function Header() {
   return (
     <div className={styles.Header}>
-      {/*<Menu/>*/}
+      <Menu/>
 
       <Link to = {'/'} className={`${styles.logo} ${styles.header_item}`}>
         <span className={styles.a}>

@@ -1,0 +1,120 @@
+.mainMenu{
+  position: fixed;
+  z-index: 2;
+  height: 100vh;
+  width: calc(100vw - 50px);
+  box-sizing: border-box;
+  background-color: white;
+
+  .iconMenu{
+    position: absolute;
+    top: 0;
+    right: -50px;
+    box-sizing: border-box;
+    width: 50px;
+    height: 50px;
+  }
+
+  .nav{
+    position: relative;
+    top: 51px;
+    height: calc(100% - 53px);
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+
+
+    .h2{
+      font-weight: 400;
+      font-size: 18px;
+      text-transform: uppercase;
+      padding: 10px 20px;
+    }
+
+    .h3{
+      font-weight: 300;
+      font-size: 17px;
+      padding: 8px 20px;
+    }
+
+    .ul{
+      margin-bottom: 30px;
+
+      .li:first-child{
+        border-top: 1px solid #f0f0f0;;
+      }
+
+      .li{
+        font-weight: 200;
+        font-size: 16px;
+        padding: 8px 20px;
+        border-bottom: 1px solid #f0f0f0;
+
+        .link{
+          position: relative;
+          display: block;
+
+          .img{
+            position: absolute;
+            right: 0;
+            top: 50%;
+            width: 20px;
+            transform: translateY(-50%);
+          }
+        }
+      }
+    }
+
+
+
+    .blockNoSex{
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      z-index: 2;
+    }
+
+
+  }
+}
+
+.space{padding-bottom: 70px}
+
+.backLogMainMenu{
+  position: fixed;
+  z-index: 1;
+  top: 50px;
+  height: calc(100vh - 50px);
+  width: 100vw;
+}
+
+
+
+
+.mainMenuOpen{
+  left: 0;
+  transition: left 300ms ease-out;
+}
+
+.mainMenuClose{
+  left: calc(50px - 100vw);
+  transition: left 300ms ease-out;
+}
+
+
+.backLogMainMenuOpen{
+  display: block;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: background-color 300ms ease-out 300ms, display 10ms ease-out 300ms;
+}
+
+.backLogMainMenuClose{
+  display: none;
+  background-color: rgba(0, 0, 0, 0);
+  transition: background-color 300ms ease-out 300ms, display 10ms ease-out 300ms;
+}
+
+
+

@@ -1,0 +1,45 @@
+.nextMenu{
+  position: absolute;
+  top: 50px;
+  box-sizing: border-box;
+  height: calc(100% - 50px);
+  width: 100%;
+  z-index: 2;
+
+
+
+  background-color: red;
+}
+
+.backLogNextMenu{
+  top: 50px;
+  position: absolute;
+  height: calc(100% - 50px);
+  left: 0;
+  width: 100%;
+}
+
+
+
+
+.nextMenuOpen{
+  left: 0;
+  transition: left 300ms;
+}
+
+.nextMenuClose{
+  left: 100%;
+  transition: left 300ms;
+}
+
+.backLogNextMenuOpen{
+  display: block;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: background-color 300ms ease-out 300ms, display 10ms ease-out 300ms;
+}
+
+.backLogNextMenuClose{
+  display: none;
+  background-color: rgba(0, 0, 0, 0);
+  transition: background-color 300ms ease-out 300ms, display 10ms ease-out 300ms;
+}

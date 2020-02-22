@@ -1,13 +1,13 @@
 .Header {
+  position: absolute;
+  width: 100%;
+  top: 0;
   background-color: #f2f2f2;
   height: 50px;
   border-bottom: 1px solid rgba(16, 24, 31, 0.2);
   display: flex;
 
-  position: fixed;
-  width: calc(100% - 50px);
-
-  z-index: 2;
+  z-index: 3;
 
   .buttonWrap{
     position: relative;

@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react'
 import { createEvent, createStore } from 'effector'
 import { useStore } from 'effector-react'
-import { setGender } from '../../../stores/env'
-import styles from './Header.module.scss'
+import { setGender } from '../../../../stores/env'
+import styles from './styles.module.scss'
+
 
 
 type HeaderProps = {
@@ -16,25 +17,25 @@ signalWithoutSexId.on(setSignalWithoutSexId, state => !state)
 signalWithoutSexId.on(setOrder, (state, payload) => payload)
 
 
-function Header ({ sexId }: HeaderProps) {
-  const timerSignal = useRef<number>(null)
+
+export function Header ({ sexId }: HeaderProps) {
+  const timerSignal = useRef<any>(null)
+
+
   const signal = useStore(signalWithoutSexId)
   useEffect(() => {
     if (signal) {
       switch (signal) {
         case 1:
-          // @ts-ignore
           timerSignal.current = setTimeout(() => { setOrder(2) }, 300); break
-        case 2: 
-          // @ts-ignore
+        case 2:
           timerSignal.current = setTimeout(() => { setSignalWithoutSexId() }, 300); break
         default:
-          // @ts-ignore
           timerSignal.current = setTimeout(() => { setOrder(1) }, 100); break
       }
     }
     // @ts-ignore
-    return () => clearTimeout(timerSignal.current)
+    return () => clearTimeout(timerSignal.current as NonNullable<any>)
   }, [signal])
 
 
@@ -53,4 +54,3 @@ function Header ({ sexId }: HeaderProps) {
   )
 }
 
-export { Header }
