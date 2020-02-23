@@ -11,16 +11,16 @@ function Footer() {
     <div className={styles.Footer}>
       <div className={styles.wrap}>
         <div className={styles.social}>
-          <a className={styles.soc} target={'_blank'} href={'/'} rel = {'noopener noreferrer'}>
+          <a className={styles.soc} target={'_blank'} href={'/'} rel="noopener noreferrer">
             <img className={styles.img} src={t} alt={'d'}/>
           </a>
-          <a className={styles.soc} target={'_blank'} href={'/'} rel = {'noopener noreferrer'}>
+          <a className={styles.soc} target={'_blank'} href={'/'} rel="noopener noreferrer" >
             <img className={styles.img} src={i} alt={'d'}/>
           </a>
-          <a className={styles.soc} target={'_blank'} href={'/'} rel = {'noopener noreferrer'}>
+          <a className={styles.soc} target={'_blank'} href={'/'} rel="noopener noreferrer" >
             <img className={styles.img} src={v} alt={'d'}/>
           </a>
-          <a className={styles.soc} target={'_blank'} href={'/'} rel = {'noopener noreferrer'}>
+          <a className={styles.soc} target={'_blank'} href={'/'} rel="noopener noreferrer" >
             <img className={styles.img} src={y} alt={'d'}/>
           </a>
         </div>

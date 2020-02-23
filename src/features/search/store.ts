@@ -1,4 +1,4 @@
-import { combine, createEffect, createEvent, createStore, restore } from 'effector'
+import { combine, createEffect, createEvent, createStore, guard, restore, sample } from 'effector'
 import { api } from '../../api'
 import { MainSearchResultItem, MainSearchReqParams } from '../../api/types'
 import { $sexId } from '../../stores/env'
@@ -33,8 +33,9 @@ const paramsFetch = combine({ $sexId, $phrase }, ({ $sexId: sex_id, $phrase: phr
   return { sex_id, phrase }
 })
 
-
-paramsFetch.updates.watch(state => {
-  if (!state.sex_id && !state.phrase) return undefined
-  fetchSearch(state as MainSearchReqParams)
+guard({
+  source: sample(paramsFetch, $phrase.updates),
+  filter: () => $modSearch.getState(),
+  target: fetchSearch,
 })
+

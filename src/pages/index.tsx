@@ -2,28 +2,18 @@ import React from 'react'
 import { Switch, Route } from 'react-router'
 import { Home } from './home'
 import { Products } from './products'
+import { NotFound } from './not-found'
 
 
-function Brands() {return(<div>Brands</div>)}
-function AboutUs() {return(<div>About us</div>)}
-function NotFound() {return <div>Not Found 404</div>}
-
-
-function Pages() {
+export function Pages() {
   return (
     <Switch>
       <Route exact={true} path={'/'} component={Home}/>
-      <Route path={'/products/:sex'} component={Products}/>
-
-      <Route path = {'/brands'} component={Brands}/>
-      <Route path={'/about'} component={AboutUs}/>
+      <Route path={'/products/:sex'} component={Products}/>\
 
 
+      <Route path={'/404'} component={NotFound}/>
       <Route path={'*'} component={NotFound}/>
     </Switch>
   )
 }
-
-
-
-export {Pages }

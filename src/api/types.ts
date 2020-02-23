@@ -1,25 +1,14 @@
-import { categoryKeys } from '../constants/category-keys'
-
-//region Env:
-export interface SexId {
-  sexId: 1 | 2,
+//region User:
+export interface UserRequest {
+  sex_id?: 1 | 2,
 }
 
-export interface EnvDataItem  {
-  title: string,
-  img: string,
-  url: string,
+export interface UserReqParams {
+  sex_id?: 1 | 2,
 }
+// endregion User
 
-export interface Env {
-  sex_id: 1 | 2 | null,
-  brands: Array<EnvDataItem>,
-  partners: Array<EnvDataItem>,
-  clothes: Array<keyof typeof categoryKeys['1']['clothes'] | keyof typeof categoryKeys['2']['clothes']> | null,
-  shoes: Array<keyof typeof categoryKeys['1']['shoes'] | keyof typeof categoryKeys['2']['shoes']> | null,
-  accessories: Array<keyof typeof categoryKeys['1']['accessories'] | keyof typeof categoryKeys['2']['accessories']> | null,
-}
-// endregion Env
+
 
 
 // region products:

@@ -1,13 +1,14 @@
 import axios, { AxiosPromise } from 'axios'
 import config from '../config'
 import {
-  SexId,
   ProductsReqParams,
   ProductsRequest,
   FilterReqParams,
   FiltersRequest,
   MainSearchReqParams,
-  MainSearchResultItem
+  MainSearchResultItem,
+  UserRequest,
+  UserReqParams,
 } from './types'
 
 
@@ -31,10 +32,12 @@ export const apiPost = axios.create({
 
 
 export const api = {
-  env: {
-    getSexId: (): AxiosPromise<SexId> => apiGet.get('/env/gender'),
+  user: {
+    setUser: (params: UserReqParams) => apiPost
+      .post('/user', params),
     
-    setInfo: (key: string | number, value: string | number) => apiPost(`/user?${key.toString()}=${value.toString()}`),
+    getUser: (): AxiosPromise<UserRequest> => apiGet
+      .get('/user')
   },
 
   

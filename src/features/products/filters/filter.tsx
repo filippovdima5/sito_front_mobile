@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import { useStore } from 'effector-react'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import { $filtersStore  } from '../../../pages/products/store'
@@ -15,6 +15,7 @@ import animateStyles from './animate/filter.module.scss'
 function FilterBody({ name, sexId }: {name: keyof typeof filtersMap, sexId: 1 | 2 }) {
   const filtersSate = useStore($filtersViewRecord)
   const filterStore = useStore($filtersStore)
+
 
 
   if (filterStore === null) return null
@@ -62,12 +63,14 @@ function ShowFilter({ sexId }: { sexId: 1 | 2 }) {
   const classNames = useTransitionNames(animateStyles)
   const showFilters = useStore($showFilters)
 
+
   useEffect(() => {
     let timer: any
     if (!showFilters) timer = setTimeout(() => setShowFilter(null), 300)
     if (showFilters) clearTimeout(timer)
 
   }, [showFilters])
+
 
   return (
     <TransitionGroup>

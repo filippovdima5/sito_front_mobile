@@ -3,17 +3,21 @@ import { api } from '../../api'
 import { GenderInfo } from './types'
 
 
+export const fetchUser = createEffect({
+  handler: api.user.getUser
+})
+
 
 //region Gender:
 export const $genderInfo = createStore<GenderInfo>(null)
 
-export const setGender = createEvent<'men' | 'women' | 1 | 2>()
-export const fetchSexId = createEffect({
-  handler: api.env.getSexId
+export const setGender = createEvent<'men' | 'women' | 1 | 2 | null>()
+const fetchSexId = fetchUser.done.map(({ result: { data } }) => {
+  if (data.sex_id) return data.sex_id
+  return null
 })
-const fetchSexIdDone = fetchSexId.done.map(i => i.result.data.sexId)
-const targetSetGender = merge([setGender, fetchSexIdDone])
 
+const targetSetGender = merge([setGender, fetchSexId])
 
 $genderInfo.on(targetSetGender, (_, payload) => {
   switch (payload) {
@@ -28,9 +32,9 @@ $genderInfo.on(targetSetGender, (_, payload) => {
 setGender.watch(payload => {
   switch (payload) {
     case 1:
-    case 'men': api.env.setInfo('sex_id', 1); break
+    case 'men': api.user.setUser({ sex_id: 1 }); break
     case 2:
-    case 'women': api.env.setInfo('sex_id', 2); break
+    case 'women': api.user.setUser({ sex_id: 2 }); break
     default: return undefined
   }
 })

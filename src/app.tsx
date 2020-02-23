@@ -1,4 +1,5 @@
 import React from 'react'
+import { Redirect } from 'react-router'
 import styles from './media/css/app.module.scss'
 import './media/css/reset.module.scss'
 import { Header } from './features/header'
@@ -9,23 +10,37 @@ import { Footer } from './features/footer'
 
 
 
-const App = React.memo(function App() {
-  return (
-    <div id={'app'} className={styles.App}>
+class App extends React.Component<any, any>{
+  state = {
+    error: false
+  }
 
-      <header className={styles.header}>
-        <Header/>
-      </header>
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
+    console.error(error, errorInfo)
+    this.setState({ error: true })
+  }
 
-      <main className={styles.main}>
-        <Pages/>
-      </main>
+  render(){
+    if (this.state.error) return <Redirect to={'/404'}/>
 
-      <footer className={styles.footer}>
-        <Footer/>
-      </footer>
-    </div>
-  )
-})
+    return(
+      <div id={'app'} className={styles.App}>
+
+        <header className={styles.header}>
+          <Header/>
+        </header>
+
+        <main className={styles.main}>
+          <Pages/>
+        </main>
+
+        <footer className={styles.footer}>
+          <Footer/>
+        </footer>
+      </div>
+    )
+  }
+}
+
 
 export { App }

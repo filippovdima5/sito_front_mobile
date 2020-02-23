@@ -6,7 +6,7 @@ import { initRouteHistory } from './store'
 
 
 
-export class Products extends React.Component<RouteComponentProps<{ sex: string }, { hilocation: string, statusCode?: number }>> {
+export class Products extends React.Component<RouteComponentProps<{ sex: string }, { hilocation: string, statusCode?: number }>, any> {
   componentDidMount(): void {
     initRouteHistory(this.props.history)
   }

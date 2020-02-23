@@ -280,7 +280,8 @@ mainState.updates.watch((payload) => {
       .join('&')
   }
 
-  routeHistory.getState()?.replace(newUrl + search)
+  const url = newUrl + search
+  routeHistory.getState()?.replace(url)
 })
 // endregion encode_url_state
 
