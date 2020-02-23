@@ -125,3 +125,10 @@ export const subcategories = {
   shoes: 'Обувь',
   accessories: 'Аксессуары'
 } as const
+
+
+export const subId = {
+  clothes: 1000,
+  shoes: 2000,
+  accessories: 3000,
+}

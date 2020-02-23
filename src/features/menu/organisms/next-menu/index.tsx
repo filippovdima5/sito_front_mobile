@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { $showNextMenu, setShowNextMenu, $showMainMenu } from '../../store'
+import { Link } from 'react-router-dom'
+import { $showNextMenu, setShowNextMenu, $showMainMenu, setShowMainMenu } from '../../store'
 import { useStore } from '../../../../helpers/hooks/use-effector-store'
 import leftArrow from '../../../../media/img/svg/leftArrow.svg'
-import { categories, subcategories } from '../../constants'
+import { subId, categories, subcategories } from '../../constants'
+import { sexIdToStr } from '../../../../helpers/lib'
+import { setCategories } from '../../../products/filters/store'
 import styles from './styles.module.scss'
+
 
 
 export function NextMenu({ sexId }: {sexId: 1 | 2 | 0}) {
@@ -48,20 +52,31 @@ export function NextMenu({ sexId }: {sexId: 1 | 2 | 0}) {
           <ul className={styles.ul}>
             {
               Object.entries(categories[sexId][sub]).map(([key, value]) => (
-                <li
+                <Link
+                  to={`/products/${sexIdToStr(sexId)}?categories=${key}`}
                   key={key}
                   className={styles.li}
+                  onClick={() => {
+                    setCategories({ value: Number(key) })
+                    setShowMainMenu()
+                  }}
                 >
                   <span className={styles.link}>
                     {value}
                   </span>
-                </li>
+                </Link>
               ))
             }
-            <li
-              className={styles.li}>
+            <Link
+              to={`/products/${sexIdToStr(sexId)}?categories=${subId[sub]}`}
+              className={styles.li}
+              onClick={() => {
+                setCategories({ value: Number(subId[sub]) })
+                setShowMainMenu()
+              }}
+            >
               <span className={styles.link}>Прочее</span>
-            </li>
+            </Link>
           </ul>
 
           <div className={styles.space}/>

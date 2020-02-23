@@ -34,6 +34,7 @@ const paramsFetch = combine({ $sexId, $phrase }, ({ $sexId: sex_id, $phrase: phr
 })
 
 
-paramsFetch.watch(state => {
+paramsFetch.updates.watch(state => {
+  if (!state.sex_id && !state.phrase) return undefined
   fetchSearch(state as MainSearchReqParams)
 })
