@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { useStore } from 'effector-react'
+import { useStore } from '../../../../../helpers/hooks/use-effector-store'
 import { $filtersView, skipAllFilters, setShowFilter, setShowFilters } from '../../store'
 import { setFilter, $productsInfoStore } from '../../../../../pages/products/store'
 import { FilterRow, UnuseFilterRow } from '../../molecules/filter-row'

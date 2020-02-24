@@ -31,4 +31,4 @@ const useStoreMapServer: typeof useOriginalStoreMap = (opts) => {
 }
 
 export const useStoreMap = config.ssr ? useStoreMapServer : useOriginalStoreMap
-export const useStore = useEffectorStore
+export { useEffectorStore as useStore }

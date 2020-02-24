@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { useStore } from 'effector-react'
+import { useStore } from '../../../helpers/hooks/use-effector-store'
 import { $productsInfoStore, productsState, setProductsState } from '../../../pages/products/store'
 import styles from './styles.module.scss'
 

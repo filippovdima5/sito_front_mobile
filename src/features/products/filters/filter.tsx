@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useStore } from 'effector-react'
+import { useStore } from '../../../helpers/hooks/use-effector-store'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import { $filtersStore  } from '../../../pages/products/store'
 import { useTransitionNames } from '../../../helpers/hooks/useTransitionNames'

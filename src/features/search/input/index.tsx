@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { useStore } from 'effector-react'
+import { useStore } from '../../../helpers/hooks/use-effector-store'
 import { setPhrase, $modSearch } from '../store'
 import styles from './styles.module.scss'
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { createEvent, createStore } from 'effector'
-import { useStore } from 'effector-react'
+import { useStore } from '../../../../helpers/hooks/use-effector-store'
 import { setGender } from '../../../../stores/env'
 import styles from './styles.module.scss'
 

@@ -1,8 +1,8 @@
 const path = require('path')
 const webpack = require('webpack')
 const nodeExternals = require('webpack-node-externals')
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const getCSSModuleLocalIdent = require('./utils/getCSSModuleLocalIdent');
+const LoadablePlugin = require('@loadable/webpack-plugin')
 
 
 const commonPresets = [
@@ -70,6 +70,7 @@ const serverEntryConfig = {
     minimize: false,
   },
   entry: {
+    sito: './ssr/app.ts',
     server: './ssr/index.ts',
   },
   output: {
@@ -85,10 +86,12 @@ const serverEntryConfig = {
     __dirname: false,
   },
   externals: [
+    '@loadable/component',
     nodeExternals({
       whitelist: [
         /normalize\.css/,
         /@babel\/runtime\/.+/
+
       ],
     })
   ],
@@ -113,7 +116,6 @@ const serverEntryConfig = {
               importLoaders: 3,
               sourceMap: true,
               modules: {
-                // localIdentName: "[name]__[local]___[hash:base64:5]",
                 getLocalIdent: getCSSModuleLocalIdent,
               },
             },
@@ -150,7 +152,7 @@ const serverEntryConfig = {
 
   plugins: [
     new webpack.EnvironmentPlugin(['REACT_APP_ENV']),
-
+    new LoadablePlugin({ filename: 'loadable-stats-server.json' }),
   ],
 }
 

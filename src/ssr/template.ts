@@ -2,12 +2,13 @@
 
 interface Args {
   html?: string,
+  preloadedState?: any,
   styleTags?: string,
   scripts?: string,
 }
 
 export const template = (
-  { html = '', styleTags = '', scripts = '' }: Args) => `
+  { html = '', styleTags = '', preloadedState, scripts = '' }: Args) => `
 <!DOCTYPE html>
 <html lang="ru">
   <head>
@@ -35,6 +36,8 @@ export const template = (
   ${scripts}
   
   <div id="root">${html}</div>
+  
+
 </body>
 </html>
 `

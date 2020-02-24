@@ -1,5 +1,5 @@
 import React from 'react'
-import { useStore } from 'effector-react'
+import { useStore } from '../../../helpers/hooks/use-effector-store'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import { useTransitionNames } from '../../../helpers/hooks/useTransitionNames'
 import styles from './styles.module.scss'

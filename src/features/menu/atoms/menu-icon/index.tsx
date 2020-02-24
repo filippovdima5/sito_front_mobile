@@ -6,8 +6,7 @@ import { useStore } from '../../../../helpers/hooks/use-effector-store'
 
 export function MenuIcon() {
   const showMainMenu = useStore($showMainMenu)
-
-
+  
 
   return (
     <div className={`${styles.Menu} ${showMainMenu ? styles.menu_open : styles.menu_close}`}>

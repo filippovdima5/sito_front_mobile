@@ -1,5 +1,5 @@
 import React from 'react'
-import { useStore } from 'effector-react'
+import { useStore } from '../../helpers/hooks/use-effector-store'
 import styles from './styles.module.scss'
 import { $modSearch } from './store'
 import { Icon } from './icon'

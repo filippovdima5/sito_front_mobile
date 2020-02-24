@@ -10,18 +10,7 @@ import { Footer } from './features/footer'
 
 
 
-class App extends React.Component<any, any>{
-  state = {
-    error: false
-  }
-
-  componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
-    console.error(error, errorInfo)
-    this.setState({ error: true })
-  }
-
-  render(){
-    if (this.state.error) return <Redirect to={'/404'}/>
+export function App() {
 
     return(
       <div id={'app'} className={styles.App}>
@@ -39,8 +28,7 @@ class App extends React.Component<any, any>{
         </footer>
       </div>
     )
-  }
 }
 
 
-export { App }
+export default App

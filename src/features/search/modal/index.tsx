@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { useStore } from 'effector-react'
+import { useStore } from '../../../helpers/hooks/use-effector-store'
 import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock'
 import { $searchResult, $showResults } from '../store'
 import styles from './styles.module.scss'

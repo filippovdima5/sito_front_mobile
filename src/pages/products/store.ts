@@ -1,10 +1,10 @@
-import {  createEffect, createEvent, createStore, guard, restore } from 'effector'
-import { RouteComponentProps } from 'react-router'
-import { setGender } from '../../stores/env'
-import {ProductsReqParams, FilterReqParams, ProductsRequest, PaginateInfo, FiltersRequest} from '../../api/types'
-import { api } from '../../api'
-import { MainState, AfterDecodeUrl, TypeSet } from './types'
-
+import {createEffect, createEvent, createStore, guard, restore} from 'effector'
+import {RouteComponentProps} from 'react-router'
+import {setGender} from '../../stores/env'
+import {FilterReqParams, FiltersRequest, PaginateInfo, ProductsReqParams, ProductsRequest} from '../../api/types'
+import {api} from '../../api'
+import {AfterDecodeUrl, MainState, TypeSet} from './types'
+import {hydrateInitialState} from '../../ssr/utils/hydrate-initial-state'
 
 
 //region route_history:
@@ -307,5 +307,15 @@ export const $productsInfoStore = createStore<PaginateInfo>({
   total_pages: 0
 })
 $productsInfoStore.on(fetchProducts.done, ((state, { result: { data: { info } } }) => info))
+
+
+
+$productsStore.on(hydrateInitialState, ((state, serverData) => {
+  return serverData.products.products as ProductsRequest['products']
+}))
+$productsInfoStore.on(hydrateInitialState, ((state, serverData) => {
+  return serverData.products.info as ProductsRequest['info']
+}))
+
 //endregion productsStore
 
