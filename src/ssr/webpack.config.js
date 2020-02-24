@@ -5,51 +5,51 @@ const nodeExternals = require('webpack-node-externals')
 
 const commonPresets = [
   [
-    '@babel/preset-env',
+    "@babel/preset-env",
     {
-      'targets': {
-        'browsers': ['>0.5%', 'last 2 versions', 'ie >= 10']
+      "targets": {
+        "browsers": [">0.5%", "last 2 versions", "ie >= 10"]
       }
     }
   ],
-  '@babel/preset-react'
+  "@babel/preset-react"
 ]
 
 const babelConfig = {
-  'plugins': [
-    ['@babel/transform-runtime',
+  "plugins": [
+    ["@babel/transform-runtime",
       {
-        'corejs': 2
+        "corejs": 2
       }
     ],
-    '@loadable/babel-plugin',
-    '@babel/transform-async-to-generator',
-    '@babel/proposal-class-properties',
-    '@babel/proposal-object-rest-spread',
-    '@babel/syntax-dynamic-import',
-    '@babel/plugin-proposal-export-default-from',
-    '@babel/plugin-syntax-export-namespace-from',
-    '@babel/plugin-proposal-optional-chaining',
-    'transform-export-extensions'
+    "@loadable/babel-plugin",
+    "@babel/transform-async-to-generator",
+    "@babel/proposal-class-properties",
+    "@babel/proposal-object-rest-spread",
+    "@babel/syntax-dynamic-import",
+    "@babel/plugin-proposal-export-default-from",
+    "@babel/plugin-syntax-export-namespace-from",
+    "@babel/plugin-proposal-optional-chaining",
+    "transform-export-extensions"
   ],
-  'overrides': [
+  "overrides": [
     {
-      'test': [
-        './src/**/*.ts',
-        './src/**/*.tsx'
+      "test": [
+        "./src/**/*.ts",
+        "./src/**/*.tsx"
       ],
-      'presets': [
-        '@babel/preset-typescript',
+      "presets": [
+        "@babel/preset-typescript",
         ...commonPresets
       ]
     },
     {
-      'test': [
-        './src/**/*.js',
-        './src/**/*.jsx'
+      "test": [
+        "./src/**/*.js",
+        "./src/**/*.jsx"
       ],
-      'presets': [
-        '@babel/preset-flow',
+      "presets": [
+        "@babel/preset-flow",
         ...commonPresets
       ]
     }
@@ -71,6 +71,7 @@ const serverEntryConfig = {
   output: {
     path: path.resolve(__dirname, '..', '..', 'build'),
     filename: 'server.js',
+    // publicPath: 'assets/',
     publicPath: '/static/',
   },
   resolve: {
@@ -112,7 +113,6 @@ const serverEntryConfig = {
         },
         sideEffects: true,
       },
-
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
         loader: 'file-loader',
@@ -138,4 +138,4 @@ const serverEntryConfig = {
   ],
 }
 
-module.exports = serverEntryConfig
+module.exports = serverEntryConfig;
