@@ -9,11 +9,15 @@ import animate from './animate.module.scss'
 // todo: Нужно как то эффективнее отслеживать скролл! иначе на каждый скролик, все обновляется!
 
 function ControlProductsAnimate() {
+
   const classNames = useTransitionNames(animate)
   const [show, setShow] = useState(false)
+
+
   const bodyRef = useRef(document.body)
   const prevPosY = useRef(0)
   const curPosY = useScroll(bodyRef).y
+
   useEffect(() => {
     if (curPosY < prevPosY.current && !show && curPosY > 100) setShow(true)
     if ((curPosY > prevPosY.current && show) || curPosY === 0) setShow(false)

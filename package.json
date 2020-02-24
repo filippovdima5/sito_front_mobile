@@ -43,7 +43,8 @@
     "use-subscription": "^1.3.0",
     "webpack": "^4.41.5",
     "webpack-node-externals": "^1.7.2",
-    "react-dev-utils": "latest"
+    "react-dev-utils": "latest",
+    "loader-utils": "latest"
   },
   "scripts": {
     "dev": "react-scripts start",

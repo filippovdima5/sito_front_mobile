@@ -3,6 +3,7 @@ import { RouteComponentProps } from 'react-router'
 import { ProductsList, ControlProducts, LoadMore, Filters } from '../../features/products'
 import styles from './styles.module.scss'
 import { initRouteHistory } from './store'
+import config from '../../config'
 
 
 

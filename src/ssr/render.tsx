@@ -24,6 +24,7 @@ const clientExtractor = new ChunkExtractor({ statsFile: clientStatsFile })
 
 export const render = async (ctx: any) => {
   
+  console.log(ctx.path, ctx.query)
 
   try {
     const jsx = (
