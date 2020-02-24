@@ -1,6 +1,8 @@
 const path = require('path')
 const webpack = require('webpack')
 const nodeExternals = require('webpack-node-externals')
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const getCSSModuleLocalIdent = require('./utils/getCSSModuleLocalIdent');
 
 
 const commonPresets = [
@@ -20,8 +22,8 @@ const babelConfig = {
     ["@babel/transform-runtime",
       {
         "corejs": 2
-      }
-    ],
+      }],
+
     "@loadable/babel-plugin",
     "@babel/transform-async-to-generator",
     "@babel/proposal-class-properties",
@@ -30,7 +32,9 @@ const babelConfig = {
     "@babel/plugin-proposal-export-default-from",
     "@babel/plugin-syntax-export-namespace-from",
     "@babel/plugin-proposal-optional-chaining",
-    "transform-export-extensions"
+    "transform-export-extensions",
+
+
   ],
   "overrides": [
     {
@@ -71,7 +75,6 @@ const serverEntryConfig = {
   output: {
     path: path.resolve(__dirname, '..', '..', 'build'),
     filename: 'server.js',
-    // publicPath: 'assets/',
     publicPath: '/static/',
   },
   resolve: {
@@ -97,22 +100,32 @@ const serverEntryConfig = {
         loader: 'babel-loader',
         options: babelConfig,
       },
-      {
-        test: /\.css$/,
-        loader: 'file-loader',
-        options: {
-          emitFile: false,
-        },
-        sideEffects: true,
-      },
+
       {
         test: /\.scss$/,
-        loader: 'file-loader',
-        options: {
-          emitFile: false,
-        },
-        sideEffects: true,
+        use: [
+          {
+            loader: 'isomorphic-style-loader',
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 3,
+              sourceMap: true,
+              modules: {
+                // localIdentName: "[name]__[local]___[hash:base64:5]",
+                getLocalIdent: getCSSModuleLocalIdent,
+              },
+            },
+          },
+          {
+            loader: 'sass-loader'
+          }
+        ]
       },
+
+
+
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
         loader: 'file-loader',
@@ -131,10 +144,13 @@ const serverEntryConfig = {
           emitFile: false,
         },
       },
+
     ],
   },
+
   plugins: [
-    new webpack.EnvironmentPlugin(['REACT_APP_ENV'])
+    new webpack.EnvironmentPlugin(['REACT_APP_ENV']),
+
   ],
 }
 

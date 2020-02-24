@@ -43,13 +43,12 @@ export const render = async (ctx: any) => {
     const scripts = clientExtractor.getScriptTags()
 
 
-    // Получаем стили и статический ксс
+    // Получаем стили
     const styleTags = clientExtractor.getStyleTags()
-
-
+    
 
     // Чистим строку от ссылок перед кэшированием (possible v8 memory leaks)
-    return template({ html, scripts, styleTags }).split('').join('')
+    return template({ html,  styleTags,  scripts }).split('').join('')
   } catch (e) {
     console.log(e)
   }
