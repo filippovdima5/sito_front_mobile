@@ -7,8 +7,6 @@ import { Footer } from './features/footer'
 
 
 
-
-
 export function App() {
     return(
       <div id={'app'} className={styles.App}>
@@ -27,6 +25,8 @@ export function App() {
       </div>
     )
 }
+
+export default App
 
 
 

@@ -234,11 +234,12 @@ const fetchProductsParams = mainState.map(state => {
   }
 })
 
-guard({
-  source: fetchProductsParams.updates,
-  filter: fetchProducts.pending.map(pending => !pending),
-  target: fetchProducts
-})
+// guard({
+//   source: fetchProductsParams.updates,
+//   filter: fetchProducts.pending.map(pending => !pending),
+//   target: fetchProducts
+// })
+
 //endregion fetchProducts
 
 

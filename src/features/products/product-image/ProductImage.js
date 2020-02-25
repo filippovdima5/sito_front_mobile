@@ -1,6 +1,10 @@
 import React, { Fragment, useState, useEffect, useRef } from 'react'
 import { Skeleton } from '../../../atoms/Skeleton/Skeleton'
 import styles from './ProductImage.module.scss'
+import config from '../../../config'
+
+// todo Надо думать как высчитывать всю хуйню на сервере
+// решение: Сделать компонент для сервера без данной фичи!
 
 
 function ProductImage({ src, alt, wrapHeight }) {
@@ -34,14 +38,14 @@ function ProductImage({ src, alt, wrapHeight }) {
 
       <img
         ref = {imgRef}
-        style={{ display: loadedImage ? 'block' : 'none' }}
+        style={{ display: loadedImage || config.ssr ? 'block' : 'none' }}
         className={styles.ProductImage}
         src={src}
         alt={alt}
         onLoad={handleLoadImg}
       />
 
-      {!loadedImage && <Skeleton customStyle={{ paddingBottom: 'calc(125% + 30px)' }}/>}
+      {!loadedImage && !config.ssr && <Skeleton customStyle={{ paddingBottom: 'calc(125% + 30px)' }}/>}
 
     </Fragment>
   )

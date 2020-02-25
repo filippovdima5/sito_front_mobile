@@ -3,6 +3,7 @@ import { useStore } from '../../../helpers/hooks/use-effector-store'
 import { $productsStore } from '../../../pages/products/store'
 import { ProductCard, SkeletonCard } from '../product-card'
 import styles from './styles.module.scss'
+import config from '../../../config'
 
 
 // todo скелетоны!
@@ -35,7 +36,7 @@ function List() {
   const viewData = useStore($productsStore).length > 0
   return (
     <div className={styles.productsList}>
-      {viewData ?
+      {(viewData || config.ssr) ?
         <ProductsList/>
         :
         <SkeletonsList/>

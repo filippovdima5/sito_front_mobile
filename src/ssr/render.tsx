@@ -39,15 +39,13 @@ const serverExtractor = new ChunkExtractor({ statsFile: serverStatsFile, entrypo
   Мы не может просто импортировать его сверху,
   Потому что иначе эффектор не будет реагировать на него, так как будет создано два экземпляра
 */
-const { App, hydrateInitialState }: EntryPoint = serverExtractor.requireEntrypoint()
+const { default: App, hydrateInitialState }: EntryPoint = serverExtractor.requireEntrypoint()
 
 
 const sex_id = 1
 
 export const render = async (ctx: any) => {
-
-
- 
+  
   await api.products.getProducts({ sex_id })
     .then(res => res.data)
     .then((res => {store.dispatch({ type: constants.SET_PRODUCTS_REDUX_STORE, payload: res })}))
@@ -55,7 +53,6 @@ export const render = async (ctx: any) => {
 
   if (hydrateInitialState) {
     hydrateInitialState(store.getState())
-    console.log(store.getState())
   }
   
 
@@ -70,14 +67,11 @@ export const render = async (ctx: any) => {
       </ChunkExtractorManager>
     )
     
-
     const html = ReactDOMServer.renderToString(jsx)
-
-
+    
     // Получаем все необходимые для рендеринга на клиенте скрипты
     const scripts = clientExtractor.getScriptTags()
-
-
+    
     // Получаем стили
     const styleTags = clientExtractor.getStyleTags()
     
