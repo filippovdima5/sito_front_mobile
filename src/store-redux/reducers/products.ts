@@ -1,4 +1,4 @@
-//import { constants } from '../constants'
+import { constants } from '../constants'
 
 const initialState = {
   products: [],
@@ -10,7 +10,7 @@ const initialState = {
 
 export default function (state = initialState, action: any) {
   switch (action.type) {
-    case 'SET_PRODUCTS_REDUX_STORE': {
+    case constants.SET_PRODUCTS_REDUX_STORE: {
       return { ...state, ...action.payload }
     }
     default: {

@@ -11,9 +11,9 @@ import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server'
 import { template } from './template'
 
 
-//import { store } from './setup-store'
-// import { api } from '../api'
-// import { constants } from '../store-redux/constants'
+import { store } from './setup-store'
+import { api } from '../api'
+import { constants } from '../store-redux/constants'
 
 
 interface EntryPoint {
@@ -39,37 +39,34 @@ const serverExtractor = new ChunkExtractor({ statsFile: serverStatsFile, entrypo
   Мы не может просто импортировать его сверху,
   Потому что иначе эффектор не будет реагировать на него, так как будет создано два экземпляра
 */
-const { default: App, hydrateInitialState }: EntryPoint = serverExtractor.requireEntrypoint()
-
-console.log(App, hydrateInitialState)
+const { App, hydrateInitialState }: EntryPoint = serverExtractor.requireEntrypoint()
 
 
+const sex_id = 1
 
 export const render = async (ctx: any) => {
 
-  // await Promise.all([
-  //   () => {
-  //       async (dispatch: any) => {
-  //         await api.products.getProducts({ sex_id })
-  //           .then(res => res.data)
-  //           .then((res => {store.dispatch({ type: constants.SET_PRODUCTS_REDUX_STORE, payload: res })}))
-  //       }
-  //   }
-  // ])
 
-  // if (hydrateInitialState) {
-  //   hydrateInitialState({products: {products: [], info: {page: 40000000000, total_pages: 58585858}}})
-  // }
+ 
+  await api.products.getProducts({ sex_id })
+    .then(res => res.data)
+    .then((res => {store.dispatch({ type: constants.SET_PRODUCTS_REDUX_STORE, payload: res })}))
+
+
+  if (hydrateInitialState) {
+    hydrateInitialState(store.getState())
+    console.log(store.getState())
+  }
   
 
   try {
     const jsx = (
       <ChunkExtractorManager extractor={clientExtractor}>
-        {/*<Provider store={store}>*/}
+        <Provider store={store}>
           <StaticRouter location={ctx.path}>
             <App />
           </StaticRouter>
-        {/*</Provider>*/}
+        </Provider>
       </ChunkExtractorManager>
     )
     
@@ -86,7 +83,7 @@ export const render = async (ctx: any) => {
     
 
     // Чистим строку от ссылок перед кэшированием (possible v8 memory leaks)
-    return template({ html, preloadedState: {},  styleTags,  scripts }).split('').join('')
+    return template({ html, preloadedState: store.getState(),  styleTags,  scripts }).split('').join('')
   } catch (e) {
     console.log(e)
   }

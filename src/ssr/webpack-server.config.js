@@ -33,8 +33,6 @@ const babelConfig = {
     "@babel/plugin-syntax-export-namespace-from",
     "@babel/plugin-proposal-optional-chaining",
     "transform-export-extensions",
-
-
   ],
   "overrides": [
     {
@@ -60,17 +58,103 @@ const babelConfig = {
   ]
 }
 
-const serverEntryConfig = {
+const serverAssetsConfig = {
   context: path.resolve(__dirname, '..'),
-  watch: process.env.WATCH === 'true',
-  mode: 'development',
-  name: 'server',
-  target: 'async-node',
+  mode: 'production',
+  target: 'node',
   optimization: {
     minimize: false,
   },
   entry: {
-    sito: './ssr/app.ts',
+    server: './ssr/app.ts',
+  },
+  output: {
+    path: path.resolve(__dirname, '..', '..', 'build'),
+    filename: 'sito.js',
+    publicPath: '/static/',
+    libraryTarget: 'commonjs2',
+  },
+  resolve: {
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    modules: ['node_modules', 'src'],
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(js|ts)x?$/,
+        exclude: /(node_modules\/)/,
+        loader: 'babel-loader',
+        options: babelConfig,
+      },
+
+      {
+        test: /\.scss$/,
+        use: [
+          {
+            loader: 'isomorphic-style-loader',
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 3,
+              sourceMap: true,
+              modules: {
+                getLocalIdent: getCSSModuleLocalIdent,
+              },
+            },
+          },
+          {
+            loader: 'sass-loader'
+          }
+        ]
+      },
+
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        loader: 'file-loader',
+        options: {
+          emitFile: false,
+          name: 'media/[name].[hash:8].[ext]',
+        },
+        sideEffects: true,
+      },
+
+      {
+        test: /\.(png|jpg|svg|ico|gif)$/,
+        loader: 'file-loader',
+        options: {
+          name: 'media/[name].[hash:8].[ext]',
+          emitFile: false,
+        },
+      },
+    ],
+  },
+  externals: [
+    '@loadable/component',
+    nodeExternals({
+      whitelist: [
+        /react-dnd-html5-backend(\/.+)?/,
+        /dnd-core(\/.+)?/,
+        /react-dnd(\/.+)?/,
+        /react-redux\/.+/,
+        /@babel\/runtime\/.+/
+      ],
+    })
+  ],
+  plugins: [
+    new LoadablePlugin({ filename: 'loadable-stats-server.json' }),
+  ]
+}
+
+const serverEntryConfig = {
+  context: path.resolve(__dirname, '..'),
+  mode: 'production',
+  target: 'async-node',
+  name: 'server',
+  optimization: {
+    minimize: false,
+  },
+  entry: {
     server: './ssr/index.ts',
   },
   output: {
@@ -86,10 +170,12 @@ const serverEntryConfig = {
     __dirname: false,
   },
   externals: [
-    '@loadable/component',
     nodeExternals({
       whitelist: [
-        /normalize\.css/,
+        /react-dnd-html5-backend(\/.+)?/,
+        /dnd-core(\/.+)?/,
+        /react-dnd(\/.+)?/,
+        /react-redux\/.+/,
         /@babel\/runtime\/.+/
 
       ],
@@ -125,9 +211,6 @@ const serverEntryConfig = {
           }
         ]
       },
-
-
-
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
         loader: 'file-loader',
@@ -149,11 +232,7 @@ const serverEntryConfig = {
 
     ],
   },
-
-  plugins: [
-    new webpack.EnvironmentPlugin(['REACT_APP_ENV']),
-    new LoadablePlugin({ filename: 'loadable-stats-server.json' }),
-  ],
+  plugins: [],
 }
 
-module.exports = serverEntryConfig;
+module.exports = [serverAssetsConfig, serverEntryConfig]

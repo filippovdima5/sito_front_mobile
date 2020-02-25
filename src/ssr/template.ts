@@ -33,7 +33,10 @@ export const template = (
 
 <body>
     <noscript>Пожалуйста, включите JavaScript в настройках браузера для корректного отображения контента сайта.</noscript>
-  ${scripts}
+    <script>
+        window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
+    </script>
+    ${scripts}
   
   <div id="root">${html}</div>
   

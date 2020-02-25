@@ -296,11 +296,11 @@ $filtersStore.on(fetchFilters.done, (state, { result: { data } }) => data)
 
 //region productsStore:
 export const $productsStore = createStore<ProductsRequest['products']>([])
-$productsStore.on(fetchProducts.done, (state, { result: { data: { products } } }) => {
-  const typeSet = $typeSet.getState()
-  if ( typeSet.type === 'set_products' && typeSet.key === 'page' ) return [...state, ...products]
-  return products
-})
+// $productsStore.on(fetchProducts.done, (state, { result: { data: { products } } }) => {
+//   const typeSet = $typeSet.getState()
+//   if ( typeSet.type === 'set_products' && typeSet.key === 'page' ) return [...state, ...products]
+//   return products
+// })
 
 export const $productsInfoStore = createStore<PaginateInfo>({
   total: 0,

@@ -23,7 +23,7 @@ export const apiGet = axios.create({
 
 export const apiPost = axios.create({
   method: 'post',
-  baseURL: '/api',
+  baseURL: config.api.main.endpoint,
   headers: {
     'Content-Type': 'application/json',
   },

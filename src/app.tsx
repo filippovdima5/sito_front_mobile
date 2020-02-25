@@ -1,5 +1,4 @@
 import React from 'react'
-import { Redirect } from 'react-router'
 import styles from './media/css/app.module.scss'
 import './media/css/reset.module.scss'
 import { Header } from './features/header'
@@ -11,7 +10,6 @@ import { Footer } from './features/footer'
 
 
 export function App() {
-
     return(
       <div id={'app'} className={styles.App}>
 
@@ -31,4 +29,4 @@ export function App() {
 }
 
 
-export default App
+
