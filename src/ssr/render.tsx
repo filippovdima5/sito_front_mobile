@@ -12,15 +12,13 @@ import { template } from './template'
 
 
 import { store } from './setup-store'
-import { api } from '../api'
-import { constants } from '../store-redux/constants'
+import { preStateController } from './pre-state-controller'
 
 
 interface EntryPoint {
   default: React.ComponentType<any>,
   hydrateInitialState?: (state: any) => void,
 }
-
 
 
 // Достаем информацию о сгенерированных webpack'ом бандлах сервера и клиента
@@ -42,15 +40,10 @@ const serverExtractor = new ChunkExtractor({ statsFile: serverStatsFile, entrypo
 const { default: App, hydrateInitialState }: EntryPoint = serverExtractor.requireEntrypoint()
 
 
-const sex_id = 1
 
 export const render = async (ctx: any) => {
+  await preStateController(ctx.path, ctx.url, ctx.query, store)
   
-  await api.products.getProducts({ sex_id })
-    .then(res => res.data)
-    .then((res => {store.dispatch({ type: constants.SET_PRODUCTS_REDUX_STORE, payload: res })}))
-
-
   if (hydrateInitialState) {
     hydrateInitialState(store.getState())
   }

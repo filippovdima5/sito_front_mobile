@@ -51,7 +51,10 @@ export const productsState = mainState.map(({ limit, page, sort }) => ({ limit, 
 
 /**Результаты первичного парсинга URL*/
 const setFromDecodeUrl = createEvent<AfterDecodeUrl>()
-mainState.on(setFromDecodeUrl, (state, payload) => ({ ...state, ...payload }))
+//mainState.on(setFromDecodeUrl, (state, payload) => ({ ...state, ...payload }))
+mainState.on(hydrateInitialState, (state, serverData) => {
+  return  {...state, ...serverData.products}
+})
 
 // endregion main_state
 
@@ -234,11 +237,11 @@ const fetchProductsParams = mainState.map(state => {
   }
 })
 
-// guard({
-//   source: fetchProductsParams.updates,
-//   filter: fetchProducts.pending.map(pending => !pending),
-//   target: fetchProducts
-// })
+guard({
+  source: fetchProductsParams.updates,
+  filter: fetchProducts.pending.map(pending => !pending),
+  target: fetchProducts
+})
 
 //endregion fetchProducts
 
@@ -297,11 +300,11 @@ $filtersStore.on(fetchFilters.done, (state, { result: { data } }) => data)
 
 //region productsStore:
 export const $productsStore = createStore<ProductsRequest['products']>([])
-// $productsStore.on(fetchProducts.done, (state, { result: { data: { products } } }) => {
-//   const typeSet = $typeSet.getState()
-//   if ( typeSet.type === 'set_products' && typeSet.key === 'page' ) return [...state, ...products]
-//   return products
-// })
+$productsStore.on(fetchProducts.done, (state, { result: { data: { products } } }) => {
+  const typeSet = $typeSet.getState()
+  if ( typeSet.type === 'set_products' && typeSet.key === 'page' ) return [...state, ...products]
+  return products
+})
 
 export const $productsInfoStore = createStore<PaginateInfo>({
   total: 0,
@@ -311,12 +314,12 @@ $productsInfoStore.on(fetchProducts.done, ((state, { result: { data: { info } } 
 
 
 
-$productsStore.on(hydrateInitialState, ((state, serverData) => {
-  return serverData.products.products as ProductsRequest['products']
-}))
-$productsInfoStore.on(hydrateInitialState, ((state, serverData) => {
-  return serverData.products.info as ProductsRequest['info']
-}))
+// $productsStore.on(hydrateInitialState, ((state, serverData) => {
+//   return serverData.products.products as ProductsRequest['products']
+// }))
+// $productsInfoStore.on(hydrateInitialState, ((state, serverData) => {
+//   return serverData.products.info as ProductsRequest['info']
+// }))
 
 //endregion productsStore
 

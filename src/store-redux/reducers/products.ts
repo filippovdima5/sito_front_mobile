@@ -1,11 +1,7 @@
 import { constants } from '../constants'
 
 const initialState = {
-  products: [],
-  info: {
-    total: 0,
-    total_pages: 0
-  }
+  // decode URL path results
 }
 
 export default function (state = initialState, action: any) {

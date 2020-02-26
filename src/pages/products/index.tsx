@@ -12,11 +12,11 @@ export class Products extends React.Component<RouteComponentProps<{ sex: string 
     initRouteHistory(this.props.history)
   }
 
-  componentDidUpdate(prevProps: Readonly<RouteComponentProps<{ sex: string }, { hilocation: string, statusCode?: number }>>): void {
-    if (prevProps.match.params.sex !== this.props.match.params.sex){
-      initRouteHistory(this.props.history)
-    }
-  }
+  // componentDidUpdate(prevProps: Readonly<RouteComponentProps<{ sex: string }, { hilocation: string, statusCode?: number }>>): void {
+  //   if (prevProps.match.params.sex !== this.props.match.params.sex){
+  //     initRouteHistory(this.props.history)
+  //   }
+  // }
 
   render(){
     return (
