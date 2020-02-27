@@ -154,7 +154,7 @@ const serverEntryConfig = {
     minimize: false,
   },
   entry: {
-    server: './ssr/index.ts',
+    main: './ssr/index.ts',
   },
   output: {
     path: path.resolve(__dirname, '..', '..', 'build'),

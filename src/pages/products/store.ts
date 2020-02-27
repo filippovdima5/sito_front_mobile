@@ -1,10 +1,11 @@
-import {createEffect, createEvent, createStore, guard, restore} from 'effector'
+import {combine, createEffect, createEvent, createStore, guard, restore} from 'effector'
 import {RouteComponentProps} from 'react-router'
 import {setGender} from '../../stores/env'
 import {FilterReqParams, FiltersRequest, PaginateInfo, ProductsReqParams, ProductsRequest} from '../../api/types'
 import {api} from '../../api'
-import {AfterDecodeUrl, MainState, TypeSet} from './types'
+import { MainState, TypeSet } from './types'
 import {hydrateInitialState} from '../../ssr/utils/hydrate-initial-state'
+import config from '../../config'
 
 
 //region route_history:
@@ -16,9 +17,9 @@ routeHistory.on(initRouteHistory, (_, payload) => payload)
 
 
 //region main_state:
-export const setTypeSet = createEvent<TypeSet>()
-const $typeSet = restore(setTypeSet, { type: 'set_url' })
 
+export const setTypeSet = createEvent<TypeSet>()
+const $typeSet = restore(setTypeSet, { type: 'set_hydrate' })
 
 
 export const mainState = createStore<MainState>({
@@ -50,63 +51,14 @@ export const filtersState = mainState.map(({ sexId, categories, brands, sizes, c
 export const productsState = mainState.map(({ limit, page, sort }) => ({ limit, sort, page }))
 
 /**Результаты первичного парсинга URL*/
-const setFromDecodeUrl = createEvent<AfterDecodeUrl>()
-//mainState.on(setFromDecodeUrl, (state, payload) => ({ ...state, ...payload }))
+$typeSet.on(hydrateInitialState, state => ({ type: 'set_hydrate' }))
+
 mainState.on(hydrateInitialState, (state, serverData) => {
   return  {...state, ...serverData.products}
 })
 
 // endregion main_state
 
-
-
-//region set decode_url_state_SET:
-routeHistory.updates.watch(state => {
-  if (state === null) return undefined
-  setTypeSet({ type: 'set_url' })
-
-  const { pathname, search } = state.location
-
-  const sex = pathname.split('/products/')[1] as 'men' || 'women'
-  const setObject: AfterDecodeUrl = { sexId: sex === 'men' ? 1 : 2 }
-  
-  try {
-    decodeURI(search)
-      .split('?')[1]
-      .split('&')
-      .map(item => (item.split('=')))
-      .forEach(([key, value]) => {
-        switch (key) {
-          case 'categories':
-            setObject[key] = value.split('|').map(item => +item)
-            break
-          case 'brands':
-          case 'sizes':
-          case 'colors':
-            setObject[key] = value.split('|')
-            break
-          case 'price_from':
-          case 'price_to':
-          case 'sale_from':
-          case 'sale_to':
-          case 'page':
-            setObject[key] = Number(value)
-            break
-          case 'sort': {
-            if (['update_up', 'price_up', 'sale_up'].includes(value)) setObject[key] = value as 'update_up' | 'price_up' | 'sale_up'
-            break
-          }
-          case 'favorite':
-            setObject[key] = true
-        }
-      })
-    // eslint-disable-next-line no-empty
-  } catch (e) {}
-  finally {
-    setFromDecodeUrl(setObject)
-  }
-})
-// endregion decode_url_state
 
 
 
@@ -195,9 +147,16 @@ const fetchFiltersParams = filtersState.map(state => {
   return params
 })
 
+const fetchByProducts = $typeSet.map(({ type }) => type === 'set_products')
+const clientHydrate = $typeSet.map(({ type }) => ( !((type === 'set_hydrate') && (config.ssr)) ))
+
+
+const blockFetchFilters = combine({ fetchByProducts, clientHydrate }).map(({ clientHydrate, fetchByProducts }) => (!clientHydrate || !fetchByProducts))
+
+
 guard({
   source: fetchFiltersParams.updates,
-  filter: $typeSet.map(({ type }) => type !== 'set_products'),
+  filter: blockFetchFilters,
   target: fetchFilters
 })
 //endregion fetchFilters
@@ -209,7 +168,7 @@ const fetchProducts = createEffect({
   handler: (params: ProductsReqParams) => api.products.getProducts(params)
 })
 
-// todo ! Нужно убрать! Это как то задеюствует фильтры и они апдейтятся
+
 const fetchProductsParams = mainState.map(state => {
   if (state.sexId === null) return undefined
   const params: ProductsReqParams = { sex_id: state.sexId }
@@ -225,21 +184,15 @@ const fetchProductsParams = mainState.map(state => {
   if (state.page !== null) params.page = state.page
   if (state.limit !== null) params.limit = state.limit
   if (state.sort !== null) params.sort = state.sort
-
-  const typeSet = $typeSet.getState()
-  switch( typeSet.type ){
-    case 'set_url': {
-      params.page = 1
-      params.limit = state.page ? state.page * 20 : 20
-      return params
-    }
-    default: return params
-  }
+  return params
 })
+
+const pendingProducts = fetchProducts.pending.map(pending => pending)
+const blockFetchProducts = combine({ pendingProducts, clientHydrate }).map(({ pendingProducts, clientHydrate }) => (!pendingProducts || !clientHydrate))
 
 guard({
   source: fetchProductsParams.updates,
-  filter: fetchProducts.pending.map(pending => !pending),
+  filter: fetchProducts.pending.map(pending => true),
   target: fetchProducts
 })
 
@@ -250,7 +203,8 @@ guard({
 // region encode_url_state:
 mainState.updates.watch((payload) => {
 
-  if ($typeSet.getState().type === 'set_url') return undefined
+  if ($typeSet.getState().type === 'set_hydrate') return undefined
+  
   if (payload.sexId === null) return undefined
   let newUrl = '/products/'
   const lineSex = payload.sexId === 1 ? 'men' : 'women'
@@ -311,15 +265,6 @@ export const $productsInfoStore = createStore<PaginateInfo>({
   total_pages: 0
 })
 $productsInfoStore.on(fetchProducts.done, ((state, { result: { data: { info } } }) => info))
-
-
-
-// $productsStore.on(hydrateInitialState, ((state, serverData) => {
-//   return serverData.products.products as ProductsRequest['products']
-// }))
-// $productsInfoStore.on(hydrateInitialState, ((state, serverData) => {
-//   return serverData.products.info as ProductsRequest['info']
-// }))
 
 //endregion productsStore
 

@@ -7,11 +7,10 @@ import { StaticRouter } from 'react-router'
 import { Provider } from 'react-redux'
 
 import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server'
-//import { App } from '../app'
 import { template } from './template'
 
 
-import { store } from './setup-store'
+import { store } from 'ssr/setup-store'
 import { preStateController } from './pre-state-controller'
 
 

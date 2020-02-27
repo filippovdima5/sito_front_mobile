@@ -2,7 +2,7 @@ import { filtersState, productsState } from './store'
 
 
 export type TypeSet =
-  { type: 'set_url' } |
+  { type: 'set_hydrate' } |
   { type: 'set_filter', key?: keyof typeof filtersState['defaultState'] } |
   { type: 'set_products', key?: keyof typeof productsState['defaultState'] }
 
