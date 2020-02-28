@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { $showNextMenu, setShowNextMenu, $showMainMenu, setShowMainMenu } from '../../store'
 import { useStore } from '../../../../helpers/hooks/use-effector-store'
-import leftArrow from '../../../../media/img/svg/leftArrow.svg'
 import { subId, categories, subcategories } from '../../constants'
 import { sexIdToStr } from '../../../../helpers/lib'
 import { setCategories } from '../../../products/filters/store'
 import styles from './styles.module.scss'
-
+import { Arrow } from '../../../../media/img/svg/icons'
 
 
 export function NextMenu({ sexId }: {sexId: 1 | 2 | 0}) {
@@ -41,7 +40,7 @@ export function NextMenu({ sexId }: {sexId: 1 | 2 | 0}) {
           onClick={() => setShowNextMenu(null)}
           className={styles.header}
         >
-          <img src={leftArrow} alt={'back'} className={styles.img}/>
+          <Arrow className={styles.img}/>
           <span className={styles.span}>
             {title}
           </span>
@@ -57,8 +56,10 @@ export function NextMenu({ sexId }: {sexId: 1 | 2 | 0}) {
                   key={key}
                   className={styles.li}
                   onClick={() => {
-                    setCategories({ value: Number(key) })
-                    setShowMainMenu()
+                    if (sexId !== 0){
+                      setCategories({ value: Number(key), sexId })
+                      setShowMainMenu()
+                    }
                   }}
                 >
                   <span className={styles.link}>
@@ -71,8 +72,10 @@ export function NextMenu({ sexId }: {sexId: 1 | 2 | 0}) {
               to={`/products/${sexIdToStr(sexId)}?categories=${subId[sub]}`}
               className={styles.li}
               onClick={() => {
-                setCategories({ value: Number(subId[sub]) })
-                setShowMainMenu()
+                if (sexId !== 0){
+                  setCategories({ value: Number(subId[sub]), sexId })
+                  setShowMainMenu()
+                }
               }}
             >
               <span className={styles.link}>Прочее</span>

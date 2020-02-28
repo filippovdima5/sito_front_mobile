@@ -29,10 +29,10 @@ mainState.on(skipAllFilters, state => {
   })
 })
 
-export const setCategories = createEvent<{ value: number}>()
-mainState.on(setCategories, (state, { value }) => {
+export const setCategories = createEvent<{ value: number, sexId: 1 | 2}>()
+mainState.on(setCategories, (state, { value, sexId }) => {
   setTypeSet({ type: 'set_filter' })
-  return ({ ...state, categories: [value] })
+  return ({ ...mainState.defaultState, sexId, categories: [value] })
 })
 
 export const skipThisFilter = createEvent<{key:  keyof Omit<MainState, 'sort' | 'limit' | 'page' | 'sexId'>}>()

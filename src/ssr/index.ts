@@ -3,6 +3,7 @@ import path from 'path'
 import Koa from 'koa'
 import serve from 'koa-static'
 import mount from 'koa-mount'
+import logger from "koa-logger"
 import proxy from 'koa-proxy'
 import { render } from './render'
 
@@ -24,6 +25,8 @@ const setupKoa = () => {
     map: path => `/api${path}`
   })))
   
+
+  app.use(logger())
   
   app.use(async (ctx) => {
     ctx.body = await render(ctx)

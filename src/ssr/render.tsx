@@ -2,16 +2,12 @@
 import path from 'path'
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
-
 import { StaticRouter } from 'react-router'
-import { Provider } from 'react-redux'
-
 import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server'
+
 import { template } from './template'
-
-
-import { store } from 'ssr/setup-store'
 import { preStateController } from './pre-state-controller'
+
 
 
 interface EntryPoint {
@@ -40,24 +36,25 @@ const { default: App, hydrateInitialState }: EntryPoint = serverExtractor.requir
 
 
 
+
 export const render = async (ctx: any) => {
-  await preStateController(ctx.path, ctx.url, ctx.query, store)
+  const preState = await preStateController(ctx.path, ctx.url, ctx.query)
   
   if (hydrateInitialState) {
-    hydrateInitialState(store.getState())
+    hydrateInitialState(preState)
   }
   
 
   try {
     const jsx = (
       <ChunkExtractorManager extractor={clientExtractor}>
-        <Provider store={store}>
           <StaticRouter location={ctx.path}>
             <App />
           </StaticRouter>
-        </Provider>
       </ChunkExtractorManager>
     )
+    
+
     
     const html = ReactDOMServer.renderToString(jsx)
     
@@ -69,7 +66,7 @@ export const render = async (ctx: any) => {
     
 
     // Чистим строку от ссылок перед кэшированием (possible v8 memory leaks)
-    return template({ html, preloadedState: store.getState(),  styleTags,  scripts }).split('').join('')
+    return template({ html, preloadedState: preState,  styleTags,  scripts }).split('').join('')
   } catch (e) {
     console.log(e)
   }

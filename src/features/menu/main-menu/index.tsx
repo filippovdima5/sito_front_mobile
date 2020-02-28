@@ -10,6 +10,7 @@ import { $sexId } from '../../../stores/env'
 import arrowRight from '../../../media/img/svg/rightArrow.svg'
 import { categories, menuLinks } from '../constants'
 import styles from './styles.module.scss'
+import { Arrow } from '../../../media/img/svg/icons'
 
 
 type LinkItem = {
@@ -78,7 +79,7 @@ export function Menu() {
               >
                 <span className={styles.link}>
                   {title}
-                  <img className={styles.img} src={arrowRight} alt={'go'}/>
+                  <Arrow className={styles.img} rotate={180}/>
                 </span>
               </li>
             ))}
@@ -115,7 +116,7 @@ export function Menu() {
           <NextMenu sexId={sexId === null ? 0 : sexId}/>
         </nav>
 
-        <Footer/>
+        {/*<Footer/>*/}
       </div>
 
       <div

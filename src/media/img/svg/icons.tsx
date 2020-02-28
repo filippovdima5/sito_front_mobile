@@ -5,12 +5,15 @@ const defaultProps = {
   width: 24,
   height: 24,
   viewBox: '0 0 24 24',
-  xmlns: 'http://www.w3.org/2000/svg'
+  xmlns: 'http://www.w3.org/2000/svg',
+  
+  
 }
 
 type Props = {
   fill?: string,
   className?: string,
+  rotate?: number,
 }
 
 export function Close(props: Props) {
@@ -27,11 +30,15 @@ export function Close(props: Props) {
 }
 
 export function Arrow(props: Props) {
+  
+
+  
   return(
     <svg
       {...defaultProps}
       fill={props.fill}
       className={props.className}
+      // style={{ transform: `rotate(${props.rotate ?? 0}deg)` }}
     >
       <path d="M13.993 19.997L5.996 12l7.997-7.997 1.414 1.414L8.824 12l6.583 6.583z"/>
     </svg>

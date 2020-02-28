@@ -1,5 +1,6 @@
 import { AfterDecodeUrl } from '../../pages/products/types'
-import { constants } from '../../store-redux/constants'
+import { api } from '../../api'
+import {$filtersStore, $productsInfoStore, $productsStore, mainState} from '../../pages/products/store'
 
 function parseQueryProducts(sexId: 1 | 2, queryParams: any) {
   const queryArr = Object.entries(queryParams)
@@ -37,11 +38,18 @@ function parseQueryProducts(sexId: 1 | 2, queryParams: any) {
   return setObject
 }
 
-export async function products(sexId: 1 | 2, queryParams: any, store: any) {
-  await Promise.all([
-    parseQueryProducts(sexId, queryParams)
+export async function products(sexId: 1 | 2, queryParams: any) {
+  
+  const queryRes = parseQueryProducts(sexId, queryParams)
+  
+  return await Promise.all([
+    api.products.getFilters({...queryRes, sex_id: sexId}),
+    api.products.getProducts({...queryRes, sex_id: sexId}),
   ])
-    .then(res => {
-      store.dispatch({ type: constants.SET_PRODUCTS_REDUX_STORE, payload: res[0] })
-    })
+    .then(res => ({
+      mainState: queryRes,
+      filtersStore: res[0].data,
+      productsStore: res[1].data.products,
+      productsInfoStore: res[1].data.info
+    }))
 }

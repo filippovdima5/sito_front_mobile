@@ -3,7 +3,7 @@ import { createEvent, createStore } from 'effector'
 import { useStore } from '../../../../helpers/hooks/use-effector-store'
 import { setGender } from '../../../../stores/env'
 import styles from './styles.module.scss'
-
+import { useRouteMatch, useLocation, useParams } from 'react-router'
 
 
 type HeaderProps = {
@@ -18,10 +18,31 @@ signalWithoutSexId.on(setOrder, (state, payload) => payload)
 
 
 
+
+function ButtonSex({ sexId, signal, currentSex }: { sexId: 1 | 2, signal: number | boolean, currentSex: 1 | 2 | 0 }) {
+  return(
+    <>
+      <button className={`${styles.button} ${signal === sexId && styles.buttonScale}`}>{sexId === 1 ? 'Мужское' : 'Женское'}</button>
+      <div className={`${styles.bottomLine} ${sexId === currentSex ? styles.bottomLine_true : styles.bottomLine_false}`}/>
+    </>
+  )
+}
+
+
+// function LinksToggle({ signal }): { signal: 1 | 2 } {
+//   return (
+//
+//   )
+// }
+
+
+
+
 export function Header ({ sexId }: HeaderProps) {
   const timerSignal = useRef<any>(null)
-
-
+  
+  const { pathname } = useLocation()
+  
   const signal = useStore(signalWithoutSexId)
   useEffect(() => {
     if (signal) {
@@ -41,14 +62,12 @@ export function Header ({ sexId }: HeaderProps) {
 
   return (
     <div className={styles.Header}>
-      <div className={styles.buttonWrap}>
-        <button onClick={() => (setGender(1))} className={`${styles.button} ${signal === 1 && styles.buttonScale}`}>Мужское</button>
-        <div className={`${styles.bottomLine} ${sexId === 1 ? styles.bottomLine_true : styles.bottomLine_false}`}/>
+      <div onClick={() => (setGender(1))} className={styles.buttonWrap}>
+        <ButtonSex sexId={1} signal={signal} currentSex={sexId}/>
       </div>
 
       <div onClick={() => (setGender(2))} className={styles.buttonWrap}>
-        <button className={`${styles.button} ${signal === 2 && styles.buttonScale}`}>Женское</button>
-        <div className={`${styles.bottomLine} ${sexId === 2 ? styles.bottomLine_true : styles.bottomLine_false}`}/>
+        <ButtonSex sexId={2} signal={signal} currentSex={sexId}/>
       </div>
     </div>
   )

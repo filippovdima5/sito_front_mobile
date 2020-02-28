@@ -50,13 +50,6 @@ export const filtersState = mainState.map(({ sexId, categories, brands, sizes, c
 
 export const productsState = mainState.map(({ limit, page, sort }) => ({ limit, sort, page }))
 
-/**Результаты первичного парсинга URL*/
-$typeSet.on(hydrateInitialState, state => ({ type: 'set_hydrate' }))
-
-mainState.on(hydrateInitialState, (state, serverData) => {
-  return  {...state, ...serverData.products}
-})
-
 // endregion main_state
 
 
@@ -148,10 +141,13 @@ const fetchFiltersParams = filtersState.map(state => {
 })
 
 const fetchByProducts = $typeSet.map(({ type }) => type === 'set_products')
-const clientHydrate = $typeSet.map(({ type }) => ( !((type === 'set_hydrate') && (config.ssr)) ))
+const isHydrate = $typeSet.map(({ type }) => (type === 'set_hydrate'))
 
 
-const blockFetchFilters = combine({ fetchByProducts, clientHydrate }).map(({ clientHydrate, fetchByProducts }) => (!clientHydrate || !fetchByProducts))
+
+const blockFetchFilters = combine({ fetchByProducts, isHydrate })
+  .map(({ isHydrate, fetchByProducts }) => (!isHydrate && !fetchByProducts))
+
 
 
 guard({
@@ -188,11 +184,12 @@ const fetchProductsParams = mainState.map(state => {
 })
 
 const pendingProducts = fetchProducts.pending.map(pending => pending)
-const blockFetchProducts = combine({ pendingProducts, clientHydrate }).map(({ pendingProducts, clientHydrate }) => (!pendingProducts || !clientHydrate))
+const blockFetchProducts = combine({ pendingProducts, isHydrate })
+  .map(({ pendingProducts, isHydrate }) => (!pendingProducts && !isHydrate))
 
 guard({
   source: fetchProductsParams.updates,
-  filter: fetchProducts.pending.map(pending => true),
+  filter: blockFetchProducts,
   target: fetchProducts
 })
 
@@ -202,10 +199,9 @@ guard({
 
 // region encode_url_state:
 mainState.updates.watch((payload) => {
+  if (config.ssr || payload.sexId === null) return undefined
 
-  if ($typeSet.getState().type === 'set_hydrate') return undefined
   
-  if (payload.sexId === null) return undefined
   let newUrl = '/products/'
   const lineSex = payload.sexId === 1 ? 'men' : 'women'
   newUrl = newUrl + lineSex
@@ -267,4 +263,35 @@ export const $productsInfoStore = createStore<PaginateInfo>({
 $productsInfoStore.on(fetchProducts.done, ((state, { result: { data: { info } } }) => info))
 
 //endregion productsStore
+
+
+
+// region Hydrate
+$typeSet.on(hydrateInitialState, state => ({ type: 'set_hydrate' }))
+
+const hydrateProducts = hydrateInitialState.map(serverData => {
+  if (!serverData.products) return undefined
+  return serverData.products
+})
+
+mainState.on(hydrateProducts, (state, hydProducts) => {
+  if (!hydProducts) return
+  return {...state, ...hydProducts.mainState}
+})
+
+$filtersStore.on(hydrateProducts, (_, hydProducts) => {
+  if (!hydProducts) return
+  return hydProducts.filtersStore
+})
+
+$productsStore.on(hydrateProducts, (_, hydProducts) => {
+  if (!hydProducts) return
+  return hydProducts.productsStore
+})
+
+$productsInfoStore.on(hydrateProducts, (_, hydProducts) => {
+  if (!hydProducts) return
+  return hydProducts.productsInfoStore
+})
+// endregion Hydrate
 

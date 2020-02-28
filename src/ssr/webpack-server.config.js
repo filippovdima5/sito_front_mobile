@@ -135,7 +135,6 @@ const serverAssetsConfig = {
         /react-dnd-html5-backend(\/.+)?/,
         /dnd-core(\/.+)?/,
         /react-dnd(\/.+)?/,
-        /react-redux\/.+/,
         /@babel\/runtime\/.+/
       ],
     })
@@ -174,7 +173,6 @@ const serverEntryConfig = {
         /react-dnd-html5-backend(\/.+)?/,
         /dnd-core(\/.+)?/,
         /react-dnd(\/.+)?/,
-        /react-redux\/.+/,
         /@babel\/runtime\/.+/
 
       ],
