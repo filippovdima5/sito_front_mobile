@@ -6,6 +6,7 @@ import {api} from '../../api'
 import { MainState, TypeSet } from './types'
 import {hydrateInitialState} from '../../ssr/utils/hydrate-initial-state'
 import config from '../../config'
+import { parseQueryProducts, parseQuery } from '../../ssr/lib'
 
 
 //region route_history:
@@ -229,6 +230,7 @@ mainState.updates.watch((payload) => {
           case 'number': return key + '=' + value.toString()
           case 'string': return key + '=' + value
           case 'boolean': return key + '=' + (value ? '1' : '0')
+          default: return key + '='
         }
       })
       .join('&')
@@ -293,5 +295,19 @@ $productsInfoStore.on(hydrateProducts, (_, hydProducts) => {
   if (!hydProducts) return
   return hydProducts.productsInfoStore
 })
+
+
+// ONLY DEVELOPMENT!
+mainState.on(initRouteHistory, ((state, payload) => {
+  if (!config.local) return undefined
+  setTypeSet({type: 'set_url'})
+  
+  let sexId: 1 | 2
+  if (payload.location.pathname.includes('/women')) sexId = 2
+  else sexId = 1
+  
+  const queryParams = parseQuery(payload.location.search)
+  return { ...state, ...parseQueryProducts(sexId, queryParams) }
+}))
 // endregion Hydrate
 

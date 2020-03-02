@@ -1,4 +1,5 @@
-import React  from 'react'
+import React, {useEffect} from 'react'
+import { setGender } from '../../../stores/env'
 import { SmoothSlider } from '../smooth-slider'
 import { ScrollSlider } from '../scroll-slider'
 
@@ -8,8 +9,7 @@ type Props = {
 }
 
 export function HomePage({ sexId }: Props) {
-
-  console.log(sexId)
+  useEffect(() => {setGender(sexId)}, [ sexId ])
 
   return (
     <>

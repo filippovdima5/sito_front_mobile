@@ -1,6 +1,6 @@
-import { createEffect, createEvent, createStore, merge } from 'effector'
+import {createEffect, createEvent, createStore, merge, restore} from 'effector'
 import { api } from '../../api'
-import { GenderInfo } from './types'
+import { GenderInfo, CurrentRoute } from './types'
 
 
 export const fetchUser = createEffect({
@@ -49,5 +49,11 @@ export const $sexLine = $genderInfo.map(state => {
   if (state) return state.inlineSex
   else return null
 })
-
 //endregion Gender
+
+
+
+// region Route-page:
+export const setCurrentRoute = createEvent<CurrentRoute>()
+export const $currentRoute = restore(setCurrentRoute, '/')
+// endregion Route-page

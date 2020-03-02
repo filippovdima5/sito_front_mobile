@@ -9,8 +9,7 @@ import { Footer } from './features/footer'
 
 export function App() {
     return(
-      <div id={'app'} className={styles.App}>
-
+      <div className={styles.app}>
         <header className={styles.header}>
           <Header/>
         </header>

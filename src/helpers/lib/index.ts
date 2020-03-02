@@ -15,6 +15,11 @@ export const sexIdToStr = function sexIdToStr (sexId: 1 | 2 | 0): 'men' | 'women
   return 'women'
 }
 
+export const sexStrToId = ( sexStr: 'men' | 'women' ): 1 | 2 => {
+  if (sexStr === 'men') return 1
+  return 2
+}
+
 
 
 

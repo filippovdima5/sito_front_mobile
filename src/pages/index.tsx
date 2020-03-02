@@ -8,10 +8,12 @@ import { NotFound } from './not-found'
 export function Pages() {
   return (
     <Switch>
-      <Route exact={true} path={'/'} component={Home}/>
-      <Route path={'/products/:sex'} component={Products}/>\
+      <Route exact={true} path={'/:sex?'} component={Home}/>
+      <Route path={'/products/:sex'} component={Products}/>
 
 
+      
+      
       <Route path={'/404'} component={NotFound}/>
       <Route path={'*'} component={NotFound}/>
     </Switch>

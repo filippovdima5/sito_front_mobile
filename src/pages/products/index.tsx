@@ -1,13 +1,15 @@
 import React from 'react'
 import { RouteComponentProps } from 'react-router'
+import { setCurrentRoute } from '../../stores/env'
 import { ProductsList, ControlProducts, LoadMore, Filters } from '../../features/products'
 import styles from './styles.module.scss'
 import { initRouteHistory } from './store'
 
 
-export class Products extends React.Component<RouteComponentProps<{ sex: string }, { hilocation: string, statusCode?: number }>, any> {
+export class Products extends React.Component<RouteComponentProps<{ sex: 'men' | 'women' }, { hilocation: string, statusCode?: number }>, any> {
   componentDidMount(): void {
     initRouteHistory(this.props.history)
+    setCurrentRoute('/products/')
   }
   
   

@@ -1,9 +1,12 @@
-import React, { useEffect, useRef } from 'react'
+import React, {useCallback, useEffect, useRef} from 'react'
 import { createEvent, createStore } from 'effector'
 import { useStore } from '../../../../helpers/hooks/use-effector-store'
-import { setGender } from '../../../../stores/env'
+import {  $currentRoute } from '../../../../stores/env'
 import styles from './styles.module.scss'
-import { useRouteMatch, useLocation, useParams } from 'react-router'
+import { ButtonSex } from '../../atoms/button-sex'
+import {Link} from 'react-router-dom'
+import {sexIdToStr} from '../../../../helpers/lib'
+
 
 
 type HeaderProps = {
@@ -19,29 +22,10 @@ signalWithoutSexId.on(setOrder, (state, payload) => payload)
 
 
 
-function ButtonSex({ sexId, signal, currentSex }: { sexId: 1 | 2, signal: number | boolean, currentSex: 1 | 2 | 0 }) {
-  return(
-    <>
-      <button className={`${styles.button} ${signal === sexId && styles.buttonScale}`}>{sexId === 1 ? 'Мужское' : 'Женское'}</button>
-      <div className={`${styles.bottomLine} ${sexId === currentSex ? styles.bottomLine_true : styles.bottomLine_false}`}/>
-    </>
-  )
-}
-
-
-// function LinksToggle({ signal }): { signal: 1 | 2 } {
-//   return (
-//
-//   )
-// }
-
-
-
 
 export function Header ({ sexId }: HeaderProps) {
   const timerSignal = useRef<any>(null)
-  
-  const { pathname } = useLocation()
+  const currentRoute = useStore($currentRoute)
   
   const signal = useStore(signalWithoutSexId)
   useEffect(() => {
@@ -60,15 +44,24 @@ export function Header ({ sexId }: HeaderProps) {
   }, [signal])
 
 
+  const sexLink = useCallback((sexItem: 1 | 2): string => {
+    switch (currentRoute) {
+      case '/':
+      case '/404/': return `/${sexIdToStr(sexItem)}`
+      case '/products/': return `/products/${sexIdToStr(sexItem)}`
+      default: return `/${sexIdToStr(sexItem)}`
+    }
+  }, [currentRoute])
+  
+  
+  // todo: Сделать линки на страницах, где есть /men or /women, в других местах оставить дивы
   return (
     <div className={styles.Header}>
-      <div onClick={() => (setGender(1))} className={styles.buttonWrap}>
-        <ButtonSex sexId={1} signal={signal} currentSex={sexId}/>
-      </div>
-
-      <div onClick={() => (setGender(2))} className={styles.buttonWrap}>
-        <ButtonSex sexId={2} signal={signal} currentSex={sexId}/>
-      </div>
+      {([1, 2] as [1, 2]).map(item => (
+        <Link to={sexLink(item)} className={styles.buttonWrap}>
+          <ButtonSex sexId={item} signal={signal} currentSex={sexId}/>
+        </Link>
+      ))}
     </div>
   )
 }

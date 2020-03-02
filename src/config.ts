@@ -1,5 +1,5 @@
 const SERVER = typeof window === 'undefined'
-//const LOCAL = !SERVER && window.location.hostname.includes('localhost')
+const LOCAL = !SERVER && window.location.hostname.includes('localhost')
 
 function getApiEndpoint() {
   //if (LOCAL) return '/api'
@@ -11,6 +11,7 @@ function getApiEndpoint() {
 
 export default {
   ssr: SERVER,
+  local: LOCAL,
   api: {
     main: {
       endpoint: getApiEndpoint()

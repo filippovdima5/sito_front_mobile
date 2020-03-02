@@ -52,6 +52,7 @@ export const $filtersViewRecord = filtersState.map(state => ({
 }))
 
 export const $filtersView = $filtersViewRecord.map(state => Object.entries(state)
+  //eslint-disable-next-line
   .map(([key, value]) => {
     const index: keyof typeof state = key as keyof typeof state
     switch (index) {
