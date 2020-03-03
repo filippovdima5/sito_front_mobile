@@ -39,10 +39,17 @@ export const mainState = createStore<MainState>({
   limit: null,
 })
 
+
 const sexId = mainState.map(({ sexId }) => sexId)
 sexId.updates.watch((state) => {
   if (state === null) return
   setGender(state)
+})
+
+
+export const toggleSex = createEvent<1 | 2>()
+mainState.on(toggleSex, (_, sexId) => {
+  return {...mainState.defaultState, sexId }
 })
 
 export const filtersState = mainState.map(({ sexId, categories, brands, sizes, colors, price_to, price_from, sale_to, sale_from, favorite }) => ({
