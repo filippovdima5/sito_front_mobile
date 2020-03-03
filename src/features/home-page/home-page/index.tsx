@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react'
+import { sexIdToStr } from '../../../helpers/lib'
 import { setGender } from '../../../stores/env'
 import { CategoryStand } from '../molecules/category-stand'
 import { PartnersSlider } from '../molecules/partners-slider'
@@ -25,7 +26,7 @@ export function HomePage({ sexId }: Props) {
         height={40}
         title={'Бренды'}
         img={'/'}
-        url={'/brands'}
+        url={`/brands/${sexIdToStr(sexId)}`}
       />
 
       <CategoryStand

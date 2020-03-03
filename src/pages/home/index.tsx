@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import { GenderDetected } from '../../features/home-page/organisms/gender-detected'
+import { GenderDetected } from '../../features/gender-detected'
 import { HomePage } from '../../features/home-page'
 import styles from './styles.module.scss'
 import {Redirect, RouteComponentProps} from 'react-router'
