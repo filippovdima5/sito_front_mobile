@@ -1,10 +1,11 @@
 import React, {useEffect} from 'react'
-import { GenderDetected } from '../../features/home-page/gender-detected'
+import { GenderDetected } from '../../features/home-page/organisms/gender-detected'
 import { HomePage } from '../../features/home-page'
 import styles from './styles.module.scss'
 import {Redirect, RouteComponentProps} from 'react-router'
 import { sexStrToId } from '../../helpers/lib'
 import { setCurrentRoute } from '../../stores/env'
+import { useBodyScrollTop } from '../../helpers/hooks/use-body-scroll-top'
 
 
 type RParams = {
@@ -13,6 +14,7 @@ type RParams = {
 
 
 function HomeWrap({ sex }: { sex: RParams['sex'] }) {
+  
   switch (sex) {
     case 'men':
     case 'women':
@@ -20,17 +22,21 @@ function HomeWrap({ sex }: { sex: RParams['sex'] }) {
     case undefined:
       return <GenderDetected height={66}/>
     default:
-      return <Redirect to={'/'}/>
+      return <Redirect to={'/home'}/>
   }
 }
 
 
-export function Home({ match: { params: { sex } } }: RouteComponentProps<RParams>) {
-  useEffect(() => {setCurrentRoute('/')}, [])
+export function Home({ match }: RouteComponentProps<RParams>) {
+  useBodyScrollTop()
+  useEffect(() => {setCurrentRoute('/home/')}, [])
+  
+  if (match.url === '/') return <Redirect to={'/home'}/>
+  
   return (
     <div className={styles.Home}>
       <div className={styles.wrap}>
-        <HomeWrap sex={sex}/>
+        <HomeWrap sex={match.params.sex}/>
       </div>
     </div>
   )

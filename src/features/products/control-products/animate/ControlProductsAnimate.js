@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useScroll } from 'react-use'
 import { CSSTransition } from 'react-transition-group'
 import { ControlProducts } from '../control-products'
-import { useTransitionNames } from '../../../../helpers/hooks/useTransitionNames'
+import { useTransitionNames } from '../../../../helpers/hooks/use-transition-names'
 import animate from './animate.module.scss'
 
 

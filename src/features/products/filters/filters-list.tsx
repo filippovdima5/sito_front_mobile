@@ -1,7 +1,7 @@
 import React from 'react'
 import { useStore } from '../../../helpers/hooks/use-effector-store'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
-import { useTransitionNames } from '../../../helpers/hooks/useTransitionNames'
+import { useTransitionNames } from '../../../helpers/hooks/use-transition-names'
 import styles from './styles.module.scss'
 import animateStyles from './animate/filters-list.module.scss'
 import { Header } from './atoms/header'

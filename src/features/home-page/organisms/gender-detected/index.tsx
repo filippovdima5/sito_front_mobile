@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react'
-import {  fetchUser, $genderInfo } from '../../../stores/env'
+import {  fetchUser, $genderInfo } from '../../../../stores/env'
 import styles from './styles.module.scss'
-import { useStore } from '../../../helpers/hooks/use-effector-store'
+import { useStore } from '../../../../helpers/hooks/use-effector-store'
 import {Redirect} from 'react-router'
-import { sexIdToStr } from '../../../helpers/lib'
+import { sexIdToStr } from '../../../../helpers/lib'
 import { Link } from 'react-router-dom'
 
 
@@ -17,13 +17,13 @@ export function GenderDetected({ height }: {height: number}) {
   useEffect(() => {fetchUser()}, [])
   const genderInfo = useStore($genderInfo)
   
-  if (genderInfo !== null) return <Redirect to={`/${sexIdToStr(genderInfo?.sexId)}`}/>
+  if (genderInfo !== null) return <Redirect to={`/home/${sexIdToStr(genderInfo?.sexId)}`}/>
   
   
   return (
     <>
       {data.map(({ index, title }) => (
-        <Link to={`/${sexIdToStr(index)}`} key={index} className={styles.genderWrap}>
+        <Link to={`/home/${sexIdToStr(index)}`} key={index} className={styles.genderWrap}>
           <div style={{ paddingTop: `${height}%` }} className={styles.gender}>
             <img src={`/`} alt={title} className={styles.img}/>
 

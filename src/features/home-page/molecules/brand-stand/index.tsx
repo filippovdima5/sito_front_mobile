@@ -1,13 +1,17 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Title } from '../../../atoms/Title'
+import { Title } from '../../atoms/title'
 import styles from './styles.module.scss'
-import {  Props } from './types'
 
+type Props = {
+  height: number,
+  img: string,
+  title: string,
+  url: string
+}
 
-export function SmoothSlider({ height, img, title, url }: Props) {
-
-
+export function BrandStand({ title, height, img, url }: Props) {
+  
   return (
     <div>
       <div style={{ paddingTop: `${height}%` }} className={styles.wrap}>

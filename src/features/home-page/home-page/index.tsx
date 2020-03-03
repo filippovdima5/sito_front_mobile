@@ -1,7 +1,9 @@
 import React, {useEffect} from 'react'
 import { setGender } from '../../../stores/env'
-import { SmoothSlider } from '../smooth-slider'
-import { ScrollSlider } from '../scroll-slider'
+import { CategoryStand } from '../molecules/category-stand'
+import { PartnersSlider } from '../molecules/partners-slider'
+import { BrandStand } from '../molecules/brand-stand'
+
 
 
 type Props = {
@@ -13,36 +15,31 @@ export function HomePage({ sexId }: Props) {
 
   return (
     <>
-      <SmoothSlider
+      <CategoryStand
         height={52}
-        title={'Одежда'}
-        img={'/'}
-        url={'/'}
+        sexId={sexId}
+        index={0}
       />
 
-      <SmoothSlider
+      <BrandStand
         height={40}
         title={'Бренды'}
         img={'/'}
-        url={'/'}
+        url={'/brands'}
       />
 
-      <SmoothSlider
+      <CategoryStand
         height={52}
-        title={'Обувь'}
-        img={'/'}
-        url={'/'}
+        index={1}
+        sexId={sexId}
       />
 
-      <ScrollSlider
+      <PartnersSlider/>
 
-      />
-
-      <SmoothSlider
+      <CategoryStand
         height={52}
-        title={'Аксессуары'}
-        img={'/'}
-        url={'/'}
+        sexId={sexId}
+        index={2}
       />
     </>
   )

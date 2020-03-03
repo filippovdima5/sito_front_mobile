@@ -6,14 +6,16 @@ import { GenderInfo, CurrentRoute } from './types'
 export const fetchUser = createEffect({
   handler: api.user.getUser
 })
+const userDone = fetchUser.done.map(payload => payload.result.data)
+const $userStore = restore(userDone, {})
 
 
 //region Gender:
 export const $genderInfo = createStore<GenderInfo>(null)
 
 export const setGender = createEvent<'men' | 'women' | 1 | 2 | null>()
-const fetchSexId = fetchUser.done.map(({ result: { data } }) => {
-  if (data.sex_id) return data.sex_id
+const fetchSexId = $userStore.map((user) => {
+  if (user.sex_id) return user.sex_id
   return null
 })
 
@@ -55,5 +57,5 @@ export const $sexLine = $genderInfo.map(state => {
 
 // region Route-page:
 export const setCurrentRoute = createEvent<CurrentRoute>()
-export const $currentRoute = restore(setCurrentRoute, '/')
+export const $currentRoute = restore(setCurrentRoute, '/home/')
 // endregion Route-page

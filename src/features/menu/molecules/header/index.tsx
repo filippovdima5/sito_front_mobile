@@ -46,8 +46,8 @@ export function Header ({ sexId }: HeaderProps) {
 
   const sexLink = useCallback((sexItem: 1 | 2): string => {
     switch (currentRoute) {
-      case '/':
-      case '/404/': return `/${sexIdToStr(sexItem)}`
+      case '/home/':
+      case '/404/': return `/home/${sexIdToStr(sexItem)}`
       case '/products/': return `/products/${sexIdToStr(sexItem)}`
       default: return `/${sexIdToStr(sexItem)}`
     }
