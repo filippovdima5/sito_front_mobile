@@ -1,7 +1,7 @@
 import React from 'react'
 import { GenderDetected} from '../features/gender-detected'
 import { HomePage} from '../features/home-page/home-page'
-import {Redirect, RouteComponentProps} from 'react-router'
+import { Redirect, RouteComponentProps } from 'react-router'
 import { sexStrToId} from '../helpers/lib'
 import { useBodyScrollTop } from '../helpers/hooks/use-body-scroll-top'
 
@@ -16,10 +16,7 @@ function HomeWrap({ sex }: { sex: RParams['sex'] }) {
     case 'men':
     case 'women':
       return <HomePage sexId={sexStrToId(sex)}/>
-    case undefined:
-      return <GenderDetected currentRoute={'/home/'} height={66}/>
-    default:
-      return <Redirect to={'/home'}/>
+    default: return <GenderDetected currentRoute={'/home/'} height={66}/>
   }
 }
 
