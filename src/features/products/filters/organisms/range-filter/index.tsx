@@ -3,7 +3,7 @@ import { useEffectSafe } from '../../../../../helpers/hooks/use-effect-safe'
 import { setShowFilters } from '../../store'
 import styles from '../filter-layout.module.scss'
 import { Input } from '../../atoms/input'
-import { setFilter } from '../../../../../pages/products/store'
+import { setFilter } from '../../../store'
 import {BtnDone} from '../../atoms/btn-done'
 
 

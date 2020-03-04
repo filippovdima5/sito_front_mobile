@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useStore } from '../../../helpers/hooks/use-effector-store'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
-import { $filtersStore  } from '../../../pages/products/store'
+import { $filtersStore  } from '../store'
 import { useTransitionNames } from '../../../helpers/hooks/use-transition-names'
 import styles from './styles.module.scss'
 import { Header } from './atoms/header'

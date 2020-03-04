@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { namesCategory } from '../../../../../constants/category-keys'
 import rightArrowSVG from '../../../../../media/img/svg/rightArrow.svg'
-import { setFilter } from '../../../../../pages/products/store'
+import { setFilter } from '../../../store'
 import { filtersMap, ViewFilter } from '../../types'
 import styles from './styles.module.scss'
 

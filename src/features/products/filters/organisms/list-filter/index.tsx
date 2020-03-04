@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react'
 import { FiltersItemNumber, FiltersItemString, FiltersRequest } from '../../../../../api/types'
 import { CheckRow } from '../../molecules/check-row'
-import { setFilter } from '../../../../../pages/products/store'
+import { setFilter } from '../../../store'
 import { namesCategory } from '../../../../../constants/category-keys'
 import { setShowFilters, skipThisFilter } from '../../store'
 import { Input } from '../../atoms/input'

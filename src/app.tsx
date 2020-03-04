@@ -4,15 +4,9 @@ import './media/css/reset.module.scss'
 import { Header } from './features/header'
 import { Pages } from './pages'
 import { Footer } from './features/footer'
-import { useLocation } from 'react-router'
 
 
 export function App() {
-  
-  const d = useLocation()
-  
-  console.log(d)
-  
     return(
       <div className={styles.app}>
         <header className={styles.header}>

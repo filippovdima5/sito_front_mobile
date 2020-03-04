@@ -1,7 +1,7 @@
 import { createEvent, restore } from 'effector'
 import { namesCategory } from '../../../constants/category-keys'
-import { filtersState, mainState, setTypeSet } from '../../../pages/products/store'
-import { MainState } from '../../../pages/products/types'
+import { filtersState, mainState, setTypeSet } from '../store'
+import { MainState } from '../types'
 import { filtersMap } from './types'
 
 

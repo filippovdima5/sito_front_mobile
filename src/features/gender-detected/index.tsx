@@ -16,15 +16,17 @@ const data = [
 
 type PropsGenderDetected = {
   height: number,
-  currentRoute: '/home/' | '/products/' | '/404/' | '/brands/'
+  currentRoute: '/home/' | '/products/' | '/404/' | '/brands/',
+  search?: string
 }
 
 
-export function GenderDetected({ height, currentRoute }: PropsGenderDetected) {
+export function GenderDetected({ height, currentRoute, search }: PropsGenderDetected) {
   useEffect(() => {fetchUser()}, [])
   const genderInfo = useStore($genderInfo)
   
   
+  // todo: Нужнали тут эта строка?
   if (genderInfo !== null) return <Redirect to={`${currentRoute}${sexIdToStr(genderInfo?.sexId)}`}/>
   
   
@@ -32,7 +34,7 @@ export function GenderDetected({ height, currentRoute }: PropsGenderDetected) {
     <div className={styles.main}>
       <div className={styles.wrap}>
       {data.map(({ index, title }) => (
-        <Link to={`${currentRoute}${sexIdToStr(index)}`} key={index} className={styles.genderWrap}>
+        <Link to={`${currentRoute}${sexIdToStr(index)}${search ?? ''}`} key={index} className={styles.genderWrap}>
           <div style={{ paddingTop: `${height}%` }} className={styles.gender}>
             <img src={`/`} alt={title} className={styles.img}/>
 

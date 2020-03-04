@@ -12,7 +12,7 @@ export function Pages() {
     <Switch>
       <Route exact={true} path={'/'} component={Home}/>
       <Route exact={true} path={'/home/:sex?'} component={Home}/>
-      <Route path={'/products/:sex'} component={Products}/>
+      <Route path={'/products/:sex?'} component={Products}/>
       <Route path={'/brands/:sex?'} component={Brands}/>
 
 

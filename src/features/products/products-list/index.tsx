@@ -1,6 +1,6 @@
 import React from 'react'
 import { useStore } from '../../../helpers/hooks/use-effector-store'
-import { $productsStore } from '../../../pages/products/store'
+import { $productsStore } from '../store'
 import { ProductCard, SkeletonCard } from '../product-card'
 import styles from './styles.module.scss'
 import config from '../../../config'

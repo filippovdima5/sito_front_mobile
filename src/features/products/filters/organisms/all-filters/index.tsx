@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { useStore } from '../../../../../helpers/hooks/use-effector-store'
 import { $filtersView, skipAllFilters, setShowFilter, setShowFilters } from '../../store'
-import { setFilter, $productsInfoStore } from '../../../../../pages/products/store'
+import { setFilter, $productsInfoStore } from '../../../store'
 import { FilterRow, UnuseFilterRow } from '../../molecules/filter-row'
 import { CheckRow } from '../../molecules/check-row'
 import styles from './styles.module.scss'

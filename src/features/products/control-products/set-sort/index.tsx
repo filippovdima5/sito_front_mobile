@@ -1,5 +1,5 @@
 import React from 'react'
-import { setProductsState } from '../../../../pages/products/store'
+import { setProductsState } from '../../store'
 import styles from './styles.module.scss'
 
 
