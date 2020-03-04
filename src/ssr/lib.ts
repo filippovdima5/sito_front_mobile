@@ -1,4 +1,4 @@
-import { AfterDecodeUrl } from '../features/products/types'
+import { AfterDecodeUrl } from '../features/products-page/types'
 
 
 

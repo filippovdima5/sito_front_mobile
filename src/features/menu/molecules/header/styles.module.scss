@@ -14,5 +14,13 @@
     width: 50%;
   }
 
-
+  .border{
+    position: relative;
+    height: 30%;
+    width: 1px;
+    background: #00000061;
+    left: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 } 

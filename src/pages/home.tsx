@@ -4,6 +4,8 @@ import { HomePage} from '../features/home-page/home-page'
 import { Redirect, RouteComponentProps } from 'react-router'
 import { sexStrToId} from '../helpers/lib'
 import { useBodyScrollTop } from '../helpers/hooks/use-body-scroll-top'
+import {useEffectSafe} from '../helpers/hooks/use-effect-safe'
+import {setCurrentRoute} from '../stores/env'
 
 
 type RParams = {
@@ -23,6 +25,11 @@ function HomeWrap({ sex }: { sex: RParams['sex'] }) {
 
 export function Home({ match }: RouteComponentProps<RParams>) {
   useBodyScrollTop()
+  useEffectSafe(() => {
+    setCurrentRoute('/home/')
+  }, [])
+  
+  
   if (match.url === '/') return <Redirect to={'/home'}/>
   return <HomeWrap  sex={match.params.sex}/>
 }

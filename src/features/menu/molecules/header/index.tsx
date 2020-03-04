@@ -48,8 +48,7 @@ export function Header ({ sexId }: HeaderProps) {
     switch (currentRoute) {
       case '/home/':
       case '/404/': return `/home/${sexIdToStr(sexItem)}`
-      case '/products/': return `/products/${sexIdToStr(sexItem)}`
-      default: return `/${sexIdToStr(sexItem)}`
+      default: return `${currentRoute}${sexIdToStr(sexItem)}`
     }
   }, [currentRoute])
   
@@ -57,6 +56,7 @@ export function Header ({ sexId }: HeaderProps) {
   // todo: Сделать линки на страницах, где есть /men or /women, в других местах оставить дивы
   return (
     <div className={styles.Header}>
+      <div className={styles.border}/>
       {([1, 2] as [1, 2]).map(item => (
         <Link to={sexLink(item)} className={styles.buttonWrap}>
           <ButtonSex sexId={item} signal={signal} currentSex={sexId}/>

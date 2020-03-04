@@ -10,6 +10,7 @@ import { $sexId } from '../../../stores/env'
 import { categories, menuLinks } from '../constants'
 import styles from './styles.module.scss'
 import { Arrow } from '../../../media/img/svg/icons'
+import {sexIdToStr} from '../../../helpers/lib'
 
 
 type LinkItem = {
@@ -86,16 +87,21 @@ export function Menu() {
 
 
           <ul className={styles.ul}>
-            {mainList.map(({ index, link }) => (
-              <Link
-                key = {index}
-                to={link}
-                onClick={() => setShowMainMenu()}
-                className={styles.li}
-              >
-                <span className={styles.link}>{menuLinks[index]}</span>
-              </Link>
-            ))}
+            <Link
+              to={`/brands/${sexId !== null ? sexIdToStr(sexId) : ''}`}
+              onClick={() => setShowMainMenu()}
+              className={styles.li}
+            >
+              <span className={styles.link}>{menuLinks['brands']}</span>
+            </Link>
+  
+            <Link
+              to={'/likes'}
+              onClick={() => setShowMainMenu()}
+              className={styles.li}
+            >
+              <span className={styles.link}>{menuLinks['likes']}</span>
+            </Link>
           </ul>
 
           <ul className={styles.ul}>

@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import styles from './styles.module.scss'
 import { ControlProducts } from './control-products'
 import { ProductsList } from './products-list'
 import { LoadMore } from './load-more'
 import { Filters } from './filters'
 import {useEffectSafe} from '../../helpers/hooks/use-effect-safe'
-import {initRouteHistory} from './store'
+import {initRouteHistory, toggleSex} from './store'
 import { useHistory } from 'react-router'
 
 
@@ -18,6 +18,13 @@ export function ProductsPage({ sexId }: Props) {
   useEffectSafe(() => {
     initRouteHistory(history)
   }, [])
+  
+  const prevSexId = useRef<Props['sexId']>(sexId)
+  useEffect(() => {
+    if (sexId !== prevSexId.current ) toggleSex(sexId)
+    prevSexId.current = sexId
+  }, [sexId])
+  
   
   return (
     <>

@@ -4,7 +4,7 @@ import { $showNextMenu, setShowNextMenu, $showMainMenu, setShowMainMenu } from '
 import { useStore } from '../../../../helpers/hooks/use-effector-store'
 import { subId, categories, subcategories } from '../../constants'
 import { sexIdToStr } from '../../../../helpers/lib'
-import { setCategories } from '../../../products/filters/store'
+import { setCategories } from '../../../products-page/filters/store'
 import styles from './styles.module.scss'
 import { Arrow } from '../../../../media/img/svg/icons'
 
@@ -52,6 +52,7 @@ export function NextMenu({ sexId }: {sexId: 1 | 2 | 0}) {
             {
               Object.entries(categories[sexId][sub]).map(([key, value]) => (
                 <Link
+                  // todo: Нужно исправить случай, когда унисекс, то вести на /products? .... (без men or women)
                   to={`/products/${sexIdToStr(sexId)}?categories=${key}`}
                   key={key}
                   className={styles.li}
