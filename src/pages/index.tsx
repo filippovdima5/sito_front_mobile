@@ -2,8 +2,9 @@ import React from 'react'
 import { Switch, Route } from 'react-router'
 import { Home } from './home'
 import { Products } from './products'
+import { Brands } from './brands'
+
 import { NotFound } from './not-found'
-import { BrandsPage } from '../features/brands-page'
 
 
 export function Pages() {
@@ -12,7 +13,7 @@ export function Pages() {
       <Route exact={true} path={'/'} component={Home}/>
       <Route exact={true} path={'/home/:sex?'} component={Home}/>
       <Route path={'/products/:sex'} component={Products}/>
-      <Route path={'/brands/:sex?'} component={BrandsPage}/>
+      <Route path={'/brands/:sex?'} component={Brands}/>
 
 
       

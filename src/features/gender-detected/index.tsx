@@ -5,7 +5,7 @@ import { useStore } from '../../helpers/hooks/use-effector-store'
 import {Redirect} from 'react-router'
 import { sexIdToStr } from '../../helpers/lib'
 import { Link } from 'react-router-dom'
-import { $currentRoute } from '../../stores/env'
+
 
 
 const data = [
@@ -14,19 +14,23 @@ const data = [
 ] as const
 
 
+type PropsGenderDetected = {
+  height: number,
+  currentRoute: '/home/' | '/products/' | '/404/' | '/brands/'
+}
 
 
-export function GenderDetected({ height }: {height: number}) {
-  const currentRoute = useStore($currentRoute)
-  
+export function GenderDetected({ height, currentRoute }: PropsGenderDetected) {
   useEffect(() => {fetchUser()}, [])
   const genderInfo = useStore($genderInfo)
+  
   
   if (genderInfo !== null) return <Redirect to={`${currentRoute}${sexIdToStr(genderInfo?.sexId)}`}/>
   
   
   return (
-    <>
+    <div className={styles.main}>
+      <div className={styles.wrap}>
       {data.map(({ index, title }) => (
         <Link to={`${currentRoute}${sexIdToStr(index)}`} key={index} className={styles.genderWrap}>
           <div style={{ paddingTop: `${height}%` }} className={styles.gender}>
@@ -38,7 +42,8 @@ export function GenderDetected({ height }: {height: number}) {
           </div>
         </Link>
       ))}
-    </>
+      </div>
+    </div>
   )
 }
 

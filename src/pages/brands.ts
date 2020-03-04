@@ -1,1 +1,0 @@
-export { BrandsPage } from '../features/brands-page'
