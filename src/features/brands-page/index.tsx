@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { setGender } from '../../stores/env'
 import styles from './styles.module.scss'
+import { Input } from '../../atoms/input'
 
 
 type Props = {
@@ -14,7 +15,18 @@ export function BrandsPage({ sexId }: Props) {
   return (
     <div className={styles.brands}>
       <div className={styles.wrap}>
-        {sexId } BRANDS
+      
+        <div className={styles.search}>
+          <Input
+            placeholder={'Поиск по названию бренда'}
+            type={'text'}
+          />
+        </div>
+        
+        <div className={styles.scrollContainer}>
+        
+        </div>
+      
       </div>
     </div>
   )

@@ -58,7 +58,7 @@ export function Header ({ sexId }: HeaderProps) {
     <div className={styles.Header}>
       <div className={styles.border}/>
       {([1, 2] as [1, 2]).map(item => (
-        <Link to={sexLink(item)} className={styles.buttonWrap}>
+        <Link to={sexLink(item)} key={item} className={styles.buttonWrap}>
           <ButtonSex sexId={item} signal={signal} currentSex={sexId}/>
         </Link>
       ))}

@@ -2,10 +2,31 @@
   width: 100%;
   box-sizing: border-box;
   margin-top: 2px;
-  padding: 10px 5px;
+  padding: 5px;
 
 
   .wrap{
     height: 100%;
+
+    .search{
+      height: 60px;
+      background-color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      & > *{
+        width: 95%;
+      }
+    }
+
+    .scrollContainer{
+      min-height: calc( 100% - 70px );
+      background-color: white;
+      margin-top: 5px;
+
+      //border: 1px solid red;
+    }
+
   }
 }

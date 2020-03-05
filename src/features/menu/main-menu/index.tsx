@@ -30,10 +30,6 @@ const catalogList: Array<ListItem> = [
   { title: 'Аксессуары', index: 'accessories' }
 ]
 
-const mainList: Array<LinkItem> = [
-  { index: 'brands', link: '/brands' },
-  { index: 'likes', link: '/likes' },
-]
 
 const infoList: Array<LinkItem> = [
   { index: 'blog', link: '/blog' },

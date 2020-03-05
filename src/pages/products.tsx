@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React  from 'react'
 import { GenderDetected } from '../features/gender-detected'
 import { ProductsPage } from '../features/products-page'
 import {RouteComponentProps} from 'react-router'

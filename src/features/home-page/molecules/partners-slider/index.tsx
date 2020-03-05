@@ -5,7 +5,7 @@ import styles from './styles.module.scss'
 // todo: Буду вызывать через api, из коллекции магазинов, одбирая тех с кем есть партнерка
 const data: any = []
 for (let i = 0; i < 20; i++){
-  data.push('https://sito.store/static/media/Lacoste.9109d412.png')
+  data.push(`/${i}`)
 }
 
 export function PartnersSlider() {
