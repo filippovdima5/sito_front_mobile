@@ -112,3 +112,17 @@ export interface MainSearchResultItem {
 
 
 //endregion mainSearch
+
+
+
+//region Simple:
+export interface BrandItem {
+  _id: string,
+  count: number
+}
+
+export interface AllBrandsRequest {
+  char: string,
+  brands: Array<BrandItem>
+}
+// endregion region Simple

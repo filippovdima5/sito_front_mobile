@@ -9,6 +9,7 @@ import {
   MainSearchResultItem,
   UserRequest,
   UserReqParams,
+  AllBrandsRequest
 } from './types'
 
 
@@ -53,5 +54,11 @@ export const api = {
   search: {
     mainSearch: (params: MainSearchReqParams): AxiosPromise<Array<MainSearchResultItem>> => apiPost
       .post('/search/main-search', params)
+  },
+  
+  
+  simple: {
+    allBrands: ( params: { sexId: 1 | 2 }): AxiosPromise<Array<AllBrandsRequest>> => apiGet
+      .get(`/simple/all-brands/?sexId=${params.sexId}`)
   }
 }

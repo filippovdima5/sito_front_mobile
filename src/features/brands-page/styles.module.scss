@@ -26,6 +26,46 @@
       margin-top: 5px;
 
       //border: 1px solid red;
+
+
+      .scrollBox{
+        list-style-type: none;
+        margin: 0;
+
+        .charGroup{
+          .char{
+            font-family: futura-pt, sans-serif;
+            font-size: 16px;
+            font-weight: 900;
+            line-height: 18px;
+            text-transform: uppercase;
+            margin: 0;
+            color: white;
+            letter-spacing: 2px;
+            background-color: #272727;
+            padding: 4vw 5vw;
+          }
+
+          .brandsGroup{
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            background-color: white;
+
+            li{
+              background-color: #fff;
+
+              a{
+                color: #2d2d2d;
+                padding: 4vw 5vw;
+                border-bottom: 1px solid #eee;
+                text-decoration: none;
+                display: block;
+              }
+            }
+          }
+        }
+      }
     }
 
   }
