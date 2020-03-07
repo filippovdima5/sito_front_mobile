@@ -4,6 +4,8 @@ import './media/css/reset.module.scss'
 import { Header } from './features/header'
 import { Pages } from './pages'
 import { Footer } from './features/footer'
+import BackToTop from './commons/molecules/back-to-top'
+import config from './config'
 
 
 export function App() {
@@ -20,6 +22,8 @@ export function App() {
         <footer className={styles.footer}>
           <Footer/>
         </footer>
+        
+        {!config.ssr && <BackToTop/>}
       </div>
     )
 }

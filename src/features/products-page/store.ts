@@ -3,7 +3,7 @@ import {RouteComponentProps} from 'react-router'
 import {setGender} from '../../stores/env'
 import {FilterReqParams, FiltersRequest, PaginateInfo, ProductsReqParams, ProductsRequest} from '../../api/types'
 import {api} from '../../api'
-import { MainState, TypeSet } from './types'
+import {MainState, StatusPage, TypeSet} from './types'
 import {hydrateInitialState} from '../../ssr/utils/hydrate-initial-state'
 import config from '../../config'
 import { parseQueryProducts, parseQuery } from '../../ssr/lib'
@@ -318,4 +318,29 @@ mainState.on(initRouteHistory, ((state, payload) => {
   return { ...state, ...parseQueryProducts(sexId, queryParams) }
 }))
 // endregion Hydrate
+
+
+
+// region statusPage:
+export const $loadingProducts = createStore<boolean>(false)
+$loadingProducts.on(fetchProducts.pending, () => true)
+$loadingProducts.on(fetchProducts.finally, () => false)
+
+export const $statusPageProducts = createStore<StatusPage>('START')
+$statusPageProducts.on(fetchProducts.done, (state, { result: { data: { products } } }) => {
+  if (products.length === 0) return 'EMPTY'
+  return 'READY'
+})
+
+
+export const $lengthSkeletonData = createStore<number>(20)
+const targetSkeletonLength = combine({ productsState, $productsStore })
+$lengthSkeletonData.on(targetSkeletonLength.updates, (_, { productsState: { page }, $productsStore }) => {
+  if (page === null) page = 1
+  const length = page * 20 - $productsStore.length
+  if (length > 0) return length
+  return 0
+})
+
+// endregion statusPage
 

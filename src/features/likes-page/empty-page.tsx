@@ -1,7 +1,7 @@
 import React from 'react'
-import styles from './styles.module.scss'
-import { LikeIcon } from '../../../media/img/svg/icons'
-import { Button } from '../../../commons/atoms/button'
+import styles from '../../media/css/info-page.module.scss'
+import { LikeIcon } from '../../media/img/svg/icons'
+import { Button } from '../../commons/atoms/button'
 import { Link } from 'react-router-dom'
 
 
@@ -15,7 +15,7 @@ export function EmptyPage() {
     <div className={styles.wrap}>
       <div>
         <div className={styles.container}>
-          <div className={styles.img}/>
+          <div style={{ backgroundImage: 'url("/cdn/mobile/like-page/like-image.svg")' }} className={styles.img}/>
           <div className={styles.title}>Не найдено</div>
           <div className={styles.body}>
             <span>

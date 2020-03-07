@@ -35,6 +35,7 @@ export const parseQueryProducts = (sexId: 1| 2, queryParams: any): AfterDecodeUr
       case 'sale_from':
       case 'sale_to':
       case 'page':
+        if (Boolean(value) && Number(value) > 1) value = '1'
         setObject[key] = Number(value)
         break
       case 'sort': {

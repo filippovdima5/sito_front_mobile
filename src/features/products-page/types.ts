@@ -1,6 +1,8 @@
 import { filtersState, productsState } from './store'
 
 
+export type StatusPage = 'START' | 'EMPTY' | 'READY' | 'FAIL'
+
 export type TypeSet =
   { type: 'set_url' } |
   { type: 'set_hydrate' } |

@@ -8,6 +8,8 @@ import {useEffectSafe} from '../../helpers/hooks/use-effect-safe'
 import {initRouteHistory, toggleSex} from './store'
 import { useHistory } from 'react-router'
 import { loadLikes } from '../../stores/env'
+import { $statusPageProducts } from './store'
+import {useStore} from '../../helpers/hooks/use-effector-store'
 
 
 type Props = {
@@ -15,6 +17,7 @@ type Props = {
 }
 
 export function ProductsPage({ sexId }: Props) {
+  const status = useStore($statusPageProducts)
   const history = useHistory()
   useEffectSafe(() => {
     initRouteHistory(history)
@@ -33,7 +36,7 @@ export function ProductsPage({ sexId }: Props) {
       <div className={styles.products}>
         <ControlProducts/>
         <ProductsList/>
-        <LoadMore/>
+        {status === 'READY' &&   <LoadMore/>}
       </div>
       <Filters sexId = {sexId}/>
     </>
