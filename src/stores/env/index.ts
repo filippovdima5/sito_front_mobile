@@ -1,6 +1,7 @@
-import {createEffect, createEvent, createStore, merge, restore} from 'effector'
+import {createEffect, createEvent, createStore, merge, restore, sample} from 'effector'
 import { api } from '../../api'
 import { GenderInfo, CurrentRoute } from './types'
+
 
 
 export const fetchUser = createEffect({
@@ -52,6 +53,43 @@ export const $sexLine = $genderInfo.map(state => {
   else return null
 })
 //endregion Gender
+
+
+
+// region Likes:
+export const fetchUserLikes = createEffect({
+  handler: api.user.getUser
+})
+export const loadLikes = createEvent()
+export const $likes = createStore<Array<string>>([])
+
+
+$likes.on($userStore.updates, (_, payload) => {
+  if (!payload.likes) return
+  return payload.likes
+})
+
+sample($likes, loadLikes).watch(payload => {
+  if (payload.length === 0) fetchUserLikes()
+})
+
+
+export const setLike = createEvent<string>()
+
+const targetSetLike = sample($likes, setLike, (likes, idProduct) => {
+  if (likes.includes(idProduct)) return likes.filter(id => id !== idProduct)
+  return [...likes, idProduct]
+})
+
+$likes.on(targetSetLike, (_, payload) => payload)
+$likes.on(fetchUserLikes.done, (state, { result: { data } }) => {
+  if (data.likes) return data.likes
+})
+targetSetLike.watch(payload => {
+  api.user.setUser({ likes: payload })
+})
+
+// endregion Likes
 
 
 

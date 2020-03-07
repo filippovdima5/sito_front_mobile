@@ -1,7 +1,7 @@
 import React from 'react'
 import { useStore } from '../../../helpers/hooks/use-effector-store'
 import { $productsStore } from '../store'
-import { ProductCard, SkeletonCard } from '../product-card'
+import { ProductCard, SkeletonCard } from '../../../commons/organisms/product-card'
 import styles from './styles.module.scss'
 import config from '../../../config'
 
@@ -26,7 +26,7 @@ function ProductsList() {
   return (
     <>
       {data.map(item => (
-        <ProductCard key={item.id} {...item}/>
+        <ProductCard showLike={true} key={item.id} {...item}/>
       ))}
     </>
   )

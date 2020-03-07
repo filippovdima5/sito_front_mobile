@@ -4,9 +4,10 @@ import { $showNextMenu, setShowNextMenu, $showMainMenu, setShowMainMenu } from '
 import { useStore } from '../../../../helpers/hooks/use-effector-store'
 import { subId, categories, subcategories } from '../../constants'
 import { sexIdToStr } from '../../../../helpers/lib'
-import { setCategories } from '../../../products-page/filters/store'
+import { setCategories } from '../../../products-page/features/filters/store'
 import styles from './styles.module.scss'
 import { Arrow } from '../../../../media/img/svg/icons'
+import { setSignalWithoutSexId } from '../../molecules/header'
 
 
 export function NextMenu({ sexId }: {sexId: 1 | 2 | 0}) {
@@ -53,13 +54,15 @@ export function NextMenu({ sexId }: {sexId: 1 | 2 | 0}) {
               Object.entries(categories[sexId][sub]).map(([key, value]) => (
                 <Link
                   // todo: Нужно исправить случай, когда унисекс, то вести на /products? .... (без men or women)
-                  to={`/products/${sexIdToStr(sexId)}?categories=${key}`}
+                  to={`/products/${sexId === 0 ? '' : sexIdToStr(sexId)}?categories=${key}`}
                   key={key}
                   className={styles.li}
                   onClick={() => {
                     if (sexId !== 0){
                       setCategories({ value: Number(key), sexId })
                       setShowMainMenu()
+                    } else {
+                      setSignalWithoutSexId()
                     }
                   }}
                 >
@@ -70,12 +73,14 @@ export function NextMenu({ sexId }: {sexId: 1 | 2 | 0}) {
               ))
             }
             <Link
-              to={`/products/${sexIdToStr(sexId)}?categories=${subId[sub]}`}
+              to={`/products/${sexId === 0 ? '' : sexIdToStr(sexId)}?categories=${subId[sub]}`}
               className={styles.li}
               onClick={() => {
                 if (sexId !== 0){
                   setCategories({ value: Number(subId[sub]), sexId })
                   setShowMainMenu()
+                } else {
+                  setSignalWithoutSexId()
                 }
               }}
             >

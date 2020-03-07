@@ -36,7 +36,7 @@ export function GenderDetected({ height, currentRoute, search }: PropsGenderDete
       {data.map(({ index, title }) => (
         <Link to={`${currentRoute}${sexIdToStr(index)}${search ?? ''}`} key={index} className={styles.genderWrap}>
           <div style={{ paddingTop: `${height}%` }} className={styles.gender}>
-            <img src={`/`} alt={title} className={styles.img}/>
+            <img src={`/cdn/mobile/gender-detected/${index}.jpg`} alt={title} className={styles.img}/>
 
             <div className={styles.titleWrap}>
               <div className={styles.title}>{title}</div>

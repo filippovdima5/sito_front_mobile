@@ -1,4 +1,4 @@
-import {combine, createEffect, createEvent, createStore, sample} from 'effector'
+import {combine, createEffect, createEvent, createStore } from 'effector'
 import { AllBrandsRequest } from '../../api/types'
 import {api} from '../../api'
 

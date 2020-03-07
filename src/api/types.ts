@@ -1,10 +1,12 @@
 //region User:
 export interface UserRequest {
   sex_id?: 1 | 2,
+  likes?: Array<string>
 }
 
 export interface UserReqParams {
   sex_id?: 1 | 2,
+  likes?: Array<string>
 }
 // endregion User
 

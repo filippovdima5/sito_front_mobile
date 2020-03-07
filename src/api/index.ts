@@ -9,7 +9,7 @@ import {
   MainSearchResultItem,
   UserRequest,
   UserReqParams,
-  AllBrandsRequest
+  AllBrandsRequest, ShortProduct
 } from './types'
 
 
@@ -47,7 +47,10 @@ export const api = {
       .post('/products/products-list', params),
     
     getFilters: (params: FilterReqParams): AxiosPromise<FiltersRequest> => apiPost
-      .post('/products/facet-filters', params)
+      .post('/products/facet-filters', params),
+    
+    getLikeProducts: (params: { likes: Array<string> }): AxiosPromise<Array<ShortProduct>> => apiPost
+      .post('/products/like-products', params)
   },
 
   

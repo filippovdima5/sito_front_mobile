@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router'
 import { Home } from './home'
 import { Products } from './products'
 import { Brands } from './brands'
+import { Likes } from './likes'
 
 import { NotFound } from './not-found'
 
@@ -14,6 +15,7 @@ export function Pages() {
       <Route exact={true} path={'/home/:sex?'} component={Home}/>
       <Route path={'/products/:sex?'} component={Products}/>
       <Route path={'/brands/:sex?'} component={Brands}/>
+      <Route path={'/likes'} component={Likes}/>
 
 
       

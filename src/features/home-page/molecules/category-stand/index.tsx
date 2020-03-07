@@ -4,7 +4,7 @@ import { Title } from '../../atoms/title'
 import styles from './styles.module.scss'
 import { namesCategory } from '../../../../constants/category-keys'
 import { sexIdToStr } from '../../../../helpers/lib'
-import { setCategories } from '../../../products-page/filters/store'
+import { setCategories } from '../../../products-page/features/filters/store'
 
 
 // todo: Потом что то подобное должно хранится у юзера

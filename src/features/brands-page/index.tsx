@@ -1,10 +1,10 @@
-import React, {Fragment, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { BrandItem } from '../../api/types'
 import { setGender } from '../../stores/env'
 import styles from './styles.module.scss'
-import { Input } from '../../atoms/input'
+import { Input } from '../../commons/atoms/input'
 import {Link} from 'react-router-dom'
-import { $filterBrands, loadBrands, setFilterString, filterString } from './store'
+import { $filterBrands, loadBrands, setFilterString } from './store'
 import { useStore } from '../../helpers/hooks/use-effector-store'
 
 

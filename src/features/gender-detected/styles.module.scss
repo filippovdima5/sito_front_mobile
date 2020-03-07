@@ -8,13 +8,15 @@
   .wrap{
     height: 100%;
 
-    & >div{margin-bottom: 10px}
-    & >div:last-child{margin-bottom: 0 !important;}
   }
 }
 
 .genderWrap{
   overflow: hidden;
+}
+
+.gender:first-child{
+  margin-bottom: 6px;
 }
 
 .gender{

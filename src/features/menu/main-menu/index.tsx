@@ -4,7 +4,7 @@ import { MenuIcon } from '../atoms/menu-icon'
 import { $showMainMenu, setShowMainMenu, setShowNextMenu } from '../store'
 import { useStore } from '../../../helpers/hooks/use-effector-store'
 import { NextMenu } from '../organisms/next-menu'
-import { Header, setSignalWithoutSexId } from '../molecules/header'
+import { Header } from '../molecules/header'
 //import { Footer } from '../molecules/footer'
 import { $sexId } from '../../../stores/env'
 import { categories, menuLinks } from '../constants'
@@ -35,7 +35,13 @@ const infoList: Array<LinkItem> = [
   { index: 'blog', link: '/blog' },
   { index: 'about', link: '/about' }
 ]
-
+//        <div
+//               onClick={(event: any) => {
+//                 event.stopPropagation()
+//                 setSignalWithoutSexId()
+//               }}
+//               className={styles.blockNoSex}
+//             />
 
 export function Menu() {
   const sexId = useStore($sexId)
@@ -51,19 +57,7 @@ export function Menu() {
         </div>
 
         <nav className={styles.nav}>
-
-
-          {sexId === null ?
-            <div
-              onClick={(event: any) => {
-                event.stopPropagation()
-                setSignalWithoutSexId()
-              }}
-              className={styles.blockNoSex}
-            />
-            :
-            <h2 className={styles.h2}>{sexId === 1 ? 'Для него' : 'Для неё'}</h2>
-          }
+          {sexId !== null && <h2 className={styles.h2}>{sexId === 1 ? 'Для него' : 'Для неё'}</h2>}
 
 
           <ul className={styles.ul}>
