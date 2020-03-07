@@ -2,13 +2,16 @@ import React, { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useStore } from '../../../helpers/hooks/use-effector-store'
 import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock'
-import { $searchResult, $showResults } from '../store'
+import {$searchResult, $showResults, setModSearch} from '../store'
 import styles from './styles.module.scss'
+import { $sexLine } from '../../../stores/env'
+import { setBrands } from '../../products-page/features/filters/store'
 
 
 function SearchResult() {
   const modalSearchRef = useRef<HTMLDivElement | null>(null)
   const searchResults = useStore($searchResult)
+  const sexLine = useStore($sexLine)
 
 
   useEffect(() => {
@@ -26,14 +29,20 @@ function SearchResult() {
     >
       <div   className={styles.modalBody}>
         <ul className={styles.list}>
-
+          
           {searchResults.map(({ count, title }) => (
             <li key={title} className={styles.title}>
-              <Link to={'/'} className={styles.link}>
+              <Link
+                onClick={() => {
+                  setBrands(title)
+                  setModSearch()
+                }}
+                to={`/products/${sexLine !== null ? sexLine : ''}?brands=${title}`}
+                className={styles.link}
+              >
                 {title}
                 
                 <span>
-                  {/*<span className={styles.type}>({typeMainSearchResultItem[type]})</span>*/}
                   <span className={styles.count}>{count}</span>
                 </span>
                 

@@ -1,4 +1,4 @@
-import {createEffect, createEvent, createStore, sample} from 'effector'
+import {createEffect, createEvent, createStore, merge, sample} from 'effector'
 import { $likes } from '../../stores/env'
 import { ShortProduct } from '../../api/types'
 import { api } from '../../api'
@@ -33,3 +33,8 @@ $statusPage.on(fetchLikeProducts.done, (_, { result: { data } }) => {
 sample($likes, loadLikeProducts).watch(likes => {
    fetchLikeProducts({ likes })
 })
+
+
+export const $loadingLikes = createStore<boolean>(false)
+$loadingLikes.on(fetchLikeProducts, () => true)
+$loadingLikes.on(merge([fetchLikeProducts.done, fetchLikeProducts.fail]), () => false)

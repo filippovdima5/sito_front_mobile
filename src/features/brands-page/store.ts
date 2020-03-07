@@ -1,4 +1,4 @@
-import {combine, createEffect, createEvent, createStore } from 'effector'
+import {combine, createEffect, createEvent, createStore, merge} from 'effector'
 import { AllBrandsRequest } from '../../api/types'
 import {api} from '../../api'
 
@@ -29,3 +29,8 @@ export const $filterBrands = combine({filterString, brands})
     brands: item.brands.filter(item => item._id.toLowerCase().includes(filterString.toLowerCase()))
   }))
 })
+
+
+export const $loadingBrands = createStore<boolean>(false)
+$loadingBrands.on(loadBrands, () => true)
+$loadingBrands.on(merge([loadBrands.done, loadBrands.fail]), () => false)

@@ -35,6 +35,12 @@ mainState.on(setCategories, (state, { value, sexId }) => {
   return ({ ...mainState.defaultState, sexId, categories: [value] })
 })
 
+export const setBrands = createEvent<string>()
+mainState.on(setBrands, (state, brand) => {
+  setTypeSet({ type: 'set_filter' })
+  return ({ ...mainState.defaultState, sexId: state.sexId, brands: [brand] })
+})
+
 export const skipThisFilter = createEvent<{key:  keyof Omit<MainState, 'sort' | 'limit' | 'page' | 'sexId'>}>()
 mainState.on(skipThisFilter, (state, { key }) => {
   setTypeSet({ type: 'set_filter' })

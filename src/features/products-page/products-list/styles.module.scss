@@ -1,14 +1,22 @@
-.productsList {
-  flex: 1;
-  margin-top: 46px;
-  box-sizing: border-box;
-
-  position: relative;
-  z-index: 1;
+.wrap{
+  height: 100%;
+  background-color: #fff;
+  width: 100%;
 
   display: flex;
-  flex-flow: wrap;
-  justify-content: flex-start;
-  width: 100%;
-  background-color: #fff;
+
+  .productsList {
+    flex: 1;
+    margin-top: 46px;
+    box-sizing: border-box;
+
+    position: relative;
+    z-index: 1;
+
+    display: flex;
+    flex-flow: wrap;
+    justify-content: flex-start;
+    width: 100%;
+
+  }
 }

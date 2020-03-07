@@ -1,4 +1,4 @@
-import {combine, createEffect, createEvent, createStore, guard, restore} from 'effector'
+import {combine, createEffect, createEvent, createStore, guard, merge, restore} from 'effector'
 import {RouteComponentProps} from 'react-router'
 import {setGender} from '../../stores/env'
 import {FilterReqParams, FiltersRequest, PaginateInfo, ProductsReqParams, ProductsRequest} from '../../api/types'
@@ -322,9 +322,9 @@ mainState.on(initRouteHistory, ((state, payload) => {
 
 
 // region statusPage:
-export const $loadingProducts = createStore<boolean>(false)
-$loadingProducts.on(fetchProducts.pending, () => true)
-$loadingProducts.on(fetchProducts.finally, () => false)
+export const $loadingProducts = fetchProducts.pending.map(state => state)
+$loadingProducts.on(fetchProducts, () => true)
+$loadingProducts.on(merge([fetchProducts.done, fetchProducts.fail]), () => false)
 
 export const $statusPageProducts = createStore<StatusPage>('START')
 $statusPageProducts.on(fetchProducts.done, (state, { result: { data: { products } } }) => {
@@ -341,6 +341,8 @@ $lengthSkeletonData.on(targetSkeletonLength.updates, (_, { productsState: { page
   if (length > 0) return length
   return 0
 })
+
+
 
 // endregion statusPage
 

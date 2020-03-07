@@ -6,6 +6,7 @@ import styles from './styles.module.scss'
 import config from '../../../config'
 import {StatusPage} from '../types'
 import { EmptyList } from './empty-list'
+import { Loader } from '../../../commons/templates/loader'
 
 
 function SkeletonsList({ length }: { length: number }) {
@@ -28,10 +29,10 @@ function Controller({ status, lengthSkeleton, loading }: { status: StatusPage, l
     case 'EMPTY': return (<EmptyList/>)
     case 'FAIL': return (<div>ОШИБКА</div>)
     default: return (
-      <>
+      <div className={styles.productsList}>
         <ProductsList/>
-        {(loading || status === 'START' || !config.ssr) && <SkeletonsList length={lengthSkeleton}/>}
-      </>
+        {(loading || status === 'START') && !config.ssr && <SkeletonsList length={lengthSkeleton}/>}
+      </div>
     )
   }
 }
@@ -42,7 +43,8 @@ function List() {
   const lengthSkeleton = useStore($lengthSkeletonData)
   
   return (
-    <div className={styles.productsList}>
+    <div className={styles.wrap}>
+      {loading && <Loader/>}
       <Controller status={status} lengthSkeleton={lengthSkeleton} loading={loading}/>
     </div>
   )

@@ -24,18 +24,12 @@ export function LoadMore() {
 
 
       {
-        viewedProducts < total ?
+        viewedProducts < total &&
           <button
             onClick = {() => {setProductsState({ key: 'page', value: page !== null ? page + 1 : 2 })}}
             className={styles.button}>
             Показать ещё
           </button>
-          :
-          <button
-            className={styles.button}
-            onClick={() => (document.body.scrollTo(0,0))}
-            title={'Наверх'}
-          />
       }
     </div>
   )
