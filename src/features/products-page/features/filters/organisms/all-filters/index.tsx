@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { useStore } from '../../../../../../helpers/hooks/use-effector-store'
-import { $filtersView, skipAllFilters, setShowFilter, setShowFilters } from '../../store'
+import { $filtersView, skipAllFilters, setShowFilter, setShowFilters, $showFilters } from '../../store'
 import { setFilter, $productsInfoStore } from '../../../../store'
 import { FilterRow, UnuseFilterRow } from '../../molecules/filter-row'
 import { CheckRow } from '../../molecules/check-row'
@@ -17,6 +17,7 @@ function TitleTypeList({ count, title, allCount }: {count: number, title: string
 
 
 export function AllFilters({ sexId }: {sexId: 1 | 2}) {
+  const showFilters = useStore($showFilters)
   const filtersView = useStore($filtersView)
   const { total } = useStore($productsInfoStore)
 
@@ -43,7 +44,7 @@ export function AllFilters({ sexId }: {sexId: 1 | 2}) {
               {usageFilters.map(({ name, type, data }, index) => {
                 if (type !== 'bool') {
                   return (
-                    <div onClick={() => setShowFilter(name)} key = {name} className={styles.itemList}>
+                    <div  key = {name} className={styles.itemList}>
                       <FilterRow
                         isFirst={index === 0}
                         type={type}
@@ -104,10 +105,15 @@ export function AllFilters({ sexId }: {sexId: 1 | 2}) {
       <div className={styles.space}/>
 
       {/*//todo Написать хелпер для склонений взависимости от кол - ва*/}
-
-      <BtnDone
-        onClick={() => setShowFilters(false)}
-        title={`Посмотреть ${total} предложения`}/>
+      
+      {
+        showFilters &&
+        <BtnDone
+            onClick={() => setShowFilters(false)}
+            title={`Посмотреть ${total} предложения`}
+            failTitle={total > 0 ? false : 'Товаров не найдено'}
+        />
+      }
 
 
     </>

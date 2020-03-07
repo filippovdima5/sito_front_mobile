@@ -4,6 +4,9 @@ import rightArrowSVG from '../../../../../../media/img/svg/rightArrow.svg'
 import { setFilter } from '../../../../store'
 import { filtersMap, ViewFilter } from '../../types'
 import styles from './styles.module.scss'
+import { $countHelpsHint, setContHelpHint } from './store'
+import { useStore } from '../../../../../../helpers/hooks/use-effector-store'
+import { setShowFilter } from '../../store'
 
 
 export { UnuseFilterRow } from './unuse-filter-row'
@@ -55,14 +58,19 @@ export function FilterRow(props: ViewFilter) {
     if (percentSkip > 0.5) setSkip(elemRow.clientWidth)
   }, [skipLength])
 
-
-
-
+  
+  const countHelpHint = useStore($countHelpsHint)
+  const countHelpRef = useRef(countHelpHint)
+  useEffect(() => {countHelpRef.current = countHelpHint}, [countHelpHint])
+  
   useEffect(() => {
     let timerIn: any, timerOut: any
-    if (props.isFirst)  {
+    if (props.isFirst && countHelpRef.current < 2)  {
       const elemRow = rowRef.current as HTMLDivElement
-      timerIn = setTimeout(() => setSkip(0.4 * elemRow.clientWidth), 2000)
+      timerIn = setTimeout(() => {
+        setSkip(0.4 * elemRow.clientWidth)
+        setContHelpHint()
+      }, 2000)
       timerOut = setTimeout(() => setSkip(0), 5000)
     }
 
@@ -121,6 +129,7 @@ export function FilterRow(props: ViewFilter) {
       className={`${styles.filterRow} ${skipStyle}`}
     >
       <div
+        onClick={() => setShowFilter(props.title)}
         ref = { skipRowRef }
         style={{ left: `-${skipLength}px` }}
         className={`${styles.item_wrap} ${skipAnimate && styles.skipAnimate}`}
@@ -144,7 +153,7 @@ export function FilterRow(props: ViewFilter) {
       <button
         onClick={() => skipFilter()}
         style={{ width: `${skipLength}px` }}
-        className={styles.skip_one}
+        className={`${styles.skip_one} ${skipAnimate && styles.skipAnimateButton}`}
       >
         Сбросить
       </button>

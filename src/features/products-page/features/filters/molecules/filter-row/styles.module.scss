@@ -1,6 +1,6 @@
 .show_skip{
-  .skip_one{transition: width 0.1s ease-in-out}
-  .item_wrap{transition: left 0.1s ease-in-out}
+  .skip_one{transition: width 0.1s}
+  .item_wrap{transition: left 0.1s}
 }
 
 .filterRow{
@@ -102,6 +102,9 @@
   }
 
   .skipAnimate{
-    transition: left 600ms ease-out;
+    transition: left 500ms ease-out;
+  }
+  .skipAnimateButton{
+    transition: width 500ms ease-out;
   }
 }
