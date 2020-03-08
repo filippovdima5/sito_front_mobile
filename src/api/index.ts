@@ -15,7 +15,7 @@ import {
 
 export const apiGet = axios.create({
   method: 'get',
-  baseURL: '/api',
+  baseURL: config.api.main.endpoint,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -61,7 +61,10 @@ export const api = {
   
   
   simple: {
-    allBrands: ( params: { sexId: 1 | 2 }): AxiosPromise<Array<AllBrandsRequest>> => apiGet
-      .get(`/simple/all-brands/?sexId=${params.sexId}`)
+    allBrands: ( params: { sexId: 1 | 2 }): AxiosPromise<Array<AllBrandsRequest>> => {
+      console.log(params, 'API')
+      return apiGet
+        .get(`/simple/all-brands/?sexId=${params.sexId}`)
+    }
   }
 }

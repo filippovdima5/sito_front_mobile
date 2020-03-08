@@ -1,14 +1,19 @@
-import React, { useEffect } from 'react'
-import { BrandItem } from '../../api/types'
-import { setGender } from '../../stores/env'
-import styles from './styles.module.scss'
-import { Input } from '../../commons/atoms/input'
+import React  from 'react'
 import {Link} from 'react-router-dom'
-import { $filterBrands, loadBrands, setFilterString, $loadingBrands } from './store'
+import { useEffectSafe } from '../../helpers/hooks/use-effect-safe'
 import { sexIdToStr } from '../../helpers/lib'
+
+import { BrandItem } from '../../api/types'
+import { useStore, useEvent } from 'effector-react/ssr'
+import { setGender } from '../../stores/env'
+
+import { $filterBrands, loadBrands, setFilterString, $loadingBrands } from './store'
 import { setBrands } from '../products-page/features/filters/store'
-import { useStore } from '../../helpers/hooks/use-effector-store'
+
+import { Input } from '../../commons/atoms/input'
 import { Loader } from '../../commons/templates/loader'
+
+import styles from './styles.module.scss'
 
 
 type Props = {
@@ -17,13 +22,14 @@ type Props = {
 
 
 function BrandsGroup({ brands, sexId }: {brands: Array<BrandItem>, sexId: 1 | 2}) {
+  const setBrandsEv = useEvent(setBrands)
   return(
     <>
       {brands.map(({ _id }) => (
         <li>
           <Link
             to={`/products/${sexIdToStr(sexId)}?brands=${_id}`}
-            onClick={() => setBrands(_id)}
+            onClick={() => setBrandsEv(_id)}
           >
             {_id}
           </Link>
@@ -35,11 +41,14 @@ function BrandsGroup({ brands, sexId }: {brands: Array<BrandItem>, sexId: 1 | 2}
 
 export function BrandsPage({ sexId }: Props) {
   const loader = useStore($loadingBrands)
+  const loadBrandsEv = useEvent(loadBrands)
+  const setFilterStringEv = useEvent(setFilterString)
   
-  useEffect(() => {setGender(sexId)}, [sexId])
-  useEffect(() => {
-    loadBrands(sexId)
+  useEffectSafe(() => {
+    setGender(sexId)
+    loadBrandsEv(sexId)
   }, [sexId])
+
   
   const charGroups = useStore($filterBrands)
   
@@ -50,7 +59,7 @@ export function BrandsPage({ sexId }: Props) {
       
         <div className={styles.search}>
           <Input
-            onChange={(event => setFilterString(event.currentTarget.value))}
+            onChange={(event => setFilterStringEv(event.currentTarget.value))}
             placeholder={'Поиск по названию бренда'}
             type={'text'}
           />

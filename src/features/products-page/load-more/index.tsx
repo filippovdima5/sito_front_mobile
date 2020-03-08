@@ -1,6 +1,8 @@
 import React, { useMemo } from 'react'
-import { useStore } from '../../../helpers/hooks/use-effector-store'
+
+import { useStore, useEvent } from 'effector-react/ssr'
 import { $productsInfoStore, productsState, setProductsState } from '../store'
+
 import styles from './styles.module.scss'
 
 
@@ -8,6 +10,8 @@ import styles from './styles.module.scss'
 export function LoadMore() {
   const { total } = useStore($productsInfoStore)
   const { page } = useStore(productsState)
+  
+  const setProductsStateEv = useEvent(setProductsState)
   
   const viewedProducts = useMemo(() => 20 * (page ? page : 1), [page])
   
@@ -26,7 +30,7 @@ export function LoadMore() {
       {
         viewedProducts < total &&
           <button
-            onClick = {() => {setProductsState({ key: 'page', value: page !== null ? page + 1 : 2 })}}
+            onClick = {() => {setProductsStateEv({ key: 'page', value: page !== null ? page + 1 : 2 })}}
             className={styles.button}>
             Показать ещё
           </button>

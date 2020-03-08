@@ -1,16 +1,21 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { useStore } from '../../../helpers/hooks/use-effector-store'
+import React, { useCallback, useRef, useState } from 'react'
+import { useEffectSafe } from '../../../helpers/hooks/use-effect-safe'
+
+import { useStore, useEvent } from 'effector-react/ssr'
 import { setPhrase, $modSearch } from '../store'
+
 import styles from './styles.module.scss'
 
 
 export function Input() {
   const inputRef = useRef<HTMLInputElement | null>(null)
   const modSearch = useStore($modSearch)
+  
+  const setPhraseEv = useEvent(setPhrase)
 
 
 
-  useEffect(() => {
+  useEffectSafe(() => {
     if (modSearch) (inputRef.current as HTMLInputElement).focus()
     else (inputRef.current as HTMLInputElement).blur()
   }, [ modSearch ])
@@ -20,8 +25,8 @@ export function Input() {
   const handleChange = useCallback((event: any) => {
     const phrase = event.currentTarget.value
     setValue(phrase)
-    setPhrase(phrase)
-  }, [])
+    setPhraseEv(phrase)
+  }, [setPhraseEv])
 
 
   return (

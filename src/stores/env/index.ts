@@ -1,4 +1,4 @@
-import {createEffect, createEvent, createStore, merge, restore, sample} from 'effector'
+import {createEffect, createEvent, createStore, merge, restore, sample} from 'lib/effector'
 import { api } from '../../api'
 import { GenderInfo, CurrentRoute } from './types'
 
@@ -70,7 +70,7 @@ $likes.on($userStore.updates, (_, payload) => {
 })
 
 sample($likes, loadLikes).watch(payload => {
-  if (payload.length === 0) fetchUserLikes()
+  if (payload.length === 0) fetchUserLikes(null)
 })
 
 

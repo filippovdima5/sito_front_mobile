@@ -1,4 +1,4 @@
-import { createEvent, restore } from 'effector'
+import { createEvent, restore } from 'lib/effector'
 import { namesCategory } from '../../../../constants/category-keys'
 import { filtersState, mainState, setTypeSet } from '../../store'
 import { MainState } from '../../types'

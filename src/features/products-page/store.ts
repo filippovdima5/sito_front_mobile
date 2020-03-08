@@ -1,4 +1,4 @@
-import {combine, createEffect, createEvent, createStore, guard, merge, restore} from 'effector'
+import {combine, createEffect, createEvent, createStore, guard, merge, restore} from 'lib/effector'
 import {RouteComponentProps} from 'react-router'
 import {setGender} from '../../stores/env'
 import {FilterReqParams, FiltersRequest, PaginateInfo, ProductsReqParams, ProductsRequest} from '../../api/types'

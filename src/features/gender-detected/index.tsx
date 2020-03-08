@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import {  fetchUser, $genderInfo } from '../../stores/env'
 import styles from './styles.module.scss'
-import { useStore } from '../../helpers/hooks/use-effector-store'
+import { useStore } from 'effector-react/ssr'
 import {Redirect} from 'react-router'
 import { sexIdToStr } from '../../helpers/lib'
 import { Link } from 'react-router-dom'
@@ -22,7 +22,8 @@ type PropsGenderDetected = {
 
 
 export function GenderDetected({ height, currentRoute, search }: PropsGenderDetected) {
-  useEffect(() => {fetchUser()}, [])
+  useEffect(() => {
+    fetchUser(null)}, [])
   const genderInfo = useStore($genderInfo)
   
   

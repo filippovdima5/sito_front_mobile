@@ -1,14 +1,17 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter } from 'react-router-dom'
-import { App } from './app'
+
 import { loadableReady } from '@loadable/component'
-import { hydrateInitialState } from './ssr/utils/hydrate-initial-state'
+import { fork, hydrate } from 'effector/fork';
+import { rootDomain } from 'lib/effector';
+import { BrowserRouter } from 'react-router-dom'
+
+import { App } from './app'
 
 
-const serverPreloadedState = (window as any).__PRELOADED_STATE__
-const preloadedState = Object.assign({}, serverPreloadedState)
-hydrateInitialState(preloadedState)
+hydrate(rootDomain, { values: (window as any).INITIAL_STATE });
+const scope = fork(rootDomain);
+
 
 
 Promise.all([
@@ -21,7 +24,7 @@ Promise.all([
   
       ReactDOM.hydrate(
         <BrowserRouter>
-          <App/>
+          <App root={scope}/>
         </BrowserRouter>
         , root)
     }

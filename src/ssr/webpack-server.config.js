@@ -18,10 +18,8 @@ const commonPresets = [
 
 const babelConfig = {
   "plugins": [
-    ["@babel/transform-runtime",
-      {
-        "corejs": 2
-      }],
+      ["@babel/transform-runtime", {"corejs": 2}],
+      ["effector/babel-plugin", { "addLoc": true }],
 
     "@loadable/babel-plugin",
     "@babel/transform-async-to-generator",

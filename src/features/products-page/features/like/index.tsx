@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import styles from './styles.module.scss'
 import { $likes, setLike } from '../../../../stores/env'
-import { useStore } from '../../../../helpers/hooks/use-effector-store'
+import { useStore } from 'effector-react/ssr'
 import { LikeIcon } from '../../../../media/img/svg/icons'
 
 type Props = {

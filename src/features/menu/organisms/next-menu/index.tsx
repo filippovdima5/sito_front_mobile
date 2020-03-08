@@ -1,18 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+
+import { useStore, useEvent } from 'effector-react/ssr'
 import { $showNextMenu, setShowNextMenu, $showMainMenu, setShowMainMenu } from '../../store'
-import { useStore } from '../../../../helpers/hooks/use-effector-store'
+import { setCategories } from '../../../products-page/features/filters/store'
+import { setSignalWithoutSexId } from '../../molecules/header'
+
 import { subId, categories, subcategories } from '../../constants'
 import { sexIdToStr } from '../../../../helpers/lib'
-import { setCategories } from '../../../products-page/features/filters/store'
-import styles from './styles.module.scss'
+
 import { Arrow } from '../../../../media/img/svg/icons'
-import { setSignalWithoutSexId } from '../../molecules/header'
+import styles from './styles.module.scss'
 
 
 export function NextMenu({ sexId }: {sexId: 1 | 2 | 0}) {
   const showNextMenu = useStore($showNextMenu)
   const showMainMenu = useStore($showMainMenu)
+  const setShowMainMenuEv = useEvent(setShowMainMenu)
+  const setShowNextMenuEv = useEvent(setShowNextMenu)
+  const setCategoriesEv = useEvent(setCategories)
+  const setSignalWithoutSexIdEv = useEvent(setSignalWithoutSexId)
 
   const [ title, setTitle ] = useState(showNextMenu === null ? '' : subcategories[showNextMenu])
   const [ sub, setSub ] = useState(showNextMenu === null ? 'clothes' : showNextMenu)
@@ -26,10 +33,10 @@ export function NextMenu({ sexId }: {sexId: 1 | 2 | 0}) {
 
   useEffect(() => {
     let timer: any
-    if (!showMainMenu) timer = setTimeout(() => setShowNextMenu(null), 300)
+    if (!showMainMenu) timer = setTimeout(() => setShowNextMenuEv(null), 300)
 
     return () => {clearTimeout(timer)}
-  }, [showMainMenu])
+  }, [showMainMenu, setShowNextMenuEv])
 
   return (
     <>
@@ -38,7 +45,7 @@ export function NextMenu({ sexId }: {sexId: 1 | 2 | 0}) {
       >
 
         <h2
-          onClick={() => setShowNextMenu(null)}
+          onClick={() => setShowNextMenuEv(null)}
           className={styles.header}
         >
           <Arrow className={styles.img}/>
@@ -59,10 +66,10 @@ export function NextMenu({ sexId }: {sexId: 1 | 2 | 0}) {
                   className={styles.li}
                   onClick={() => {
                     if (sexId !== 0){
-                      setCategories({ value: Number(key), sexId })
-                      setShowMainMenu()
+                      setCategoriesEv({ value: Number(key), sexId })
+                      setShowMainMenuEv()
                     } else {
-                      setSignalWithoutSexId()
+                      setSignalWithoutSexIdEv()
                     }
                   }}
                 >
@@ -77,10 +84,10 @@ export function NextMenu({ sexId }: {sexId: 1 | 2 | 0}) {
               className={styles.li}
               onClick={() => {
                 if (sexId !== 0){
-                  setCategories({ value: Number(subId[sub]), sexId })
-                  setShowMainMenu()
+                  setCategoriesEv({ value: Number(subId[sub]), sexId })
+                  setShowMainMenuEv()
                 } else {
-                  setSignalWithoutSexId()
+                  setSignalWithoutSexIdEv()
                 }
               }}
             >

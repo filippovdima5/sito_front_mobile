@@ -1,7 +1,7 @@
 import React from 'react'
 import {ProductCard} from '../../commons/organisms/product-card'
 import {$likeProducts } from './store'
-import {useStore} from '../../helpers/hooks/use-effector-store'
+import {useStore} from 'effector-react/ssr'
 
 export function ReadyPage() {
   const products = useStore($likeProducts)

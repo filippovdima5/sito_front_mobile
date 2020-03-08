@@ -1,11 +1,18 @@
 import React  from 'react'
 import { RouteComponentProps } from 'react-router'
-import { GenderDetected } from '../features/gender-detected'
 import { useBodyScrollTop } from '../helpers/hooks/use-body-scroll-top'
 import { sexStrToId } from '../helpers/lib'
-import { BrandsPage } from '../features/brands-page'
-import { setCurrentRoute } from '../stores/env'
 import {useEffectSafe} from '../helpers/hooks/use-effect-safe'
+
+import { GenderDetected } from '../features/gender-detected'
+
+import { useEvent } from 'effector-react/ssr'
+import { setCurrentRoute } from '../stores/env'
+import { $loadBrands } from '../features/brands-page/store'
+import { START } from 'lib/effector';
+
+import { BrandsPage } from '../features/brands-page'
+
 
 
 
@@ -15,9 +22,11 @@ type RParams = {
 
 
 export function Brands({ match }: RouteComponentProps<RParams>) {
+  const setCurrentRouteEv = useEvent(setCurrentRoute)
+  
   useBodyScrollTop()
   useEffectSafe(() => {
-    setCurrentRoute('/brands/')
+    setCurrentRouteEv('/brands/')
   }, [])
   
   switch (match.params.sex) {
@@ -28,3 +37,4 @@ export function Brands({ match }: RouteComponentProps<RParams>) {
   }
 }
 
+Brands[START] = setCurrentRoute

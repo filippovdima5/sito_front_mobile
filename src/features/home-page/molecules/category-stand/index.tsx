@@ -5,6 +5,7 @@ import styles from './styles.module.scss'
 import { namesCategory } from '../../../../constants/category-keys'
 import { sexIdToStr } from '../../../../helpers/lib'
 import { setCategories } from '../../../products-page/features/filters/store'
+import { useEvent } from 'effector-react/ssr'
 
 
 // todo: Потом что то подобное должно хранится у юзера
@@ -21,6 +22,7 @@ type Props = {
 }
 
 export function CategoryStand({ height, sexId, index }: Props) {
+  const setCategoriesEv = useEvent(setCategories)
   
   const categoryId = useMemo(() => {
     return category[sexId][index]
@@ -40,7 +42,7 @@ export function CategoryStand({ height, sexId, index }: Props) {
         </div>
         <Link
           className={styles.link}
-          onClick={() => setCategories({ sexId, value: categoryId })}
+          onClick={() => setCategoriesEv({ sexId, value: categoryId })}
           to={`/products/${sexIdToStr(sexId)}?categories=${categoryId}`}/>
       </div>
     </div>

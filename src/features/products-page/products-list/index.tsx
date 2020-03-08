@@ -1,5 +1,5 @@
 import React  from 'react'
-import { useStore } from '../../../helpers/hooks/use-effector-store'
+import { useStore } from 'effector-react/ssr'
 import { $productsStore, $loadingProducts, $statusPageProducts, $lengthSkeletonData } from '../store'
 import { ProductCard, SkeletonCard } from '../../../commons/organisms/product-card'
 import styles from './styles.module.scss'

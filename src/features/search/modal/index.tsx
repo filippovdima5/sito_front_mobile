@@ -1,17 +1,23 @@
 import React, { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { useStore } from '../../../helpers/hooks/use-effector-store'
 import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock'
+
+import { useStore, useEvent } from 'effector-react/ssr'
 import {$searchResult, $showResults, setModSearch} from '../store'
-import styles from './styles.module.scss'
 import { $sexLine } from '../../../stores/env'
 import { setBrands } from '../../products-page/features/filters/store'
+
+import styles from './styles.module.scss'
+
 
 
 function SearchResult() {
   const modalSearchRef = useRef<HTMLDivElement | null>(null)
   const searchResults = useStore($searchResult)
   const sexLine = useStore($sexLine)
+  
+  const setModSearchEv = useEvent(setModSearch)
+  const setBrandsEv = useEvent(setBrands)
 
 
   useEffect(() => {
@@ -34,8 +40,8 @@ function SearchResult() {
             <li key={title} className={styles.title}>
               <Link
                 onClick={() => {
-                  setBrands(title)
-                  setModSearch()
+                  setBrandsEv(title)
+                  setModSearchEv()
                 }}
                 to={`/products/${sexLine !== null ? sexLine : ''}?brands=${title}`}
                 className={styles.link}

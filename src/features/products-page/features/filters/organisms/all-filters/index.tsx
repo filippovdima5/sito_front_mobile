@@ -1,11 +1,14 @@
 import React, { useMemo } from 'react'
-import { useStore } from '../../../../../../helpers/hooks/use-effector-store'
+
+import { useStore, useEvent } from 'effector-react/ssr'
 import { $filtersView, skipAllFilters, setShowFilter, setShowFilters, $showFilters } from '../../store'
 import { setFilter, $productsInfoStore } from '../../../../store'
+
 import { FilterRow, UnuseFilterRow } from '../../molecules/filter-row'
 import { CheckRow } from '../../molecules/check-row'
-import styles from './styles.module.scss'
 import { BtnDone } from '../../atoms/btn-done'
+
+import styles from './styles.module.scss'
 
 
 function TitleTypeList({ count, title, allCount }: {count: number, title: string, allCount: number}) {
@@ -20,6 +23,11 @@ export function AllFilters({ sexId }: {sexId: 1 | 2}) {
   const showFilters = useStore($showFilters)
   const filtersView = useStore($filtersView)
   const { total } = useStore($productsInfoStore)
+  
+  const skipAllFiltersEv = useEvent(skipAllFilters)
+  const setShowFilterEv = useEvent(setShowFilter)
+  const setShowFiltersEv = useEvent(setShowFilters)
+  const setFilterEv = useEvent(setFilter)
 
   const [ usageFilters, unusedFilters ] = useMemo(() => [
     filtersView.filter(({ data }) => (!!data)),
@@ -37,7 +45,7 @@ export function AllFilters({ sexId }: {sexId: 1 | 2}) {
             
             {
               usageFilters.length > 1 &&
-              <button className={styles.skipAll} onClick={() => skipAllFilters()}>Сбросить всё</button>
+              <button className={styles.skipAll} onClick={() => skipAllFiltersEv()}>Сбросить всё</button>
             }
             
             <div className={styles.list}>
@@ -58,7 +66,7 @@ export function AllFilters({ sexId }: {sexId: 1 | 2}) {
                 }
                 return (
                   <div key={name}  className={styles.itemList}>
-                    <CheckRow title={name} check={Boolean(data)} disabled={false} event={() => {setFilter({ key: 'favorite', value: !data })}}/>
+                    <CheckRow title={name} check={Boolean(data)} disabled={false} event={() => {setFilterEv({ key: 'favorite', value: !data })}}/>
                   </div>
                 )
               })}
@@ -79,7 +87,7 @@ export function AllFilters({ sexId }: {sexId: 1 | 2}) {
             <div className={styles.list}>
               {unusedFilters.map(({ name, type, data }) => {
                 if (type !== 'bool') return (
-                  <div onClick={() => setShowFilter(name)} key={name}  className={styles.itemList}>
+                  <div onClick={() => setShowFilterEv(name)} key={name}  className={styles.itemList}>
                     <UnuseFilterRow key = {name} title={name}/>
                   </div>
                 )
@@ -90,7 +98,7 @@ export function AllFilters({ sexId }: {sexId: 1 | 2}) {
                       title={name}
                       disabled={false}
                       check={Boolean(data)}
-                      event={() => {setFilter({ key: 'favorite', value: !data })}}/>
+                      event={() => {setFilterEv({ key: 'favorite', value: !data })}}/>
                   </div>
                 )
               })}
@@ -109,13 +117,11 @@ export function AllFilters({ sexId }: {sexId: 1 | 2}) {
       {
         showFilters &&
         <BtnDone
-            onClick={() => setShowFilters(false)}
+            onClick={() => setShowFiltersEv(false)}
             title={`Посмотреть ${total} предложения`}
             failTitle={total > 0 ? false : 'Товаров не найдено'}
         />
       }
-
-
     </>
   )
 }

@@ -1,23 +1,29 @@
-import React, { useEffect } from 'react'
-import { useStore } from '../../../../helpers/hooks/use-effector-store'
+import React from 'react'
+import { useEffectSafe } from '../../../../helpers/hooks/use-effect-safe'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
+
+import { useStore, useEvent } from 'effector-react/ssr'
 import { $filtersStore  } from '../../store'
-import { useTransitionNames } from '../../../../helpers/hooks/use-transition-names'
-import styles from './styles.module.scss'
-import { Header } from './atoms/header'
 import { $showFilter, setShowFilter, $filtersViewRecord, $showFilters } from './store'
+
+import { useTransitionNames } from '../../../../helpers/hooks/use-transition-names'
 import { filtersMap } from './types'
+
+import { Header } from './atoms/header'
 import { ListFilter } from './organisms/list-filter'
 import { RangeFilter } from './organisms/range-filter'
+
 import animateStyles from './animate/filter.module.scss'
+import styles from './styles.module.scss'
+
 
 
 function FilterBody({ name, sexId }: {name: keyof typeof filtersMap, sexId: 1 | 2 }) {
   const filtersSate = useStore($filtersViewRecord)
   const filterStore = useStore($filtersStore)
 
-
-
+  
+  
   if (filterStore === null) return null
 
   switch (name) {
@@ -47,9 +53,11 @@ function FilterBody({ name, sexId }: {name: keyof typeof filtersMap, sexId: 1 | 
 
 
 function Filter({ sexId, name }: { sexId: 1 | 2, name: keyof typeof filtersMap}) {
+  const setShowFilterEv = useEvent(setShowFilter)
+  
   return (
     <div className={`${styles.wrap} ${styles.filter}`}>
-      <Header title={filtersMap[name]} event={() => setShowFilter(null)} type={'back'}/>
+      <Header title={filtersMap[name]} event={() => setShowFilterEv(null)} type={'back'}/>
       <div style={{ background: 'white' }} className={styles.body}>
         <FilterBody sexId={sexId} name={name}/>
       </div>
@@ -62,11 +70,12 @@ function ShowFilter({ sexId }: { sexId: 1 | 2 }) {
   const showFilter = useStore($showFilter)
   const classNames = useTransitionNames(animateStyles)
   const showFilters = useStore($showFilters)
+  const setShowFilterEv = useEvent(setShowFilter)
 
 
-  useEffect(() => {
+  useEffectSafe(() => {
     let timer: any
-    if (!showFilters) timer = setTimeout(() => setShowFilter(null), 300)
+    if (!showFilters) timer = setTimeout(() => setShowFilterEv(null), 300)
     if (showFilters) clearTimeout(timer)
 
   }, [showFilters])

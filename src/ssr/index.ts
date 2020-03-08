@@ -19,19 +19,20 @@ const statMiddleware = serve(`${path.resolve(__dirname, 'static')}`, {
 
 const setupKoa = () => {
   app.use(mount('/static', statMiddleware))
-  
   app.use(mount('/api', proxy({
     host: 'http://localhost:8080',
     map: path => `/api${path}`
   })))
-  
-
   app.use(logger())
+  
+  
   
   app.use(async (ctx) => {
     ctx.body = await render(ctx)
   })
 
+  
+  
   app.listen(PORT, () => {
     console.log('app started: 9000')
   })

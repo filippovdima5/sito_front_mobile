@@ -1,4 +1,4 @@
-import { createStore, createEvent, restore } from 'effector'
+import { createStore, createEvent, restore } from 'lib/effector'
 import { categories } from './constants'
 
 

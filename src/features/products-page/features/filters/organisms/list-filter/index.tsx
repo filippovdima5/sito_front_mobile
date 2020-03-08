@@ -1,14 +1,17 @@
 import React, { useState, useMemo, useEffect } from 'react'
 import { FiltersItemNumber, FiltersItemString, FiltersRequest } from '../../../../../../api/types'
-import { CheckRow } from '../../molecules/check-row'
-import { setFilter } from '../../../../store'
 import { namesCategory } from '../../../../../../constants/category-keys'
+
+import { useEvent } from 'effector-react/ssr'
+import { setFilter } from '../../../../store'
 import { setShowFilters, skipThisFilter } from '../../store'
+
+import { CheckRow } from '../../molecules/check-row'
 import { Input } from '../../../../../../commons/atoms/input'
-import styles from '../filter-layout.module.scss'
 import { BtnDone } from '../../atoms/btn-done'
 import { BtnHelp } from '../../atoms/btn-help'
 
+import styles from '../filter-layout.module.scss'
 
 type Props = {
   storeData: FiltersRequest['brands' | 'categories' | 'colors' | 'sizes'],
@@ -30,6 +33,10 @@ const maxItemsView = 35
 export function ListFilter({ sexId, stateData, storeData, filter }: Props) {
   const [showAll, setShowAll] = useState<boolean>(storeData.length < maxItemsView)
   const [ searchPhrase, setSearchPhrase ] = useState<string | null>(null)
+  
+  const setFilterEv = useEvent(setFilter)
+  const setShowFiltersEv = useEvent(setShowFilters)
+  const skipThisFilterEv = useEvent(skipThisFilter)
 
   useEffect(() => {
     if (searchPhrase !== null) setShowAll(true)
@@ -84,7 +91,7 @@ export function ListFilter({ sexId, stateData, storeData, filter }: Props) {
               title={titleVew(value, sexId)}
               check={stateData === null ? false : stateData.includes(value)}
               disabled={!available}
-              event={() => (setFilter({ key: filter, value }))}/>
+              event={() => (setFilterEv({ key: filter, value }))}/>
           </div>
         ))}
       </div>
@@ -92,11 +99,11 @@ export function ListFilter({ sexId, stateData, storeData, filter }: Props) {
 
       <BtnHelp title={'Показать ещё'} onClick={() => (setShowAll(true))} visible={!showAll}/>
 
-      <BtnHelp title={'Сбросить'} onClick={() => skipThisFilter({ key: filter })}/>
+      <BtnHelp title={'Сбросить'} onClick={() => skipThisFilterEv({ key: filter })}/>
 
       <div className={styles.space}/>
 
-      <BtnDone onClick={() => setShowFilters(false)} title={'Готово'}/>
+      <BtnDone onClick={() => setShowFiltersEv(false)} title={'Готово'}/>
 
     </>
   )

@@ -1,4 +1,4 @@
-import {createEvent, createStore} from 'effector'
+import {createEvent, createStore} from 'lib/effector'
 
 export const $countHelpsHint = createStore<number>(0)
 export const setContHelpHint = createEvent()

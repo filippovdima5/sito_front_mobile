@@ -1,20 +1,23 @@
 import React from 'react'
-import { useStore } from '../../../../helpers/hooks/use-effector-store'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import { useTransitionNames } from '../../../../helpers/hooks/use-transition-names'
-import styles from './styles.module.scss'
-import animateStyles from './animate/filters-list.module.scss'
+
+import { useStore, useEvent } from 'effector-react/ssr'
+import { $showFilters, setShowFilters } from './store'
+
 import { Header } from './atoms/header'
 import { AllFilters } from './organisms/all-filters'
-import { $showFilters, setShowFilters } from './store'
 import { Filter } from './filter'
 
-
+import styles from './styles.module.scss'
+import animateStyles from './animate/filters-list.module.scss'
 
 function FiltersList({ sexId }: {sexId: 1 | 2}) {
+  const setShowFiltersEv = useEvent(setShowFilters)
+  
   return (
     <div className={`${styles.wrap} ${styles.filtersList}`}>
-      <Header title={'Фильтры'} event={() => setShowFilters(false)} type={'close'}/>
+      <Header title={'Фильтры'} event={() => setShowFiltersEv(false)} type={'close'}/>
 
 
       <div  className={styles.body}>

@@ -2,15 +2,15 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { MenuIcon } from '../atoms/menu-icon'
 import { $showMainMenu, setShowMainMenu, setShowNextMenu } from '../store'
-import { useStore } from '../../../helpers/hooks/use-effector-store'
+import { useStore,  useEvent } from 'effector-react/ssr'
 import { NextMenu } from '../organisms/next-menu'
 import { Header } from '../molecules/header'
-//import { Footer } from '../molecules/footer'
 import { $sexId } from '../../../stores/env'
 import { categories, menuLinks } from '../constants'
 import styles from './styles.module.scss'
 import { Arrow } from '../../../media/img/svg/icons'
 import {sexIdToStr} from '../../../helpers/lib'
+//import { Footer } from '../molecules/footer'
 
 
 type LinkItem = {
@@ -35,17 +35,13 @@ const infoList: Array<LinkItem> = [
   { index: 'blog', link: '/blog' },
   { index: 'about', link: '/about' }
 ]
-//        <div
-//               onClick={(event: any) => {
-//                 event.stopPropagation()
-//                 setSignalWithoutSexId()
-//               }}
-//               className={styles.blockNoSex}
-//             />
 
 export function Menu() {
   const sexId = useStore($sexId)
   const showMainMenu = useStore($showMainMenu)
+  const setShowMainMenuEv = useEvent(setShowMainMenu)
+  const setShowNextMenuEv = useEvent(setShowNextMenu)
+  
 
   return(
     <>
@@ -63,7 +59,7 @@ export function Menu() {
           <ul className={styles.ul}>
             {catalogList.map(({ title, index }) => (
               <li
-                onClick={() => setShowNextMenu(index)}
+                onClick={() => setShowNextMenuEv(index)}
                 key={index}
                 className={styles.li}
               >
@@ -79,7 +75,7 @@ export function Menu() {
           <ul className={styles.ul}>
             <Link
               to={`/brands/${sexId !== null ? sexIdToStr(sexId) : ''}`}
-              onClick={() => setShowMainMenu()}
+              onClick={() => setShowMainMenuEv()}
               className={styles.li}
             >
               <span className={styles.link}>{menuLinks['brands']}</span>
@@ -87,7 +83,7 @@ export function Menu() {
   
             <Link
               to={'/likes'}
-              onClick={() => setShowMainMenu()}
+              onClick={() => setShowMainMenuEv()}
               className={styles.li}
             >
               <span className={styles.link}>{menuLinks['likes']}</span>
@@ -99,7 +95,7 @@ export function Menu() {
               <Link
                 key = {index}
                 to={link}
-                onClick={() => setShowMainMenu()}
+                onClick={() => setShowMainMenuEv()}
                 className={styles.li}
               >
                 <span className={styles.link}>{menuLinks[index]}</span>
@@ -115,7 +111,7 @@ export function Menu() {
       </div>
 
       <div
-        onClick={() => setShowMainMenu()}
+        onClick={() => setShowMainMenuEv()}
         className={`${styles.backLogMainMenu} ${showMainMenu ? styles.backLogMainMenuOpen : styles.backLogMainMenuClose}`}
       />
     </>

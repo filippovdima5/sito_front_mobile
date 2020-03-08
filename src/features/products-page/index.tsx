@@ -1,15 +1,19 @@
-import React, { useEffect, useRef } from 'react'
-import styles from './styles.module.scss'
+import React, {  useRef } from 'react'
+import {useEffectSafe} from '../../helpers/hooks/use-effect-safe'
+import { useHistory } from 'react-router'
+
+import { useStore, useEvent } from 'effector-react/ssr'
+import { initRouteHistory, toggleSex } from './store'
+import { loadLikes } from '../../stores/env'
+import { $statusPageProducts } from './store'
+
+
 import { ControlProducts } from './features/control-products'
 import { ProductsList } from './products-list'
 import { LoadMore } from './load-more'
 import { Filters } from './features/filters'
-import {useEffectSafe} from '../../helpers/hooks/use-effect-safe'
-import {initRouteHistory, toggleSex} from './store'
-import { useHistory } from 'react-router'
-import { loadLikes } from '../../stores/env'
-import { $statusPageProducts } from './store'
-import {useStore} from '../../helpers/hooks/use-effector-store'
+
+import styles from './styles.module.scss'
 
 
 type Props = {
@@ -17,16 +21,20 @@ type Props = {
 }
 
 export function ProductsPage({ sexId }: Props) {
+  const initRouteHistoryEv = useEvent(initRouteHistory)
+  const toggleSexEv = useEvent(toggleSex)
+  const loadLikesEv = useEvent(loadLikes)
+  
   const status = useStore($statusPageProducts)
   const history = useHistory()
   useEffectSafe(() => {
-    initRouteHistory(history)
-    loadLikes()
+    initRouteHistoryEv(history)
+    loadLikesEv()
   }, [])
   
   const prevSexId = useRef<Props['sexId']>(sexId)
-  useEffect(() => {
-    if (sexId !== prevSexId.current ) toggleSex(sexId)
+  useEffectSafe(() => {
+    if (sexId !== prevSexId.current ) toggleSexEv(sexId)
     prevSexId.current = sexId
   }, [sexId])
   

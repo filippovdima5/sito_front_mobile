@@ -1,11 +1,15 @@
-import React, { useEffect } from 'react'
+import React from 'react'
+import { useEffectSafe } from '../../helpers/hooks/use-effect-safe'
+
+import { useStore, useEvent } from 'effector-react/ssr'
 import { loadLikeProducts, $statusPage } from './store'
-import { useStore } from '../../helpers/hooks/use-effector-store'
-import styles from './styles.module.scss'
+import { StatusPage, $loadingLikes } from './store'
+
 import { ReadyPage } from './ready-page'
 import { EmptyPage } from './empty-page'
-import { StatusPage, $loadingLikes } from './store'
 import { Loader } from '../../commons/templates/loader'
+
+import styles from './styles.module.scss'
 
 
 function Controller({ status }: {status: StatusPage}) {
@@ -17,8 +21,9 @@ function Controller({ status }: {status: StatusPage}) {
 
 
 export function LikesPage() {
+  const loadLikeProductsEv = useEvent(loadLikeProducts)
   const statusPage = useStore($statusPage)
-  useEffect(() => {loadLikeProducts()}, [])
+  useEffectSafe(() => {loadLikeProductsEv()}, [])
   const loader = useStore($loadingLikes)
   
   return(

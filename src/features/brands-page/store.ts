@@ -1,13 +1,34 @@
-import {combine, createEffect, createEvent, createStore, merge} from 'effector'
+import {combine, createEffect, createEvent, createStore, merge} from 'lib/effector'
 import { AllBrandsRequest } from '../../api/types'
 import {api} from '../../api'
+import {guard, sample} from 'effector'
 
 
 const brands = createStore<Array<AllBrandsRequest>>([])
 
+// ---
+const sex = createStore<number>(2)
+export const $loadBrands = createEvent()
+
+$loadBrands.watch(payload => console.log('DADAADDADADADDADDAD!!!!!!!!!!!'))
+
 export const loadBrands = createEffect({
   handler: (sexId: 1 | 2) => api.simple.allBrands({ sexId })
 })
+
+loadBrands.watch((payload) => console.log('Loadbrands effewct', payload))
+loadBrands.done.watch(payload => console.log('BRANDS: ', payload))
+loadBrands.fail.watch(({ error }) => console.log('FAIL', error))
+
+const isIdle = loadBrands.pending.map(pending => !pending)
+
+
+guard({
+  source: sample(sex, $loadBrands),
+  filter: isIdle,
+  target: loadBrands,
+})
+// -----
 
 brands.on(loadBrands.done, (_, { result: { data } }) => data )
 
