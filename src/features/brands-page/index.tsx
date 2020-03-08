@@ -5,7 +5,7 @@ import { sexIdToStr } from '../../helpers/lib'
 
 import { BrandItem } from '../../api/types'
 import { useStore, useEvent } from 'effector-react/ssr'
-import { setGender } from '../../stores/env'
+import { setGender } from '../../stores/env2'
 
 import { $filterBrands, loadBrands, setFilterString, $loadingBrands } from './store'
 import { setBrands } from '../products-page/features/filters/store'
@@ -41,12 +41,11 @@ function BrandsGroup({ brands, sexId }: {brands: Array<BrandItem>, sexId: 1 | 2}
 
 export function BrandsPage({ sexId }: Props) {
   const loader = useStore($loadingBrands)
-  const loadBrandsEv = useEvent(loadBrands)
   const setFilterStringEv = useEvent(setFilterString)
   
   useEffectSafe(() => {
     setGender(sexId)
-    loadBrandsEv(sexId)
+    loadBrands(sexId)
   }, [sexId])
 
   

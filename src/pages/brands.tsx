@@ -7,9 +7,8 @@ import {useEffectSafe} from '../helpers/hooks/use-effect-safe'
 import { GenderDetected } from '../features/gender-detected'
 
 import { useEvent } from 'effector-react/ssr'
-import { setCurrentRoute } from '../stores/env'
-import { $loadBrands } from '../features/brands-page/store'
-import { START } from 'lib/effector';
+import { setCurrentRoute } from '../stores/env2'
+
 
 import { BrandsPage } from '../features/brands-page'
 
@@ -24,6 +23,8 @@ type RParams = {
 export function Brands({ match }: RouteComponentProps<RParams>) {
   const setCurrentRouteEv = useEvent(setCurrentRoute)
   
+
+  
   useBodyScrollTop()
   useEffectSafe(() => {
     setCurrentRouteEv('/brands/')
@@ -37,4 +38,3 @@ export function Brands({ match }: RouteComponentProps<RParams>) {
   }
 }
 
-Brands[START] = setCurrentRoute

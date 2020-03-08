@@ -1,6 +1,6 @@
 import {combine, createEffect, createEvent, createStore, guard, merge, restore} from 'lib/effector'
 import {RouteComponentProps} from 'react-router'
-import {setGender} from '../../stores/env'
+import {setGender} from '../../stores/env2'
 import {FilterReqParams, FiltersRequest, PaginateInfo, ProductsReqParams, ProductsRequest} from '../../api/types'
 import {api} from '../../api'
 import {MainState, StatusPage, TypeSet} from './types'

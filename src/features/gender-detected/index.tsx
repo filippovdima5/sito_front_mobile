@@ -1,11 +1,14 @@
-import React, {useEffect} from 'react'
-import {  fetchUser, $genderInfo } from '../../stores/env'
-import styles from './styles.module.scss'
-import { useStore } from 'effector-react/ssr'
+import React from 'react'
+import { Link } from 'react-router-dom'
 import {Redirect} from 'react-router'
 import { sexIdToStr } from '../../helpers/lib'
-import { Link } from 'react-router-dom'
 
+import { useStore, useEvent } from 'effector-react/ssr'
+import { $genderInfo, $setGender } from '../../stores/user'
+import { $baseLink } from '../../stores/env'
+
+
+import styles from './styles.module.scss'
 
 
 const data = [
@@ -14,28 +17,33 @@ const data = [
 ] as const
 
 
-type PropsGenderDetected = {
+type Props = {
   height: number,
-  currentRoute: '/home/' | '/products/' | '/404/' | '/brands/',
-  search?: string
 }
 
 
-export function GenderDetected({ height, currentRoute, search }: PropsGenderDetected) {
-  useEffect(() => {
-    fetchUser(null)}, [])
+export function GenderDetected({ height }: Props) {
   const genderInfo = useStore($genderInfo)
-  
-  
-  // todo: Нужнали тут эта строка?
-  if (genderInfo !== null) return <Redirect to={`${currentRoute}${sexIdToStr(genderInfo?.sexId)}`}/>
+  const { readyLink, linkParams: { baseRoute, search } } = useStore($baseLink)
+  const setGender = useEvent($setGender)
+
+
+  if (genderInfo !== null) {
+    setGender(genderInfo.sexId)
+    return <Redirect to={readyLink}/>
+  }
   
   
   return (
     <div className={styles.main}>
       <div className={styles.wrap}>
       {data.map(({ index, title }) => (
-        <Link to={`${currentRoute}${sexIdToStr(index)}${search ?? ''}`} key={index} className={styles.genderWrap}>
+        <Link
+          onClick={() => setGender(index)}
+          to={`/${baseRoute}/${sexIdToStr(index)}${search ? `?${search}` : ''}`}
+          key={index}
+          className={styles.genderWrap}
+        >
           <div style={{ paddingTop: `${height}%` }} className={styles.gender}>
             <img src={`/cdn/mobile/gender-detected/${index}.jpg`} alt={title} className={styles.img}/>
 

@@ -1,11 +1,11 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import { sexIdToStr } from '../../../helpers/lib'
-import { setGender } from '../../../stores/env'
+
 import { CategoryStand } from '../molecules/category-stand'
 import { PartnersSlider } from '../molecules/partners-slider'
 import { BrandStand } from '../molecules/brand-stand'
-import styles from './styles.module.scss'
 
+import styles from './styles.module.scss'
 
 
 type Props = {
@@ -13,8 +13,7 @@ type Props = {
 }
 
 export function HomePage({ sexId }: Props) {
-  useEffect(() => {setGender(sexId)}, [ sexId ])
-
+  
   return (
     <div className={styles.home}>
       <div className={styles.wrap}>

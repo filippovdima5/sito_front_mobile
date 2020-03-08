@@ -1,5 +1,5 @@
 import {createEffect, createEvent, createStore, merge, sample} from 'lib/effector'
-import { $likes } from '../../stores/env'
+import { $likes } from '../../stores/env2'
 import { ShortProduct } from '../../api/types'
 import { api } from '../../api'
 

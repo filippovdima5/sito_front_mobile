@@ -4,7 +4,7 @@ import { useHistory } from 'react-router'
 
 import { useStore, useEvent } from 'effector-react/ssr'
 import { initRouteHistory, toggleSex } from './store'
-import { loadLikes } from '../../stores/env'
+import { loadLikes } from '../../stores/env2'
 import { $statusPageProducts } from './store'
 
 
@@ -21,11 +21,14 @@ type Props = {
 }
 
 export function ProductsPage({ sexId }: Props) {
+  
   const initRouteHistoryEv = useEvent(initRouteHistory)
   const toggleSexEv = useEvent(toggleSex)
   const loadLikesEv = useEvent(loadLikes)
   
+
   const status = useStore($statusPageProducts)
+  
   const history = useHistory()
   useEffectSafe(() => {
     initRouteHistoryEv(history)

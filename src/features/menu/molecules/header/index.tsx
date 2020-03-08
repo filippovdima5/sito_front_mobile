@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useRef} from 'react'
 import { createEvent, createStore } from 'lib/effector'
 import { useStore } from 'effector-react/ssr'
-import {  $currentRoute } from '../../../../stores/env'
+import {  $currentRoute } from '../../../../stores/env2'
 import styles from './styles.module.scss'
 import { ButtonSex } from '../../atoms/button-sex'
 import {Link} from 'react-router-dom'

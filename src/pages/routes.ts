@@ -28,10 +28,6 @@ export const ROUTES = [
     component: Likes,
   },
   {
-    path: '/404',
-    component: NotFound,
-  },
-  {
     path: '*',
     component: NotFound,
   },

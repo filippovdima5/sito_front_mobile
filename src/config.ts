@@ -3,8 +3,6 @@ const LOCAL = !SERVER && window.location.hostname.includes('localhost') && proce
 
 function getApiEndpoint() {
   //if (LOCAL) return '/api'
-  console.log('config - SERVER', SERVER)
-  
   if (SERVER) return 'http://localhost:8080/api/'
   
   return '/api/'

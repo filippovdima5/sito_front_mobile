@@ -9,13 +9,12 @@ import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server'
 import { fork, serialize, allSettled } from 'effector/fork';
 import { forward, clearNode, rootDomain, START } from 'lib/effector';
 
+import { $setGender } from '../stores/user'
+
 import { App } from '../app'
 import { ROUTES } from '../pages/routes'
 
 import { template } from './template'
-
-
-import { $loadBrands } from '../features/brands-page/store'
 
 
 const clientStatsFile = path.resolve(__dirname, './loadable-stats.json')
@@ -38,8 +37,6 @@ export const render = async (ctx: any) => {
   
   if (pageEvents.length > 0) {
     try {
-      // console.log(startServer, 'startServer')
-      // console.log(pageEvents.length, 'pageEvents.length')
       forward({ from: startServer, to: pageEvents })
     }catch (e) {
       console.log(e, 'dima')
@@ -49,9 +46,10 @@ export const render = async (ctx: any) => {
   const scope = fork(rootDomain)
   
   try {
-    await allSettled($loadBrands, {
+
+    await allSettled($setGender, {
       scope,
-      params: undefined,
+      params: 2,
     });
   } catch (error) {
     console.log(error)

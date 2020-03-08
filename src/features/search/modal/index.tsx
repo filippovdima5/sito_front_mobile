@@ -4,7 +4,7 @@ import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock'
 
 import { useStore, useEvent } from 'effector-react/ssr'
 import {$searchResult, $showResults, setModSearch} from '../store'
-import { $sexLine } from '../../../stores/env'
+import { $sexLine } from '../../../stores/env2'
 import { setBrands } from '../../products-page/features/filters/store'
 
 import styles from './styles.module.scss'

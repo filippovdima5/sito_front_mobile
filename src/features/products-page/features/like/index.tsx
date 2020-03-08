@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import styles from './styles.module.scss'
-import { $likes, setLike } from '../../../../stores/env'
+import { $likes, setLike } from '../../../../stores/env2'
 import { useStore } from 'effector-react/ssr'
 import { LikeIcon } from '../../../../media/img/svg/icons'
 
