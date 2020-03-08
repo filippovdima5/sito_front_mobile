@@ -1,9 +1,15 @@
 import React from 'react'
-import { GenderDetected} from '../features/gender-detected'
-import { HomePage} from '../features/home-page/home-page'
+import { useBodyScrollTop } from '../helpers/hooks/use-body-scroll-top'
 import { Redirect, RouteComponentProps } from 'react-router'
 import { sexStrToId} from '../helpers/lib'
-import { useBodyScrollTop } from '../helpers/hooks/use-body-scroll-top'
+
+import { useEvent } from 'effector-react/ssr'
+import { $setGender } from '../stores/user'
+
+import { GenderDetected} from '../features/gender-detected'
+import { HomePage} from '../features/home-page/home-page'
+import {useEffectSafe} from '../helpers/hooks/use-effect-safe'
+
 
 
 type RParams = {
@@ -11,11 +17,22 @@ type RParams = {
 }
 
 
+function UseGender({ sexId }: { sexId: 1 | 2 }) {
+  const setGender = useEvent($setGender)
+  useEffectSafe(() => {
+    setGender(sexId)
+  
+  }, [])
+  return (
+    <HomePage sexId={sexId}/>
+  )
+}
+
+
 function HomeWrap({ sex }: { sex: RParams['sex'] }) {
   switch (sex) {
     case 'men':
-    case 'women':
-      return <HomePage sexId={sexStrToId(sex)}/>
+    case 'women': return <UseGender sexId={sexStrToId(sex)}/>
     default: return <GenderDetected height={66}/>
   }
 }

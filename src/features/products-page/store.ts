@@ -1,18 +1,21 @@
 import {combine, createEffect, createEvent, createStore, guard, merge, restore} from 'lib/effector'
-import {RouteComponentProps} from 'react-router'
-import {setGender} from '../../stores/env2'
-import {FilterReqParams, FiltersRequest, PaginateInfo, ProductsReqParams, ProductsRequest} from '../../api/types'
+
+
+
 import {api} from '../../api'
-import {MainState, StatusPage, TypeSet} from './types'
-import {hydrateInitialState} from '../../ssr/utils/hydrate-initial-state'
 import config from '../../config'
 import { parseQueryProducts, parseQuery } from '../../ssr/lib'
 
+import {RouteComponentProps} from 'react-router'
+import {MainState, StatusPage, TypeSet} from './types'
+import {FilterReqParams, FiltersRequest, PaginateInfo, ProductsReqParams, ProductsRequest} from '../../api/types'
+
+
 
 //region route_history:
-export const initRouteHistory = createEvent<RouteComponentProps['history']>()
+export const $initRouteHistory = createEvent<RouteComponentProps['history']>()
 const routeHistory = createStore<RouteComponentProps['history'] | null>(null)
-routeHistory.on(initRouteHistory, (_, payload) => payload)
+routeHistory.on($initRouteHistory, (_, payload) => payload)
 //endregion route_history
 
 
@@ -40,12 +43,6 @@ export const mainState = createStore<MainState>({
 })
 
 
-const sexId = mainState.map(({ sexId }) => sexId)
-sexId.updates.watch((state) => {
-  if (state === null) return
-  setGender(state)
-})
-
 
 export const toggleSex = createEvent<1 | 2>()
 mainState.on(toggleSex, (_, sexId) => {
@@ -59,7 +56,6 @@ export const filtersState = mainState.map(({ sexId, categories, brands, sizes, c
 export const productsState = mainState.map(({ limit, page, sort }) => ({ limit, sort, page }))
 
 // endregion main_state
-
 
 
 
@@ -276,36 +272,9 @@ $productsInfoStore.on(fetchProducts.done, ((state, { result: { data: { info } } 
 
 
 
-// region Hydrate
-$typeSet.on(hydrateInitialState, state => ({ type: 'set_hydrate' }))
-
-const hydrateProducts = hydrateInitialState.map(serverData => {
-  if (!serverData.products) return undefined
-  return serverData.products
-})
-
-mainState.on(hydrateProducts, (state, hydProducts) => {
-  if (!hydProducts) return
-  return {...state, ...hydProducts.mainState}
-})
-
-$filtersStore.on(hydrateProducts, (_, hydProducts) => {
-  if (!hydProducts) return
-  return hydProducts.filtersStore
-})
-
-$productsStore.on(hydrateProducts, (_, hydProducts) => {
-  if (!hydProducts) return
-  return hydProducts.productsStore
-})
-
-$productsInfoStore.on(hydrateProducts, (_, hydProducts) => {
-  if (!hydProducts) return
-  return hydProducts.productsInfoStore
-})
+// region mountApp:
 
 
-// ONLY DEVELOPMENT!
 mainState.on(initRouteHistory, ((state, payload) => {
   if (!config.local) return undefined
   setTypeSet({type: 'set_url'})
@@ -317,7 +286,7 @@ mainState.on(initRouteHistory, ((state, payload) => {
   const queryParams = parseQuery(payload.location.search)
   return { ...state, ...parseQueryProducts(sexId, queryParams) }
 }))
-// endregion Hydrate
+// endregion mountApp
 
 
 

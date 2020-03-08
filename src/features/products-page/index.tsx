@@ -3,7 +3,7 @@ import {useEffectSafe} from '../../helpers/hooks/use-effect-safe'
 import { useHistory } from 'react-router'
 
 import { useStore, useEvent } from 'effector-react/ssr'
-import { initRouteHistory, toggleSex } from './store'
+import { $initRouteHistory, toggleSex } from './store'
 import { loadLikes } from '../../stores/env2'
 import { $statusPageProducts } from './store'
 
@@ -14,6 +14,7 @@ import { LoadMore } from './load-more'
 import { Filters } from './features/filters'
 
 import styles from './styles.module.scss'
+import config from '../../config'
 
 
 type Props = {
@@ -22,7 +23,7 @@ type Props = {
 
 export function ProductsPage({ sexId }: Props) {
   
-  const initRouteHistoryEv = useEvent(initRouteHistory)
+  const initRouteHistory = useEvent($initRouteHistory)
   const toggleSexEv = useEvent(toggleSex)
   const loadLikesEv = useEvent(loadLikes)
   
@@ -31,7 +32,8 @@ export function ProductsPage({ sexId }: Props) {
   
   const history = useHistory()
   useEffectSafe(() => {
-    initRouteHistoryEv(history)
+    if (!config.ssr) initRouteHistory(history)
+    
     loadLikesEv()
   }, [])
   

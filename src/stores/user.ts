@@ -1,7 +1,7 @@
 import { createStore, createEffect,  guard,  createEvent, merge } from 'lib/effector'
 import { UserRequest} from '../api/types'
 import { api } from '../api'
-import {setGender} from './env2'
+
 
 
 type GenderInfo = { sexId: 1, sexLine: 'men' } | { sexId: 2, sexLine: 'women' }
@@ -36,6 +36,8 @@ const $user = $fetchedUser.map(state => {
 // region Gender:
 export const $setGender = createEvent<'men' | 'women' | 1 | 2>()
 
+$setGender.watch(payload => console.log(payload))
+
 const targetSexUpdate = merge([$user.updates.map(payload => {
   if (payload?.sexId) return payload.sexId
   return undefined
@@ -51,8 +53,8 @@ export const $sexLine = $genderInfo.map(state => {
   return  state.sexLine
 })
 
-$genderInfo.on(targetSexUpdate, (_, payload) => {
-  if (!payload) return undefined
+$genderInfo.on(targetSexUpdate, (state, payload) => {
+  if (!payload || payload === state?.sexId) return undefined
   switch (payload) {
     case 1:
     case 'men': return { sexId: 1, sexLine: 'men' }
@@ -66,7 +68,7 @@ $genderInfo.on(targetSexUpdate, (_, payload) => {
 
 
 // region setFetchUser:
-setGender.watch(payload => {
+$setGender.watch(payload => {
   switch (payload) {
     case 1:
     case 'men': api.user.setUser({ sex_id: 1 }); break
