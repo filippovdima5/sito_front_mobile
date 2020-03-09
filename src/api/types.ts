@@ -128,3 +128,18 @@ export interface AllBrandsRequest {
   brands: Array<BrandItem>
 }
 // endregion region Simple
+
+
+// region Seo:
+export interface SeoReqParams {
+  sexId: 1 | 2 | null,
+  path: string,
+  search: string,
+}
+
+export interface SeoRequest {
+  title: string,
+  description: string,
+}
+// endregion Seo
+

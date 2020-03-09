@@ -1,4 +1,3 @@
-/* eslint-disable padding-line-between-statements, no-return-assign, no-console */
 import path from 'path'
 import Koa from 'koa'
 import serve from 'koa-static'
@@ -9,7 +8,6 @@ import { render } from './render'
 
 
 const app = new Koa()
-const PORT = 9000
 
 
 const statMiddleware = serve(`${path.resolve(__dirname, 'static')}`, {
@@ -19,21 +17,19 @@ const statMiddleware = serve(`${path.resolve(__dirname, 'static')}`, {
 
 const setupKoa = () => {
   app.use(mount('/static', statMiddleware))
+  
   app.use(mount('/api', proxy({
     host: 'http://localhost:8080',
     map: path => `/api${path}`
   })))
+  
   app.use(logger())
-  
-  
   
   app.use(async (ctx) => {
     ctx.body = await render(ctx)
   })
-
   
-  
-  app.listen(PORT, () => {
+  app.listen(9000, () => {
     console.log('app started: 9000')
   })
 }

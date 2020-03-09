@@ -5,10 +5,11 @@ interface Args {
   preloadedState?: any,
   styleTags?: string,
   scripts?: string,
+  helmet?: any
 }
 
 export const template = (
-  { html = '', styleTags = '', preloadedState, scripts = '' }: Args) => `
+  { html = '', styleTags = '', preloadedState, scripts = '', helmet }: Args) => `
 <!DOCTYPE html>
 <html lang="ru">
   <head>
@@ -16,8 +17,8 @@ export const template = (
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta name="format-detection" content="telephone=no">
     
-    <title>Sito - сервис скидок</title>
-    <meta name="description" content="Агрегатор самых выгодных предложений в мире моды"/>
+       ${helmet.title.toString()}
+       ${helmet.meta.toString()}
     
     <link rel="shortcut icon" href="/icons/favicon.ico">
     <link rel="shortcut icon" href="/icons/favicon.png">

@@ -1,8 +1,12 @@
-import { createStore, createEvent,  combine } from 'lib/effector'
+import { createStore, createEvent,  combine, createEffect, guard } from 'lib/effector'
 import { $sexLine } from './user'
+import { sexStrToId } from '../helpers/lib'
+import { SeoReqParams, SeoRequest } from '../api/types'
+import { api } from '../api'
 
 
 type BaseRoute = 'home' | 'products' | 'brands'
+
 
 
 export const $setUrlInfo = createEvent<{path: string, search: string}>()
@@ -36,3 +40,29 @@ export const $baseLink = combine({ $search, $baseRoute, $sexLine }, ({ $search, 
    }
  })
 })
+
+
+export const $seo = createStore<SeoRequest>({
+  title: 'SITO - сайт выгодных скидок. Каталог акций в интернет-магазинах.',
+  description: 'Все скидки рунета на SITO: поиск выгодных цен на одежду, обувь и аксессуары в интернет-магазинах. Агрегатор скидок – акции от 50%'
+})
+const fetchSeo = createEffect({
+  handler: (params: SeoReqParams) => api.seo.getSeo(params)
+})
+$seo.on(fetchSeo.done, (state, { result: { data } }) => data)
+
+
+const seoParams =  $baseLink.map(clock => {
+  const sexId = clock.linkParams.sexLine !== null ? sexStrToId(clock.linkParams.sexLine) : null
+  const path = clock.linkParams.baseRoute as string
+  const search = clock.linkParams.search
+  
+  return ({ sexId, path, search })
+})
+
+guard({
+  source: seoParams,
+  filter: () => true,
+  target: fetchSeo
+})
+

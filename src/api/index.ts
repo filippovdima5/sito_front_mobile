@@ -9,7 +9,10 @@ import {
   MainSearchResultItem,
   UserRequest,
   UserReqParams,
-  AllBrandsRequest, ShortProduct
+  AllBrandsRequest,
+  ShortProduct,
+  SeoReqParams,
+  SeoRequest
 } from './types'
 
 
@@ -65,9 +68,14 @@ export const api = {
   
   simple: {
     allBrands: ( params: { sexId: 1 | 2 }): AxiosPromise<Array<AllBrandsRequest>> => {
-      console.log(params, 'API')
       return apiGet
         .get(`/simple/all-brands/?sexId=${params.sexId}`)
     }
+  },
+  
+  seo: {
+    getSeo: (params: SeoReqParams): AxiosPromise<SeoRequest> => apiPost
+      .post('/seo', params)
   }
+  
 }

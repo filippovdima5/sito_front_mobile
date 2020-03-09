@@ -5,10 +5,11 @@ import { Scope } from 'effector/fork';
 import { Provider } from 'effector-react/ssr';
 import { useEffectSafe } from './helpers/hooks/use-effect-safe'
 import { useLocation } from 'react-router'
+import {Helmet} from "react-helmet"
 
-import { useEvent } from 'effector-react/ssr'
+import { useEvent, useStore } from 'effector-react/ssr'
 import { $fetchUser } from './stores/user'
-import { $setUrlInfo } from './stores/env'
+import { $setUrlInfo, $seo } from './stores/env'
 
 import { Header } from './features/header'
 import { Pages } from './pages'
@@ -25,6 +26,7 @@ interface Props {
 
 function Main() {
   const { pathname, search } = useLocation()
+  const { title, description } = useStore($seo)
   const fetchUser = useEvent($fetchUser)
   const setUrlInfo = useEvent($setUrlInfo)
   
@@ -41,21 +43,32 @@ function Main() {
 
   
   return (
-    <div className={styles.app}>
-      <header className={styles.header}>
-        <Header/>
-      </header>
+    <>
+      <Helmet>
+        <title>{title}</title>
+        <meta
+          name="description"
+          content={description}
+        />
+      </Helmet>
+  
+  
+      <div className={styles.app}>
+        <header className={styles.header}>
+          <Header/>
+        </header>
     
-      <main className={styles.main}>
-        <Pages/>
-      </main>
+        <main className={styles.main}>
+          <Pages/>
+        </main>
     
-      <footer className={styles.footer}>
-        <Footer/>
-      </footer>
+        <footer className={styles.footer}>
+          <Footer/>
+        </footer>
     
-      {!config.ssr && <BackToTop/>}
-    </div>
+        {!config.ssr && <BackToTop/>}
+      </div>
+    </>
   )
 }
 

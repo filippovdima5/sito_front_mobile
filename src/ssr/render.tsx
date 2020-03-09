@@ -13,6 +13,7 @@ import { $setUrlInfo } from '../stores/env'
 import { $setGender } from '../stores/user'
 import {api} from '../api'
 import { findSexLine } from '../helpers/lib'
+import {Helmet} from "react-helmet"
 
 const clientStatsFile = path.resolve(__dirname, './loadable-stats.json')
 const clientExtractor = new ChunkExtractor({ statsFile: clientStatsFile })
@@ -22,6 +23,7 @@ export const render = async (ctx: any) => {
   // region Переменные необходимые для отрисовки (КЭШ):
   let sexIdUser: 1 | 2 | undefined = undefined
   const url = ctx.url
+  const [ path, search ] = url.split('?')
   
   const cookie = ctx.cookies.get('user')
   if (Boolean(cookie)){
@@ -33,11 +35,10 @@ export const render = async (ctx: any) => {
   // endregion
   
 
-  
+  // region render:
   const scope = fork(rootDomain)
   
   // Сетим информацию о пользователе и локейшене страницы
-  const [ path, search ] = url.split('?')
   await Promise.all([
     allSettled($setUrlInfo, {scope, params: { path, search }}),
     allSettled($setGender, {scope, params: sexIdUser })
@@ -61,6 +62,7 @@ export const render = async (ctx: any) => {
     }
   }
   
+  //endregion render
   
   const context = {}
   try {
@@ -71,12 +73,15 @@ export const render = async (ctx: any) => {
           </StaticRouter>
       </ChunkExtractorManager>
     )
-  
+    
     const html = ReactDOMServer.renderToString(jsx)
     const preloadedState = serialize(scope)
     const scripts = clientExtractor.getScriptTags()
     const styleTags = clientExtractor.getStyleTags()
-    return template({ html, preloadedState,  styleTags,  scripts }).split('').join('')
+    const helmet = Helmet.renderStatic()
+    
+    
+    return template({ html, preloadedState,  styleTags,  scripts, helmet }).split('').join('')
   } catch (e) {
     console.log(e)
   }
