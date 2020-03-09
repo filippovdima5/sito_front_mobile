@@ -20,6 +20,12 @@ export const sexStrToId = ( sexStr: 'men' | 'women' ): 1 | 2 => {
   return 2
 }
 
+export const findSexLine = ( url: string ): 1 | 2 | null => {
+  if (!url.includes('men')) return null
+  if (url.includes('women')) return 2
+  return 1
+}
+
 
 
 

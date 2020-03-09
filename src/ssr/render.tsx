@@ -1,53 +1,47 @@
-/* eslint-disable prefer-template */
 import path from 'path'
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import { StaticRouter } from 'react-router'
 import { matchRoutes } from 'react-router-config'
 import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server'
-import { parseSearch } from './lib'
-
 import { fork, serialize, allSettled } from 'effector/fork';
-import { forward, clearNode, rootDomain, START } from 'lib/effector';
-
-
-
+import { clearNode, rootDomain, START } from 'lib/effector';
 import { App } from '../app'
 import { ROUTES } from '../pages/routes'
-
 import { template } from './template'
-
 import { $setUrlInfo } from '../stores/env'
-import { $fetchUser, $setGender } from '../stores/user'
-
+import { $setGender } from '../stores/user'
+import {api} from '../api'
+import { findSexLine } from '../helpers/lib'
 
 const clientStatsFile = path.resolve(__dirname, './loadable-stats.json')
 const clientExtractor = new ChunkExtractor({ statsFile: clientStatsFile })
 
 
-
 export const render = async (ctx: any) => {
+  // region Переменные необходимые для отрисовки (КЭШ):
+  let sexIdUser: 1 | 2 | undefined = undefined
+  const url = ctx.url
+  
+  const cookie = ctx.cookies.get('user')
+  if (Boolean(cookie)){
+    const { data: { sex_id } } = await api.user.getIdUser({ id: cookie })
+    sexIdUser = sex_id
+  }
+  const sexInUrl = findSexLine(url)
+  if (sexInUrl !== null) sexIdUser = sexInUrl
+  // endregion
+  
+
+  
   const scope = fork(rootDomain)
   
   // Сетим информацию о пользователе и локейшене страницы
-  const [ path, search ] = ctx.url.split('?')
+  const [ path, search ] = url.split('?')
   await Promise.all([
     allSettled($setUrlInfo, {scope, params: { path, search }}),
-    allSettled($fetchUser, {scope, params: undefined})
+    allSettled($setGender, {scope, params: sexIdUser })
   ])
-  
-  // Заматченные роуты:
-  const matchedRoutes = matchRoutes(ROUTES, ctx.url)
-  
-  // Если роут ведет на опр. пол - то сетим этот пол в приложение
-  const sexId = matchedRoutes
-    // @ts-ignore
-    .filter(({ match }) => (Boolean(match.params.sex)))
-    // @ts-ignore
-    .map(({ match }) => match.params.sex.split('?')[0])
-    .find(sex => (sex === 'men' || 'women')) as 'men' | 'women' | undefined
-  
-  if (Boolean(sexId)) await allSettled($setGender, { scope, params: sexId })
   
   
   // Ищем ивенты для первоночального стейта заматченных страниц и сетим их
@@ -67,7 +61,6 @@ export const render = async (ctx: any) => {
     }
   }
   
-
   
   const context = {}
   try {
@@ -80,17 +73,9 @@ export const render = async (ctx: any) => {
     )
   
     const html = ReactDOMServer.renderToString(jsx)
-  
     const preloadedState = serialize(scope)
-    
-    // Получаем все необходимые для рендеринга на клиенте скрипты
     const scripts = clientExtractor.getScriptTags()
-    
-    // Получаем стили
     const styleTags = clientExtractor.getStyleTags()
-    
-
-    // Чистим строку от ссылок перед кэшированием (possible v8 memory leaks)
     return template({ html, preloadedState,  styleTags,  scripts }).split('').join('')
   } catch (e) {
     console.log(e)

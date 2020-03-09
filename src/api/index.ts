@@ -38,7 +38,10 @@ export const api = {
       .post('/user', params),
     
     getUser: (): AxiosPromise<UserRequest> => apiGet
-      .get('/user')
+      .get('/user'),
+    
+    getIdUser: (params: {id: string}): AxiosPromise<UserRequest> => apiGet
+      .get(`/user/byId?id=${params.id}`)
   },
 
   

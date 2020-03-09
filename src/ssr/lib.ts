@@ -19,6 +19,7 @@ export const parseQueryProducts = (queryParams?: any): AfterDecodeUrl => {
   
   
   (queryArr as Array<[keyof AfterDecodeUrl, string]>).forEach(([key, value]) => {
+    value = decodeURI(value)
     switch (key) {
       case 'categories':
         setObject[key] = value.split('|').map(item => +item)

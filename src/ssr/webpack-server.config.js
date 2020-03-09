@@ -55,92 +55,7 @@ const babelConfig = {
   ]
 }
 
-const serverAssetsConfig = {
-  context: path.resolve(__dirname, '..'),
-  mode: 'production',
-  target: 'node',
-  optimization: {
-    minimize: false,
-  },
-  entry: {
-    server: './ssr/app.ts',
-  },
-  output: {
-    path: path.resolve(__dirname, '..', '..', 'build'),
-    filename: 'sito.js',
-    publicPath: '/static/',
-    libraryTarget: 'commonjs2',
-  },
-  resolve: {
-    extensions: ['.js', '.jsx', '.ts', '.tsx'],
-    modules: ['node_modules', 'src'],
-  },
-  module: {
-    rules: [
-      {
-        test: /\.(js|ts)x?$/,
-        exclude: /(node_modules\/)/,
-        loader: 'babel-loader',
-        options: babelConfig,
-      },
 
-      {
-        test: /\.scss$/,
-        use: [
-          {
-            loader: 'isomorphic-style-loader',
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 3,
-              sourceMap: true,
-              modules: {
-                getLocalIdent: getCSSModuleLocalIdent,
-              },
-            },
-          },
-          {
-            loader: 'sass-loader'
-          }
-        ]
-      },
-
-      {
-        test: /\.(eot|svg|ttf|woff|woff2)$/,
-        loader: 'file-loader',
-        options: {
-          emitFile: false,
-          name: 'media/[name].[hash:8].[ext]',
-        },
-        sideEffects: true,
-      },
-
-      {
-        test: /\.(png|jpg|svg|ico|gif)$/,
-        loader: 'file-loader',
-        options: {
-          name: 'media/[name].[hash:8].[ext]',
-          emitFile: false,
-        },
-      },
-    ],
-  },
-  externals: [
-    '@loadable/component',
-    nodeExternals({
-      whitelist: [
-        /react-dnd-html5-backend(\/.+)?/,
-        /dnd-core(\/.+)?/,
-        /react-dnd(\/.+)?/,
-        /@babel\/runtime\/.+/
-      ],
-    })
-  ],
-  plugins: [
-    new LoadablePlugin({ filename: 'loadable-stats-server.json' }),
-  ]
-}
 
 const serverEntryConfig = {
   context: path.resolve(__dirname, '..'),
@@ -230,4 +145,4 @@ const serverEntryConfig = {
   plugins: [],
 }
 
-module.exports = [serverAssetsConfig, serverEntryConfig]
+module.exports = [serverEntryConfig]

@@ -1,6 +1,7 @@
 import { createStore, createEffect,  guard,  createEvent, merge, sample } from 'lib/effector'
 import { UserRequest} from '../api/types'
 import { api } from '../api'
+import config from '../config'
 
 
 
@@ -87,6 +88,7 @@ targetSetLike.watch(likes => {
 
 // region setFetchUser:
 $setGender.watch(payload => {
+  if (config.ssr) return undefined
   switch (payload) {
     case 1:
     case 'men': api.user.setUser({ sex_id: 1 }); break
