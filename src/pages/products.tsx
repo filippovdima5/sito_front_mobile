@@ -5,7 +5,9 @@ import {RouteComponentProps} from 'react-router'
 import {useEffectSafe} from '../helpers/hooks/use-effect-safe'
 
 import { useEvent } from 'effector-react/ssr'
+import { START } from 'lib/effector';
 import { $setGender } from '../stores/user'
+import { $mountProductsPage } from '../features/products-page/store'
 
 import { GenderDetected } from '../features/gender-detected'
 import { ProductsPage } from '../features/products-page'
@@ -34,3 +36,5 @@ export function Products({ match }: RouteComponentProps<RParams>) {
     default: return <GenderDetected height={66}/>
   }
 }
+
+UseSex[START] = $mountProductsPage

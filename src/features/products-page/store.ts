@@ -1,14 +1,16 @@
-import {combine, createEffect, createEvent, createStore, guard, merge, restore} from 'lib/effector'
+import {combine, createEffect, createEvent, createStore, guard, merge, restore } from 'lib/effector'
 
-
+import { $sexId, $sexLine } from '../../stores/user'
+import { $baseLink } from '../../stores/env'
 
 import {api} from '../../api'
 import config from '../../config'
-import { parseQueryProducts, parseQuery } from '../../ssr/lib'
+import { parseQueryProducts, parseSearch } from '../../ssr/lib'
 
 import {RouteComponentProps} from 'react-router'
 import {MainState, StatusPage, TypeSet} from './types'
 import {FilterReqParams, FiltersRequest, PaginateInfo, ProductsReqParams, ProductsRequest} from '../../api/types'
+import {sample} from 'effector'
 
 
 
@@ -27,7 +29,6 @@ const $typeSet = restore(setTypeSet, { type: 'set_hydrate' })
 
 
 export const mainState = createStore<MainState>({
-  sexId: null,
   categories: null,
   brands: null,
   sizes: null,
@@ -43,14 +44,14 @@ export const mainState = createStore<MainState>({
 })
 
 
-
-export const toggleSex = createEvent<1 | 2>()
-mainState.on(toggleSex, (_, sexId) => {
-  return {...mainState.defaultState, sexId }
+export const $toggleSex = createEvent()
+mainState.on($toggleSex, () => {
+  return mainState.defaultState
 })
 
-export const filtersState = mainState.map(({ sexId, categories, brands, sizes, colors, price_to, price_from, sale_to, sale_from, favorite }) => ({
-  sexId, categories, brands, sizes, colors, price_to, price_from, sale_to, sale_from, favorite
+
+export const filtersState = mainState.map(({ categories, brands, sizes, colors, price_to, price_from, sale_to, sale_from, favorite }) => ({
+  categories, brands, sizes, colors, price_to, price_from, sale_to, sale_from, favorite
 }))
 
 export const productsState = mainState.map(({ limit, page, sort }) => ({ limit, sort, page }))
@@ -60,7 +61,7 @@ export const productsState = mainState.map(({ limit, page, sort }) => ({ limit, 
 
 
 // region set event_state_SET:
-export const setFilter = createEvent<{key: keyof Omit<MainState, 'sort' | 'limit' | 'page' | 'sexId'>, value: string | number | boolean | null}>()
+export const setFilter = createEvent<{key: keyof Omit<MainState, 'sort' | 'limit' | 'page'>, value: string | number | boolean | null}>()
 
 export const setProductsState = createEvent<{
   key: keyof Pick<MainState, 'sort' | 'limit' | 'page' >, value: 'update_up' | 'price_up' | 'sale_up' | number,
@@ -130,8 +131,9 @@ const fetchFilters = createEffect({
 })
 
 const fetchFiltersParams = filtersState.map(state => {
-  if (state.sexId === null) return undefined
-  const params: FilterReqParams = { sex_id: state.sexId }
+  const sexId = $sexId.getState()
+  if (sexId === null) return undefined
+  const params: FilterReqParams = { sex_id: sexId }
   if (state.categories !== null) params.categories = state.categories
   if (state.brands !== null) params.brands = state.brands
   if (state.colors !== null) params.colors = state.colors
@@ -144,19 +146,11 @@ const fetchFiltersParams = filtersState.map(state => {
   return params
 })
 
-const fetchByProducts = $typeSet.map(({ type }) => type === 'set_products')
-const isHydrate = $typeSet.map(({ type }) => (type === 'set_hydrate'))
-
-
-
-const blockFetchFilters = combine({ fetchByProducts, isHydrate })
-  .map(({ isHydrate, fetchByProducts }) => (!isHydrate && !fetchByProducts))
-
 
 
 guard({
   source: fetchFiltersParams.updates,
-  filter: blockFetchFilters,
+  filter: () => true,
   target: fetchFilters
 })
 //endregion fetchFilters
@@ -168,10 +162,13 @@ const fetchProducts = createEffect({
   handler: (params: ProductsReqParams) => api.products.getProducts(params)
 })
 
+$sexId.watch(state => console.log(state))
 
 const fetchProductsParams = mainState.map(state => {
-  if (state.sexId === null) return undefined
-  const params: ProductsReqParams = { sex_id: state.sexId }
+  const sexId = $sexId.getState()
+  console.log(sexId)
+  if (sexId === null) return undefined
+  const params: ProductsReqParams = { sex_id: sexId }
   if (state.categories !== null) params.categories = state.categories
   if (state.brands !== null) params.brands = state.brands
   if (state.colors !== null) params.colors = state.colors
@@ -187,13 +184,11 @@ const fetchProductsParams = mainState.map(state => {
   return params
 })
 
-const pendingProducts = fetchProducts.pending.map(pending => pending)
-const blockFetchProducts = combine({ pendingProducts, isHydrate })
-  .map(({ pendingProducts, isHydrate }) => (!pendingProducts && !isHydrate))
+
 
 guard({
   source: fetchProductsParams.updates,
-  filter: blockFetchProducts,
+  filter: () => true,
   target: fetchProducts
 })
 
@@ -203,14 +198,12 @@ guard({
 
 // region encode_url_state:
 mainState.updates.watch((payload) => {
-  if (config.ssr || payload.sexId === null) return undefined
+  const sexLine = $sexLine.getState()
+  if (sexLine === null || config.ssr) return undefined
   
-
   
-  let newUrl = '/products/'
-  const lineSex = payload.sexId === 1 ? 'men' : 'women'
-  newUrl = newUrl + lineSex
-
+  let newUrl = '/products/' + sexLine
+  
   //todo типы!
   const encode = Object.entries(payload).filter(([_, value]) => (value !== null))
   //as Array<[keyof AfterDecodeUrl, any]>
@@ -273,19 +266,27 @@ $productsInfoStore.on(fetchProducts.done, ((state, { result: { data: { info } } 
 
 
 // region mountApp:
+export const $mountProductsPage = createEvent()
+export const $mountProductsPageLocal = createEvent<{search: string}>()
+const storeForMount = $baseLink.map(state => {
+  const { linkParams: { search } } = state
+  const queryParams = parseSearch(search)
+  return parseQueryProducts(queryParams)
+})
 
+const targetUpdate = sample(storeForMount, $mountProductsPage)
+mainState.on(targetUpdate, (state, payload) => {
+  if (payload === null) return undefined
+  return {...state, ...payload}
+})
+mainState.on($mountProductsPageLocal, (state, { search }) => {
+  const queryParams = parseSearch(search)
+  console.log(search)
+  console.log({...state, ...parseQueryProducts(queryParams)})
+  return {...state, ...parseQueryProducts(queryParams)}
+})
 
-mainState.on(initRouteHistory, ((state, payload) => {
-  if (!config.local) return undefined
-  setTypeSet({type: 'set_url'})
-  
-  let sexId: 1 | 2
-  if (payload.location.pathname.includes('/women')) sexId = 2
-  else sexId = 1
-  
-  const queryParams = parseQuery(payload.location.search)
-  return { ...state, ...parseQueryProducts(sexId, queryParams) }
-}))
+targetUpdate.watch(payload => console.log(payload))
 // endregion mountApp
 
 
@@ -310,8 +311,5 @@ $lengthSkeletonData.on(targetSkeletonLength.updates, (_, { productsState: { page
   if (length > 0) return length
   return 0
 })
-
-
-
 // endregion statusPage
 

@@ -11,7 +11,6 @@ export type TypeSet =
 
 
 export type MainState = {
-  sexId: 1 | 2 | null,
   categories: Array<number> | null,
   brands: Array<string> | null,
   sizes: Array<string> | null,
@@ -29,7 +28,6 @@ export type MainState = {
 
 
 export type AfterDecodeUrl = {
-  sexId: 1 | 2,
   categories?: Array<number>,
   brands?: Array<string>,
   sizes?: Array<string>,

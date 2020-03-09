@@ -2,23 +2,20 @@ import { AfterDecodeUrl } from '../features/products-page/types'
 
 
 
-export const parseQuery = (search: string): any => {
-  const searchArr = search.split('?')
-  let onlySearch =  searchArr[1]
-  if (!onlySearch) onlySearch = searchArr[0]
-  
-  return Object.fromEntries(onlySearch
+export const parseSearch = (search: string): any | null => {
+  if (!Boolean(search)) return null
+  return Object.fromEntries(search
     .split('&')
     .map(item => item.split('=')))
 }
 
 
-export const parseQueryProducts = (sexId: 1| 2, queryParams: any): AfterDecodeUrl => {
+export const parseQueryProducts = (queryParams?: any): AfterDecodeUrl => {
+  const setObject: AfterDecodeUrl = {};
+  if (!Boolean(queryParams)) return setObject;
   const queryArr = Object.entries(queryParams)
-  
-  const setObject: AfterDecodeUrl = { sexId };
-  
   if (queryArr.length === 0) return setObject;
+  
   
   (queryArr as Array<[keyof AfterDecodeUrl, string]>).forEach(([key, value]) => {
     switch (key) {

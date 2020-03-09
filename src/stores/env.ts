@@ -33,5 +33,3 @@ export const $baseLink = combine({ $search, $baseRoute, $sexLine }, ({ $search, 
    }
  })
 })
-
-$baseLink.watch(state => console.log(state))

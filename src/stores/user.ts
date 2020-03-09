@@ -36,7 +36,6 @@ const $user = $fetchedUser.map(state => {
 // region Gender:
 export const $setGender = createEvent<'men' | 'women' | 1 | 2>()
 
-$setGender.watch(payload => console.log(payload))
 
 const targetSexUpdate = merge([$user.updates.map(payload => {
   if (payload?.sexId) return payload.sexId
