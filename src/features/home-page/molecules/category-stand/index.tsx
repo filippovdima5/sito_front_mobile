@@ -10,8 +10,8 @@ import { useEvent } from 'effector-react/ssr'
 
 // todo: Потом что то подобное должно хранится у юзера
 const category = {
-  1: [ 1001, 2005, 3001 ],
-  2: [ 1002, 2004, 3002 ]
+  1: [ 2001, 2002, 1006 ],
+  2: [ 1011, 2001, 1004 ]
 } as const
 
 
@@ -36,7 +36,7 @@ export function CategoryStand({ height, sexId, index }: Props) {
   return (
     <div>
       <div style={{ paddingTop: `${height}%` }} className={styles.wrap}>
-        <img className={styles.img} src={'/'} alt={title}/>
+        <img className={styles.img} src={`/cdn/mobile/home/${sexId}/${categoryId}.jpg`} alt={title}/>
         <div className={styles.title}>
           <Title title={title}/>
         </div>

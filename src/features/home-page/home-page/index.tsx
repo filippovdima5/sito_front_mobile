@@ -27,7 +27,7 @@ export function HomePage({ sexId }: Props) {
         <BrandStand
           height={40}
           title={'Бренды'}
-          img={'/'}
+          img={'/cdn/mobile/home/brands/nike.jpg'}
           url={`/brands/${sexIdToStr(sexId)}`}
         />
   
