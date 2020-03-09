@@ -4,6 +4,7 @@ import { AfterDecodeUrl } from '../features/products-page/types'
 
 export const parseSearch = (search: string): any | null => {
   if (!Boolean(search)) return null
+  search = search.replace('?', '')
   return Object.fromEntries(search
     .split('&')
     .map(item => item.split('=')))

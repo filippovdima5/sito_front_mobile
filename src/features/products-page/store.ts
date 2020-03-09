@@ -1,6 +1,5 @@
 import {combine, createEffect, createEvent, createStore, guard, merge, restore } from 'lib/effector'
 
-import { $sexId } from '../../stores/user'
 import { $baseLink } from '../../stores/env'
 
 import {api} from '../../api'
@@ -11,7 +10,7 @@ import {RouteComponentProps} from 'react-router'
 import {MainState, StatusPage, TypeSet} from './types'
 import {FilterReqParams, FiltersRequest, PaginateInfo, ProductsReqParams, ProductsRequest} from '../../api/types'
 import {sample} from 'effector'
-import {sexIdToStr} from '../../helpers/lib'
+import {sexIdToStr, sexStrToId} from '../../helpers/lib'
 
 
 
@@ -136,6 +135,7 @@ const fetchFilters = createEffect({
 
 const fetchFiltersParams = filtersState.map(state => {
   if (state.sexId === null) return undefined
+  
   const params: FilterReqParams = { sex_id: state.sexId }
   if (state.categories !== null) params.categories = state.categories
   if (state.brands !== null) params.brands = state.brands
@@ -168,6 +168,7 @@ const fetchProducts = createEffect({
 
 const fetchProductsParams = mainState.map(state => {
   if (state.sexId === null) return undefined
+  
   const params: ProductsReqParams = { sex_id: state.sexId }
   if (state.categories !== null) params.categories = state.categories
   if (state.brands !== null) params.brands = state.brands
@@ -266,19 +267,20 @@ $productsInfoStore.on(fetchProducts.done, ((state, { result: { data: { info } } 
 export const $mountProductsPage = createEvent()
 
 const storeForMount = $baseLink.map(state => {
-  const sexId = $sexId.getState()
-  const { linkParams: { search } } = state
+  const { linkParams: { search, sexLine } } = state
+  if (sexLine === null) return null
+  const sexId = sexStrToId(sexLine)
   const queryParams = parseSearch(search)
-  
   return { ...parseQueryProducts(queryParams), sexId }
 })
+
 
 const targetUpdate = sample(storeForMount, $mountProductsPage)
 mainState.on(targetUpdate, (state, payload) => {
   if (payload === null) return undefined
-  if (payload.sexId === null) return undefined
   return {...state, ...payload}
 })
+
 
 mainState.on($initRouteHistory, (state, history) => {
   const { location: { pathname, search } } = history

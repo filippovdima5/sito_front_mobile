@@ -11,7 +11,10 @@ export const $baseRoute = createStore<BaseRoute>('home')
 export const $search = createStore<string>('')
 
 
-$search.on($setUrlInfo, (_, { search }) => search.replace('?', ''))
+$search.on($setUrlInfo, (_, { search }) => {
+  if (!search) return ''
+  return search.replace('?', '')
+})
 $baseRoute.on($setUrlInfo, (_, { path }) => {
   if (path.includes('brands')) return 'brands'
   if (path.includes('products')) return 'products'

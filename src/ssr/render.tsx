@@ -5,16 +5,20 @@ import ReactDOMServer from 'react-dom/server'
 import { StaticRouter } from 'react-router'
 import { matchRoutes } from 'react-router-config'
 import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server'
+import { parseSearch } from './lib'
 
 import { fork, serialize, allSettled } from 'effector/fork';
 import { forward, clearNode, rootDomain, START } from 'lib/effector';
 
-import { $setGender } from '../stores/user'
+
 
 import { App } from '../app'
 import { ROUTES } from '../pages/routes'
 
 import { template } from './template'
+
+import { $setUrlInfo } from '../stores/env'
+import { $fetchUser, $setGender } from '../stores/user'
 
 
 const clientStatsFile = path.resolve(__dirname, './loadable-stats.json')
@@ -23,8 +27,30 @@ const clientExtractor = new ChunkExtractor({ statsFile: clientStatsFile })
 
 
 export const render = async (ctx: any) => {
+  const scope = fork(rootDomain)
   
-
+  // Сетим информацию о пользователе и локейшене страницы
+  const [ path, search ] = ctx.url.split('?')
+  await Promise.all([
+    allSettled($setUrlInfo, {scope, params: { path, search }}),
+    allSettled($fetchUser, {scope, params: undefined})
+  ])
+  
+  // Заматченные роуты:
+  const matchedRoutes = matchRoutes(ROUTES, ctx.url)
+  
+  // Если роут ведет на опр. пол - то сетим этот пол в приложение
+  const sexId = matchedRoutes
+    // @ts-ignore
+    .filter(({ match }) => (Boolean(match.params.sex)))
+    // @ts-ignore
+    .map(({ match }) => match.params.sex.split('?')[0])
+    .find(sex => (sex === 'men' || 'women')) as 'men' | 'women' | undefined
+  
+  if (Boolean(sexId)) await allSettled($setGender, { scope, params: sexId })
+  
+  
+  // Ищем ивенты для первоночального стейта заматченных страниц и сетим их
   const pageEvents = matchRoutes(ROUTES, ctx.url)
     .map((match) =>
       // @ts-ignore
@@ -33,36 +59,22 @@ export const render = async (ctx: any) => {
     .filter(Boolean)
   
   
-  const startServer = rootDomain.createEvent()
-  
-  if (pageEvents.length > 0) {
+  if (pageEvents.length > 0){
     try {
-      forward({ from: startServer, to: pageEvents })
-    }catch (e) {
-      console.log(e, 'dima')
+      await Promise.all(pageEvents.map(event => allSettled(event, { scope, params: undefined })))
+    } catch (error) {
+      console.log(error)
     }
   }
   
-  const scope = fork(rootDomain)
-  
-  try {
 
-    await allSettled($setGender, {
-      scope,
-      params: 2,
-    });
-  } catch (error) {
-    console.log(error)
-  }
   
   const context = {}
-  
-  
   try {
     const jsx = (
       <ChunkExtractorManager extractor={clientExtractor}>
           <StaticRouter context={context} location={ctx.url}>
-            <App root={scope}/>
+            <App root={scope} />
           </StaticRouter>
       </ChunkExtractorManager>
     )
