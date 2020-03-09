@@ -3,8 +3,8 @@ import {useEffectSafe} from '../../helpers/hooks/use-effect-safe'
 import { useHistory } from 'react-router'
 
 import { useStore, useEvent } from 'effector-react/ssr'
-import { $initRouteHistory, $mountProductsPageLocal, $toggleSex } from './store'
-import {loadLikes, setGender} from '../../stores/env2'
+import { $initRouteHistory, $toggleSex } from './store'
+import { loadLikes } from '../../stores/env2'
 import { $statusPageProducts } from './store'
 
 
@@ -14,7 +14,7 @@ import { LoadMore } from './load-more'
 import { Filters } from './features/filters'
 
 import styles from './styles.module.scss'
-import config from '../../config'
+
 
 
 type Props = {
@@ -26,31 +26,24 @@ export function ProductsPage({ sexId }: Props) {
   const prevSexId = useRef<Props['sexId']>(sexId)
   
   const status = useStore($statusPageProducts)
-  const mountProductsPageLocal = useEvent($mountProductsPageLocal)
   const toggleSex = useEvent($toggleSex)
   const initRouteHistory = useEvent($initRouteHistory)
   
   const loadLikesEv = useEvent(loadLikes)
   
 
-  // useEffectSafe(() => {
-  //   if (sexId !== prevSexId.current ) toggleSex()
-  //   prevSexId.current = sexId
-  // }, [sexId])
+  useEffectSafe(() => {
+    if (sexId !== prevSexId.current ) toggleSex(sexId)
+    prevSexId.current = sexId
+  }, [ sexId ])
   
   
   useEffectSafe(() => {
-    if (!config.ssr) initRouteHistory(history)
+    initRouteHistory(history)
     loadLikesEv()
   }, [])
   
-  
-  useEffectSafe(() => {
-    if (config.local) {
-      mountProductsPageLocal({ search: history.location.search.replace('?', '') })
-    }
-  }, [])
-  
+
   
   return (
     <>

@@ -1,11 +1,16 @@
-import React, {useCallback, useEffect, useRef} from 'react'
+import React, { useEffect, useRef } from 'react'
+import {sexIdToStr} from '../../../../helpers/lib'
+
+import { useStore, useEvent } from 'effector-react/ssr'
 import { createEvent, createStore } from 'lib/effector'
-import { useStore } from 'effector-react/ssr'
-import {  $currentRoute } from '../../../../stores/env2'
-import styles from './styles.module.scss'
+import { $setGender } from '../../../../stores/user'
+import { $baseLink } from '../../../../stores/env'
+
 import { ButtonSex } from '../../atoms/button-sex'
 import {Link} from 'react-router-dom'
-import {sexIdToStr} from '../../../../helpers/lib'
+
+import styles from './styles.module.scss'
+
 
 
 
@@ -25,7 +30,8 @@ signalWithoutSexId.on(setOrder, (state, payload) => payload)
 
 export function Header ({ sexId }: HeaderProps) {
   const timerSignal = useRef<any>(null)
-  const currentRoute = useStore($currentRoute)
+  const { linkParams: { baseRoute } } = useStore($baseLink)
+  const setGender = useEvent($setGender)
   
   const signal = useStore(signalWithoutSexId)
   useEffect(() => {
@@ -44,21 +50,17 @@ export function Header ({ sexId }: HeaderProps) {
   }, [signal])
 
 
-  const sexLink = useCallback((sexItem: 1 | 2): string => {
-    switch (currentRoute) {
-      case '/home/':
-      case '/404/': return `/home/${sexIdToStr(sexItem)}`
-      default: return `${currentRoute}${sexIdToStr(sexItem)}`
-    }
-  }, [currentRoute])
-  
-  
-  // todo: Сделать линки на страницах, где есть /men or /women, в других местах оставить дивы
+
   return (
     <div className={styles.Header}>
       <div className={styles.border}/>
       {([1, 2] as [1, 2]).map(item => (
-        <Link to={sexLink(item)} key={item} className={styles.buttonWrap}>
+        <Link
+          to={`/${baseRoute}/${sexIdToStr(item)}`}
+          onClick={() => setGender(item)}
+          key={item}
+          className={styles.buttonWrap}
+        >
           <ButtonSex sexId={item} signal={signal} currentSex={sexId}/>
         </Link>
       ))}

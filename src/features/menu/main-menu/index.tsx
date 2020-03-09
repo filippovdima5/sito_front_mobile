@@ -1,16 +1,20 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { MenuIcon } from '../atoms/menu-icon'
-import { $showMainMenu, setShowMainMenu, setShowNextMenu } from '../store'
+import {sexIdToStr} from '../../../helpers/lib'
+import { categories, menuLinks } from '../constants'
+
 import { useStore,  useEvent } from 'effector-react/ssr'
+import { $sexId } from '../../../stores/user'
+import { $showMainMenu, setShowMainMenu, setShowNextMenu } from '../store'
+
+import { MenuIcon } from '../atoms/menu-icon'
 import { NextMenu } from '../organisms/next-menu'
 import { Header } from '../molecules/header'
-import { $sexId } from '../../../stores/env2'
-import { categories, menuLinks } from '../constants'
-import styles from './styles.module.scss'
 import { Arrow } from '../../../media/img/svg/icons'
-import {sexIdToStr} from '../../../helpers/lib'
+
+import styles from './styles.module.scss'
 //import { Footer } from '../molecules/footer'
+
 
 
 type LinkItem = {
