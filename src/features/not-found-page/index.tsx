@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React  from 'react'
 import { Link } from 'react-router-dom'
 import t from '../../media/img/svg/telegram.png'
 import i from '../../media/img/svg/instagram.svg'
@@ -6,12 +6,10 @@ import v from '../../media/img/svg/vk.svg'
 import y from '../../media/img/svg/youtube.svg'
 import styles from './styles.module.scss'
 import imgNot from './404.png'
-import { setCurrentRoute } from '../../stores/env2'
+
 
 
 export function NotFound() {
-  useEffect(() => {setCurrentRoute('/404/')}, [])
-  
   return (
     <div className={styles.container}>
 

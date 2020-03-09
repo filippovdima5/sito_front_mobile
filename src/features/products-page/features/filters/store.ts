@@ -35,8 +35,8 @@ mainState.on(setCategories, (state, { value, sexId }) => {
   return ({ ...mainState.defaultState, sexId, categories: [value] })
 })
 
-export const setBrands = createEvent<string>()
-mainState.on(setBrands, (state, brand) => {
+export const $setBrands = createEvent<string>()
+mainState.on($setBrands, (state, brand) => {
   setTypeSet({ type: 'set_filter' })
   return ({ ...mainState.defaultState, sexId: state.sexId,  brands: [brand] })
 })

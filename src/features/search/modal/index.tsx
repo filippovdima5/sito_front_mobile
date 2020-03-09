@@ -4,8 +4,8 @@ import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock'
 
 import { useStore, useEvent } from 'effector-react/ssr'
 import {$searchResult, $showResults, setModSearch} from '../store'
-import { $sexLine } from '../../../stores/env2'
-import { setBrands } from '../../products-page/features/filters/store'
+import { $sexLine } from '../../../stores/user'
+import { $setBrands } from '../../products-page/features/filters/store'
 
 import styles from './styles.module.scss'
 
@@ -17,7 +17,7 @@ function SearchResult() {
   const sexLine = useStore($sexLine)
   
   const setModSearchEv = useEvent(setModSearch)
-  const setBrandsEv = useEvent(setBrands)
+  const setBrands = useEvent($setBrands)
 
 
   useEffect(() => {
@@ -40,7 +40,7 @@ function SearchResult() {
             <li key={title} className={styles.title}>
               <Link
                 onClick={() => {
-                  setBrandsEv(title)
+                  setBrands(title)
                   setModSearchEv()
                 }}
                 to={`/products/${sexLine !== null ? sexLine : ''}?brands=${title}`}

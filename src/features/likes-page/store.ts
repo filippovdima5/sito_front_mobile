@@ -1,18 +1,15 @@
-import {createEffect, createEvent, createStore, merge, sample} from 'lib/effector'
-import { $likes } from '../../stores/env2'
+import { createEffect, createEvent, createStore, merge, sample, guard } from 'lib/effector'
 import { ShortProduct } from '../../api/types'
 import { api } from '../../api'
 
+import { $likes } from '../../stores/user'
+
 
 export type StatusPage = 'START' | 'EMPTY' | 'READY'
-
 export const $statusPage = createStore<StatusPage>('START')
 
 
-
-
-export const loadLikeProducts = createEvent()
-
+export const $loadLikeProducts = createEvent()
 const fetchLikeProducts = createEffect({
   handler: (params: { likes: Array<string> }) => api.products.getLikeProducts(params)
 })
@@ -30,8 +27,11 @@ $statusPage.on(fetchLikeProducts.done, (_, { result: { data } }) => {
   return 'READY'
 })
 
-sample($likes, loadLikeProducts).watch(likes => {
-   fetchLikeProducts({ likes })
+
+guard({
+  source: sample($likes, $loadLikeProducts, (source => ({ likes: source }))),
+  filter: () => true,
+  target: fetchLikeProducts
 })
 
 

@@ -1,8 +1,10 @@
 import React, { useMemo } from 'react'
-import styles from './styles.module.scss'
-import { $likes, setLike } from '../../../../stores/env2'
-import { useStore } from 'effector-react/ssr'
+
+import { useStore, useEvent } from 'effector-react/ssr'
+import { $likes, $setLike } from '../../../../stores/user'
+
 import { LikeIcon } from '../../../../media/img/svg/icons'
+import styles from './styles.module.scss'
 
 type Props = {
   currentId: string,
@@ -11,6 +13,7 @@ type Props = {
 
 export function Like({ currentId }: Props) {
   const likeIds = useStore($likes)
+  const setLike = useEvent($setLike)
   
   
   const isLike = useMemo(() => likeIds.includes(currentId), [likeIds, currentId])

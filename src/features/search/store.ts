@@ -1,8 +1,7 @@
 import { combine, createEffect, createEvent, createStore, guard, restore, sample } from 'lib/effector'
 import { api } from '../../api'
 import { MainSearchResultItem, MainSearchReqParams } from '../../api/types'
-import { $sexId } from '../../stores/env2'
-
+import { $sexId } from '../../stores/user'
 
 export const setModSearch = createEvent()
 export const $modSearch  = createStore<boolean>(false)

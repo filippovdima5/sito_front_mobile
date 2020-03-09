@@ -37,4 +37,4 @@ export function Products({ match }: RouteComponentProps<RParams>) {
   }
 }
 
-UseSex[START] = $mountProductsPage
+Products[START] = $mountProductsPage

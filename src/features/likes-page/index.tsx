@@ -2,7 +2,7 @@ import React from 'react'
 import { useEffectSafe } from '../../helpers/hooks/use-effect-safe'
 
 import { useStore, useEvent } from 'effector-react/ssr'
-import { loadLikeProducts, $statusPage } from './store'
+import { $loadLikeProducts, $statusPage } from './store'
 import { StatusPage, $loadingLikes } from './store'
 
 import { ReadyPage } from './ready-page'
@@ -21,10 +21,15 @@ function Controller({ status }: {status: StatusPage}) {
 
 
 export function LikesPage() {
-  const loadLikeProductsEv = useEvent(loadLikeProducts)
   const statusPage = useStore($statusPage)
-  useEffectSafe(() => {loadLikeProductsEv()}, [])
   const loader = useStore($loadingLikes)
+  
+  const loadLikeProducts = useEvent($loadLikeProducts)
+  
+  useEffectSafe(() => {
+    loadLikeProducts()
+  }, [])
+
   
   return(
     <div className={styles.wrap}>

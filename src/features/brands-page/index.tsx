@@ -5,10 +5,9 @@ import { sexIdToStr } from '../../helpers/lib'
 
 import { BrandItem } from '../../api/types'
 import { useStore, useEvent } from 'effector-react/ssr'
-import { setGender } from '../../stores/env2'
 
-import { $filterBrands, loadBrands, setFilterString, $loadingBrands } from './store'
-import { setBrands } from '../products-page/features/filters/store'
+import { $filterBrands, $fetchBrands, $setFilterString, $loadingBrands } from './store'
+import { $setBrands } from '../products-page/features/filters/store'
 
 import { Input } from '../../commons/atoms/input'
 import { Loader } from '../../commons/templates/loader'
@@ -22,14 +21,14 @@ type Props = {
 
 
 function BrandsGroup({ brands, sexId }: {brands: Array<BrandItem>, sexId: 1 | 2}) {
-  const setBrandsEv = useEvent(setBrands)
+  const setBrands = useEvent($setBrands)
   return(
     <>
       {brands.map(({ _id }) => (
         <li>
           <Link
             to={`/products/${sexIdToStr(sexId)}?brands=${_id}`}
-            onClick={() => setBrandsEv(_id)}
+            onClick={() => setBrands(_id)}
           >
             {_id}
           </Link>
@@ -41,15 +40,15 @@ function BrandsGroup({ brands, sexId }: {brands: Array<BrandItem>, sexId: 1 | 2}
 
 export function BrandsPage({ sexId }: Props) {
   const loader = useStore($loadingBrands)
-  const setFilterStringEv = useEvent(setFilterString)
+  const charGroups = useStore($filterBrands)
+  
+  const fetchBrands = useEvent($fetchBrands)
+  const setFilterString = useEvent($setFilterString)
   
   useEffectSafe(() => {
-    setGender(sexId)
-    loadBrands(sexId)
+    fetchBrands({ sexId })
   }, [sexId])
 
-  
-  const charGroups = useStore($filterBrands)
   
   return (
     <div className={styles.brands}>
@@ -58,14 +57,13 @@ export function BrandsPage({ sexId }: Props) {
       
         <div className={styles.search}>
           <Input
-            onChange={(event => setFilterStringEv(event.currentTarget.value))}
+            onChange={(event => setFilterString(event.currentTarget.value))}
             placeholder={'Поиск по названию бренда'}
             type={'text'}
           />
         </div>
         
         <div className={styles.scrollContainer}>
-          
           <ul className={styles.scrollBox}>
             {charGroups.map(({ char, brands }) => (
               <li className={styles.charGroup} key={char}>
@@ -74,15 +72,9 @@ export function BrandsPage({ sexId }: Props) {
                   <BrandsGroup sexId={sexId} brands={brands}/>
                 </ol>
               </li>
-            
             ))}
-            
-            
-
           </ul>
-          
         </div>
-      
       </div>
     </div>
   )

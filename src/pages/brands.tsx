@@ -6,9 +6,11 @@ import {useEffectSafe} from '../helpers/hooks/use-effect-safe'
 
 import { useEvent } from 'effector-react/ssr'
 import { $setGender } from '../stores/user'
+import { $mountBrandsPage } from '../features/brands-page/store'
 
 import { GenderDetected } from '../features/gender-detected'
 import { BrandsPage } from '../features/brands-page'
+import {START} from '../lib/effector'
 
 
 type RParams = {
@@ -18,7 +20,6 @@ type RParams = {
 
 function UseSex({ sexId }: { sexId: 1 | 2 }) {
   const setGender = useEvent($setGender)
-  
   useEffectSafe(() => {
     setGender(sexId)
   }, [])
@@ -37,3 +38,4 @@ export function Brands({ match }: RouteComponentProps<RParams>) {
   }
 }
 
+Brands[START] = $mountBrandsPage

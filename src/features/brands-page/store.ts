@@ -1,23 +1,37 @@
-import {combine, createEffect, createEvent, createStore, merge} from 'lib/effector'
+import { combine, createEffect, createEvent, createStore, merge, guard, sample } from 'lib/effector'
 import { AllBrandsRequest } from '../../api/types'
 import {api} from '../../api'
-
+import { $sexId } from '../../stores/user'
 
 
 const brands = createStore<Array<AllBrandsRequest>>([])
 
-
-export const loadBrands = createEffect({
-  handler: (sexId: 1 | 2) => api.simple.allBrands({ sexId })
+const loadBrands = createEffect({
+  handler: (params: {sexId: 1 | 2}) => api.simple.allBrands({ sexId: params.sexId })
 })
 
 brands.on(loadBrands.done, (_, { result: { data } }) => data )
 
+export const $fetchBrands = createEvent<{ sexId: 1 | 2 }>()
+guard({
+  source: $fetchBrands,
+  filter: () => true,
+  target: loadBrands
+})
+
+export const $mountBrandsPage = createEvent()
+guard({
+  source: sample($sexId, $mountBrandsPage, source => ({ sexId: source })),
+  filter: $sexId.map(state => state !== null),
+  target: loadBrands
+})
 
 
-export const setFilterString = createEvent<string>()
+
+
+export const $setFilterString = createEvent<string>()
 export const filterString = createStore<string>('')
-filterString.on(setFilterString, (_, string) => string)
+filterString.on($setFilterString, (_, string) => string)
 
 export const $filterBrands = combine({filterString, brands})
   .map(({ brands, filterString }) => {

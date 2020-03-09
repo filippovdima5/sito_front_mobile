@@ -1,4 +1,4 @@
-import { createStore, createEffect,  guard,  createEvent, merge } from 'lib/effector'
+import { createStore, createEffect,  guard,  createEvent, merge, sample } from 'lib/effector'
 import { UserRequest} from '../api/types'
 import { api } from '../api'
 
@@ -64,6 +64,25 @@ $genderInfo.on(targetSexUpdate, (state, payload) => {
 })
 // endregion Gender
 
+
+// region Likes:
+export const $likes = createStore<Array<string>>([])
+$likes.on($user.updates, (state, user) => {
+  if (!Boolean(user) || !Boolean(user?.likes)) return []
+  return user?.likes
+})
+
+
+export const $setLike = createEvent<string>()
+const targetSetLike = sample($likes, $setLike, (likes, idProduct) => {
+  if (likes.includes(idProduct)) return likes.filter(id => id !== idProduct)
+  return [...likes, idProduct]
+})
+$likes.on(targetSetLike, (_, payload) => payload)
+targetSetLike.watch(likes => {
+  api.user.setUser({ likes })
+})
+// endregion Likes
 
 
 // region setFetchUser:

@@ -4,7 +4,6 @@ import { useHistory } from 'react-router'
 
 import { useStore, useEvent } from 'effector-react/ssr'
 import { $initRouteHistory, $toggleSex } from './store'
-import { loadLikes } from '../../stores/env2'
 import { $statusPageProducts } from './store'
 
 
@@ -29,8 +28,7 @@ export function ProductsPage({ sexId }: Props) {
   const toggleSex = useEvent($toggleSex)
   const initRouteHistory = useEvent($initRouteHistory)
   
-  const loadLikesEv = useEvent(loadLikes)
-  
+
 
   useEffectSafe(() => {
     if (sexId !== prevSexId.current ) toggleSex(sexId)
@@ -40,7 +38,6 @@ export function ProductsPage({ sexId }: Props) {
   
   useEffectSafe(() => {
     initRouteHistory(history)
-    loadLikesEv()
   }, [])
   
 
