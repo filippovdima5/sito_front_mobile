@@ -5,22 +5,21 @@ import { loadableReady } from '@loadable/component'
 import { fork, hydrate } from 'effector/fork';
 import { rootDomain } from 'lib/effector';
 import { BrowserRouter } from 'react-router-dom'
-
 import { App } from './app'
-
-
-hydrate(rootDomain, { values: (window as any).INITIAL_STATE });
-const scope = fork(rootDomain);
 
 
 
 Promise.all([
   loadableReady(),
+
 ])
   .then(
     () => {
       const root = document.getElementById('root')
       if (!root) return
+  
+      hydrate(rootDomain, { values: (window as any).INITIAL_STATE })
+      let scope = fork(rootDomain);
   
       ReactDOM.hydrate(
         <BrowserRouter>

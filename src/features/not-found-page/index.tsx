@@ -6,10 +6,12 @@ import v from '../../media/img/svg/vk.svg'
 import y from '../../media/img/svg/youtube.svg'
 import styles from './styles.module.scss'
 import imgNot from './404.png'
+import {useBodyScrollTop} from '../../helpers/hooks/use-body-scroll-top'
 
 
 
 export function NotFound() {
+  useBodyScrollTop()
   return (
     <div className={styles.container}>
 

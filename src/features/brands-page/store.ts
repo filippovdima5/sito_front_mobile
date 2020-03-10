@@ -6,6 +6,8 @@ import { $sexId } from '../../stores/user'
 
 const brands = createStore<Array<AllBrandsRequest>>([])
 
+brands.watch(state => console.log(state))
+
 const loadBrands = createEffect({
   handler: (params: {sexId: 1 | 2}) => api.simple.allBrands({ sexId: params.sexId })
 })

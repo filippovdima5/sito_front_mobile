@@ -31,12 +31,14 @@ const enableLoadable = (config, client = true) => {
   }
 
   addBabelPlugin(config, "@loadable/babel-plugin")
+  addBabelPlugin({ "addLoc": true }, 'effector/babel-plugin')
 }
 
 
 
 const adjustConfigForServer = (config) => {
   addBabelPlugin(config, "@babel/plugin-proposal-optional-chaining")
+
   const isServer = process.env.SERVER === 'true'
   if (isServer) {
     const serverConfig = {...config}

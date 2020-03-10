@@ -3,7 +3,7 @@ import styles from './styles.module.scss'
 import config from '../../../config'
 
 
-const FPS = 35
+const FPS = 3
 const getScrollTop = () => config.ssr ? 0 : window.document.body.scrollTop
 
 const scrollToTop = () => {

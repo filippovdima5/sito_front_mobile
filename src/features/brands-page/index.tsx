@@ -46,7 +46,7 @@ export function BrandsPage({ sexId }: Props) {
   const setFilterString = useEvent($setFilterString)
   
   useEffectSafe(() => {
-    fetchBrands({ sexId })
+    //fetchBrands({ sexId })
   }, [sexId])
 
   

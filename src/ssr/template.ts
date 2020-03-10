@@ -35,7 +35,8 @@ export const template = (
 <body>
     <noscript>Пожалуйста, включите JavaScript в настройках браузера для корректного отображения контента сайта.</noscript>
     <script>
-        window.INITIAL_STATE = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
+        window.INITIAL_STATE = ${JSON.stringify(preloadedState)}
+       
     </script>
     ${scripts}
   
@@ -46,3 +47,5 @@ export const template = (
 </html>
 `
 export default template
+
+// //.replace(/</g, '\\u003c')

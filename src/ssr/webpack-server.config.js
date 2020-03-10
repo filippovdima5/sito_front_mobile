@@ -1,7 +1,6 @@
 const path = require('path')
 const nodeExternals = require('webpack-node-externals')
 const getCSSModuleLocalIdent = require('./utils/getCSSModuleLocalIdent');
-const LoadablePlugin = require('@loadable/webpack-plugin')
 
 
 const commonPresets = [

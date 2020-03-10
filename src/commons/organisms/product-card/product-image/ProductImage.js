@@ -37,6 +37,7 @@ function ProductImage({ src, alt, wrapHeight }) {
       <div style={{ height: `${heightSpace}px` }}/>
 
       <img
+          itemProp={"image"}
         ref = {imgRef}
         style={{ display: loadedImage || config.ssr ? 'block' : 'none' }}
         className={styles.ProductImage}

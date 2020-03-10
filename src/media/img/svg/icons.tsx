@@ -28,9 +28,6 @@ export function Close(props: Props) {
 }
 
 export function Arrow(props: Props) {
-  
-
-  
   return(
     <svg
       {...defaultProps}

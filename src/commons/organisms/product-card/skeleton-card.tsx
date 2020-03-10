@@ -33,9 +33,7 @@ export function SkeletonCard() {
             </span>
           </div>
 
-          <div className={styles.sale}>
-            <Skeleton customStyle={{ height: 14 }}/>
-          </div>
+          <div className={styles.sale}/>
         </div>
 
       </div>
