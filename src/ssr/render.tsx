@@ -15,8 +15,9 @@ import {api} from '../api'
 import { findSexLine } from '../helpers/lib'
 import {Helmet} from "react-helmet"
 
+
 const clientStatsFile = path.resolve(__dirname, './loadable-stats.json')
-const clientExtractor = new ChunkExtractor({ statsFile: clientStatsFile })
+const clientExtractor = new ChunkExtractor({ statsFile: clientStatsFile, entrypoints: ['main'] })
 
 
 export const render = async (ctx: any) => {
@@ -64,11 +65,11 @@ export const render = async (ctx: any) => {
   
   //endregion render
   
-  const context = {}
+  const routerContext: Record<string, any> = {}
   try {
     const jsx = (
       <ChunkExtractorManager extractor={clientExtractor}>
-          <StaticRouter context={context} location={ctx.url}>
+          <StaticRouter context={routerContext} location={ctx.path}>
             <App root={scope} />
           </StaticRouter>
       </ChunkExtractorManager>

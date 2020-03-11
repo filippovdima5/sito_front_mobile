@@ -76,9 +76,9 @@ function Main() {
 
 export function App({ root }: Props) {
     return(
-      <Provider value={root}>
-        <Main/>
-      </Provider>
+       <Provider value={root}>
+         <Main/>
+       </Provider>
     )
 }
 

@@ -9,18 +9,17 @@ import { App } from './app'
 
 
 
+
 Promise.all([
   loadableReady(),
-
+  hydrate(rootDomain, { values: (window as any).INITIAL_STATE })
 ])
   .then(
     () => {
       const root = document.getElementById('root')
       if (!root) return
-  
-      hydrate(rootDomain, { values: (window as any).INITIAL_STATE })
       let scope = fork(rootDomain);
-  
+      
       ReactDOM.hydrate(
         <BrowserRouter>
           <App root={scope}/>

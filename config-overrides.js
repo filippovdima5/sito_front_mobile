@@ -1,6 +1,5 @@
 const LoadablePlugin = require('@loadable/webpack-plugin')
-const nodeExternals = require('webpack-node-externals')
-const path = require('path')
+
 
 
 const addBabelPlugin = (config, name, { prepend } = {}) => {
@@ -24,67 +23,28 @@ const findBabelPlugin = (config) => {
   return babelLoaderConfig
 }
 
-const enableLoadable = (config, client = true) => {
-  if (client) {
-    config.plugins = config.plugins || []
-    config.plugins.push(new LoadablePlugin())
-  }
+const enableLoadable = (config) => {
+  config.plugins = config.plugins || []
+  config.plugins.push(new LoadablePlugin())
+
 
   addBabelPlugin(config, "@loadable/babel-plugin")
-  addBabelPlugin({ "addLoc": true }, 'effector/babel-plugin')
 }
 
-
-
-const adjustConfigForServer = (config) => {
-  addBabelPlugin(config, "@babel/plugin-proposal-optional-chaining")
-
-  const isServer = process.env.SERVER === 'true'
-  if (isServer) {
-    const serverConfig = {...config}
-
-    serverConfig.target = 'node'
-    delete serverConfig.optimization
-    serverConfig.entry = path.resolve(__dirname, 'src', 'server', 'index.ts')
-    serverConfig.output = {...config.output}
-    serverConfig.output.path = path.resolve(__dirname, 'build', 'server')
-    serverConfig.output.filename = 'server.js'
-    serverConfig.node = {
-      __dirname: false,
-    }
-    serverConfig.externals = [
-      nodeExternals({
-        whitelist: [
-          /normalize\.css/,
-          /@babel\/runtime\/.+/
-        ],
-      })
-    ]
-
-    return [config, serverConfig]
-  }
-
-  return config
+const enabledEffectorReact = (config) => {
+  addBabelPlugin(config, 'effector/babel-plugin')
 }
+
 
 const webpack = function override(config, env) {
 
-  config.optimization.splitChunks =  {
-    cacheGroups: {
-      vendor: {
-        test: /node_modules/,
-        chunks: 'initial',
-        name: 'vendor',
-        enforce: true
-      },
-    }
-  }
-  config.optimization.runtimeChunk = false
 
 
+
+  enabledEffectorReact(config)
   enableLoadable(config)
 
-  return adjustConfigForServer(config)
+  return config
 }
 
 module.exports = webpack

@@ -1,18 +1,18 @@
-import { combine, createEffect, createEvent, createStore, merge, guard, sample } from 'lib/effector'
+import {  createEffect, createEvent, createStore, merge, guard, sample } from 'lib/effector'
 import { AllBrandsRequest } from '../../api/types'
 import {api} from '../../api'
 import { $sexId } from '../../stores/user'
 
 
-const brands = createStore<Array<AllBrandsRequest>>([])
-
-brands.watch(state => console.log(state))
+const $brands = createStore<Array<AllBrandsRequest>>([])
+export const $filteredBrands = createStore<Array<AllBrandsRequest>>([])
 
 const loadBrands = createEffect({
   handler: (params: {sexId: 1 | 2}) => api.simple.allBrands({ sexId: params.sexId })
 })
+$brands.on(loadBrands.done, (_, { result: { data } }) => data )
+$filteredBrands.on(loadBrands.done, (_, { result: { data } }) => data)
 
-brands.on(loadBrands.done, (_, { result: { data } }) => data )
 
 export const $fetchBrands = createEvent<{ sexId: 1 | 2 }>()
 guard({
@@ -30,14 +30,12 @@ guard({
 
 
 
-
 export const $setFilterString = createEvent<string>()
 export const filterString = createStore<string>('')
 filterString.on($setFilterString, (_, string) => string)
 
-export const $filterBrands = combine({filterString, brands})
-  .map(({ brands, filterString }) => {
-    
+
+const filterSample = sample($brands, filterString, (brands, filterString) => {
   if (filterString.length < 1) return brands
   
   const firstChar = filterString.charAt(0)
@@ -47,6 +45,9 @@ export const $filterBrands = combine({filterString, brands})
     brands: item.brands.filter(item => item._id.toLowerCase().includes(filterString.toLowerCase()))
   }))
 })
+
+
+$filteredBrands.on(filterSample.updates, (_, payload) => payload)
 
 
 export const $loadingBrands = createStore<boolean>(false)

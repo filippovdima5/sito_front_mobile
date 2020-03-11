@@ -6,7 +6,7 @@ import { sexIdToStr } from '../../helpers/lib'
 import { BrandItem } from '../../api/types'
 import { useStore, useEvent } from 'effector-react/ssr'
 
-import { $filterBrands, $fetchBrands, $setFilterString, $loadingBrands } from './store'
+import { $filteredBrands, $fetchBrands, $setFilterString, $loadingBrands } from './store'
 import { $setBrands } from '../products-page/features/filters/store'
 
 import { Input } from '../../commons/atoms/input'
@@ -40,13 +40,14 @@ function BrandsGroup({ brands, sexId }: {brands: Array<BrandItem>, sexId: 1 | 2}
 
 export function BrandsPage({ sexId }: Props) {
   const loader = useStore($loadingBrands)
-  const charGroups = useStore($filterBrands)
+  const charGroups = useStore($filteredBrands)
   
   const fetchBrands = useEvent($fetchBrands)
   const setFilterString = useEvent($setFilterString)
   
+  
   useEffectSafe(() => {
-    //fetchBrands({ sexId })
+    fetchBrands({ sexId })
   }, [sexId])
 
   
