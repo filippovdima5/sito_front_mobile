@@ -28,8 +28,7 @@ export function ProductsPage({ sexId }: Props) {
   const toggleSex = useEvent($toggleSex)
   const initRouteHistory = useEvent($initRouteHistory)
   
-
-
+  
   useEffectSafe(() => {
     if (sexId !== prevSexId.current ) toggleSex(sexId)
     prevSexId.current = sexId
@@ -40,7 +39,6 @@ export function ProductsPage({ sexId }: Props) {
     initRouteHistory(history)
   }, [])
   
-
   
   return (
     <>

@@ -1,16 +1,16 @@
-import {combine, createEffect, createEvent, createStore, guard, merge, restore } from 'lib/effector'
+import { combine, createEffect, createEvent, createStore, guard, merge, restore } from 'lib/effector'
 
+import { RouteComponentProps } from 'react-router'
+import { sample } from 'effector'
 import { $baseLink } from '../../stores/env'
 
-import {api} from '../../api'
+import { api } from '../../api'
 import config from '../../config'
 import { parseQueryProducts, parseSearch } from '../../ssr/lib'
 
-import {RouteComponentProps} from 'react-router'
-import {MainState, StatusPage, TypeSet} from './types'
-import {FilterReqParams, FiltersRequest, PaginateInfo, ProductsReqParams, ProductsRequest} from '../../api/types'
-import {sample} from 'effector'
-import {sexIdToStr, sexStrToId} from '../../helpers/lib'
+import { FilterReqParams, FiltersRequest, PaginateInfo, ProductsReqParams, ProductsRequest } from '../../api/types'
+import { sexIdToStr, sexStrToId } from '../../helpers/lib'
+import { MainState, StatusPage, TypeSet } from './types'
 
 
 
@@ -46,9 +46,7 @@ export const mainState = createStore<MainState>({
 
 
 export const $toggleSex = createEvent<1 | 2>()
-mainState.on($toggleSex, (_, sexId) => {
-  return {...mainState.defaultState, sexId}
-})
+mainState.on($toggleSex, (_, sexId) => ({ ...mainState.defaultState, sexId }))
 
 
 export const filtersState = mainState.map(({ sexId, categories, brands, sizes, colors, price_to, price_from, sale_to, sale_from, favorite }) => ({
@@ -198,13 +196,13 @@ guard({
 
 
 // region encode_url_state:
-mainState.updates.watch((payload) => {
+sample(routeHistory, mainState.updates, (history, payload) => {
   if (config.ssr || payload.sexId === null) return undefined
-  let newUrl = '/products/' + sexIdToStr(payload.sexId)
+  
+  const newUrl = '/products/' + sexIdToStr(payload.sexId)
   
   //todo типы!
   const encode = Object.entries(payload).filter(([_, value]) => (value !== null))
-  //as Array<[keyof AfterDecodeUrl, any]>
   
   let search: string
   if (encode.length === 0) search = ''
@@ -230,10 +228,16 @@ mainState.updates.watch((payload) => {
       })
       .join('&')
   }
-
+  
   const url = newUrl + search
-  routeHistory.getState()?.replace(url)
+  history?.replace(url)
 })
+
+// mainState.updates.watch((payload) => {
+//
+//
+//   routeHistory.getState()?.replace(url)
+// })
 // endregion encode_url_state
 
 
@@ -278,7 +282,7 @@ const storeForMount = $baseLink.map(state => {
 const targetUpdate = sample(storeForMount, $mountProductsPage)
 mainState.on(targetUpdate, (state, payload) => {
   if (payload === null) return undefined
-  return {...state, ...payload}
+  return { ...state, ...payload }
 })
 
 
@@ -287,7 +291,7 @@ mainState.on($initRouteHistory, (state, history) => {
   if (!pathname.includes('men')) return undefined
   const sexId = pathname.includes('women') ? 2 : 1
   const queryParams = parseSearch(search.replace('?', ''))
-  return { ...state, ...parseQueryProducts(queryParams), sexId}
+  return { ...state, ...parseQueryProducts(queryParams), sexId }
 })
 
 // endregion mountApp
