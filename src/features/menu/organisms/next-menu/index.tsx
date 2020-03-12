@@ -60,10 +60,9 @@ export function NextMenu({ sexId }: {sexId: 1 | 2 | 0}) {
             {
               Object.entries(categories[sexId][sub]).map(([key, value]) => (
                 <Link
-                  // todo: Нужно исправить случай, когда унисекс, то вести на /products? .... (без men or women)
-                  to={`/products/${sexId === 0 ? '' : sexIdToStr(sexId)}?categories=${key}`}
                   key={key}
                   className={styles.li}
+                  to={`/products/${sexId === 0 ? '' : sexIdToStr(sexId)}?categories=${key}`}
                   onClick={() => {
                     if (sexId !== 0){
                       setCategoriesEv({ value: Number(key), sexId })

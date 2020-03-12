@@ -1,11 +1,13 @@
-import { combine, createEffect, createEvent, createStore, guard, restore, sample } from 'lib/effector'
+import { combine, createEffect, createEvent, createStore, guard, restore } from 'lib/effector'
 import { api } from '../../api'
 import { MainSearchResultItem, MainSearchReqParams } from '../../api/types'
 import { $sexId } from '../../stores/user'
 
+
 export const setModSearch = createEvent()
 export const $modSearch  = createStore<boolean>(false)
 $modSearch.on(setModSearch, (state) => !state)
+
 
 export const setPhrase = createEvent<string>()
 export const $phrase = restore(setPhrase, '')
@@ -33,8 +35,8 @@ const paramsFetch = combine({ $sexId, $phrase }, ({ $sexId: sex_id, $phrase: phr
 })
 
 guard({
-  source: sample(paramsFetch, $phrase.updates),
-  filter: () => $modSearch.getState(),
+  source: paramsFetch,
+  filter: $modSearch.map(state => state),
   target: fetchSearch,
 })
 

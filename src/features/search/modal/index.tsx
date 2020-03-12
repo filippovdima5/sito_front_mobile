@@ -1,20 +1,20 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock'
 
 import { useStore, useEvent } from 'effector-react/ssr'
-import {$searchResult, $showResults, setModSearch} from '../store'
-import { $sexLine } from '../../../stores/user'
+import { $searchResult, $showResults, setModSearch } from '../store'
+import { $genderInfo } from '../../../stores/user'
 import { $setBrands } from '../../products-page/features/filters/store'
 
 import styles from './styles.module.scss'
 
 
 
-function SearchResult() {
+function  SearchResult() {
   const modalSearchRef = useRef<HTMLDivElement | null>(null)
   const searchResults = useStore($searchResult)
-  const sexLine = useStore($sexLine)
+  const genderInfo = useStore($genderInfo)
   
   const setModSearchEv = useEvent(setModSearch)
   const setBrands = useEvent($setBrands)
@@ -26,6 +26,13 @@ function SearchResult() {
       clearAllBodyScrollLocks()
     })
   }, [])
+  
+  
+  const sexLine = useMemo(() => {
+    if (genderInfo === null) return ''
+    if (genderInfo.sexLine === null) return ''
+    return genderInfo.sexLine
+  }, [genderInfo])
 
 
   return (
@@ -43,7 +50,7 @@ function SearchResult() {
                   setBrands(title)
                   setModSearchEv()
                 }}
-                to={`/products/${sexLine !== null ? sexLine : ''}?brands=${title}`}
+                to={`/products/${sexLine}?brands=${title}`}
                 className={styles.link}
               >
                 {title}

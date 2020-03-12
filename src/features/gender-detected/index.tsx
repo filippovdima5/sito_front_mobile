@@ -1,10 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import {Redirect} from 'react-router'
+import { useStore, useEvent } from 'effector-react/ssr'
 import { sexIdToStr } from '../../helpers/lib'
 
-import { useStore, useEvent } from 'effector-react/ssr'
-import { $genderInfo, $setGender } from '../../stores/user'
+import { $setGender } from '../../stores/user'
 import { $baseLink } from '../../stores/env'
 
 
@@ -23,36 +22,29 @@ type Props = {
 
 
 export function GenderDetected({ height }: Props) {
-  const genderInfo = useStore($genderInfo)
-  const { readyLink, linkParams: { baseRoute, search } } = useStore($baseLink)
+  const {  linkParams: { baseRoute, search } } = useStore($baseLink)
   const setGender = useEvent($setGender)
-
-
-  if (genderInfo !== null) {
-    setGender(genderInfo.sexId)
-    return <Redirect to={readyLink}/>
-  }
   
   
   return (
     <div className={styles.main}>
       <div className={styles.wrap}>
-      {data.map(({ index, title }) => (
-        <Link
-          onClick={() => setGender(index)}
-          to={`/${baseRoute}/${sexIdToStr(index)}${search ? `?${search}` : ''}`}
-          key={index}
-          className={styles.genderWrap}
-        >
-          <div style={{ paddingTop: `${height}%` }} className={styles.gender}>
-            <img src={`/cdn/mobile/gender-detected/${index}.jpg`} alt={title} className={styles.img}/>
+        {data.map(({ index, title }) => (
+          <Link
+            onClick={() => setGender(index)}
+            to={`/${baseRoute}/${sexIdToStr(index)}${search ? `?${search}` : ''}`}
+            key={index}
+            className={styles.genderWrap}
+          >
+            <div style={{ paddingTop: `${height}%` }} className={styles.gender}>
+              <img src={`/cdn/mobile/gender-detected/${index}.jpg`} alt={title} className={styles.img}/>
 
-            <div className={styles.titleWrap}>
-              <div className={styles.title}>{title}</div>
+              <div className={styles.titleWrap}>
+                <div className={styles.title}>{title}</div>
+              </div>
             </div>
-          </div>
-        </Link>
-      ))}
+          </Link>
+        ))}
       </div>
     </div>
   )

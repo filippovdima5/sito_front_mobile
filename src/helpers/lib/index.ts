@@ -26,6 +26,14 @@ export const findSexLine = ( url: string ): 1 | 2 | null => {
   return 1
 }
 
+export const preDetectedGender = ( propsGender: string | undefined, storeGender: 'men' | 'women' | undefined ): 'men' | 'women' | null => {
+  switch (propsGender) {
+    case 'men': return 'men'
+    case 'women': return 'women'
+    default: return storeGender ?? null
+  }
+}
+
 
 
 

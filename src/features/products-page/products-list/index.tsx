@@ -2,11 +2,12 @@ import React  from 'react'
 import { useStore } from 'effector-react/ssr'
 import { $productsStore, $loadingProducts, $statusPageProducts, $lengthSkeletonData } from '../store'
 import { ProductCard, SkeletonCard } from '../../../commons/organisms/product-card'
-import styles from './styles.module.scss'
 import config from '../../../config'
-import {StatusPage} from '../types'
-import { EmptyList } from './empty-list'
+import { StatusPage } from '../types'
 import { Loader } from '../../../commons/templates/loader'
+import { EmptyList } from './empty-list'
+import styles from './styles.module.scss'
+
 
 
 function SkeletonsList({ length }: { length: number }) {

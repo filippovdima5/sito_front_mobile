@@ -1,20 +1,20 @@
 import React  from 'react'
 import { RouteComponentProps } from 'react-router'
+import { useEvent, useStore } from 'effector-react/ssr'
 import { useBodyScrollTop } from '../helpers/hooks/use-body-scroll-top'
-import { sexStrToId } from '../helpers/lib'
-import {useEffectSafe} from '../helpers/hooks/use-effect-safe'
+import { preDetectedGender, sexStrToId } from '../helpers/lib'
+import { useEffectSafe } from '../helpers/hooks/use-effect-safe'
 
-import { useEvent } from 'effector-react/ssr'
-import { $setGender } from '../stores/user'
+import { $genderInfo, $setGender } from '../stores/user'
 import { $mountBrandsPage } from '../features/brands-page/store'
 
 import { GenderDetected } from '../features/gender-detected'
 import { BrandsPage } from '../features/brands-page'
-import {START} from '../lib/effector'
+import { START } from '../lib/effector'
 
 
 type RParams = {
-  sex: 'men' | 'women' | undefined
+  sex: 'men' | 'women' | undefined,
 }
 
 
@@ -30,10 +30,12 @@ function UseSex({ sexId }: { sexId: 1 | 2 }) {
 
 export function Brands({ match }: RouteComponentProps<RParams>) {
   useBodyScrollTop()
+  const genderInfo = useStore($genderInfo)
+  const gender = preDetectedGender(match.params.sex, genderInfo?.sexLine)
   
-  switch (match.params.sex) {
+  switch (gender) {
     case 'men':
-    case 'women': return <UseSex sexId={sexStrToId(match.params.sex)}/>
+    case 'women': return <UseSex sexId={sexStrToId(gender)}/>
     default: return <GenderDetected height={66}/>
   }
 }

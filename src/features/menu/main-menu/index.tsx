@@ -1,10 +1,10 @@
-import React from 'react'
+import React, {useMemo} from 'react'
 import { Link } from 'react-router-dom'
-import {sexIdToStr} from '../../../helpers/lib'
+import { useStore,  useEvent } from 'effector-react/ssr'
+import { sexIdToStr } from '../../../helpers/lib'
 import { categories, menuLinks } from '../constants'
 
-import { useStore,  useEvent } from 'effector-react/ssr'
-import { $sexId } from '../../../stores/user'
+import { $genderInfo } from '../../../stores/user'
 import { $showMainMenu, setShowMainMenu, setShowNextMenu } from '../store'
 
 import { MenuIcon } from '../atoms/menu-icon'
@@ -41,16 +41,21 @@ const infoList: Array<LinkItem> = [
 ]
 
 export function Menu() {
-  const sexId = useStore($sexId)
+  const genderInfo = useStore($genderInfo)
   const showMainMenu = useStore($showMainMenu)
   const setShowMainMenuEv = useEvent(setShowMainMenu)
   const setShowNextMenuEv = useEvent(setShowNextMenu)
   
+  const sexId = useMemo(() => {
+    if (genderInfo === null) return 0
+    if (genderInfo.sexId === null) return 0
+    return genderInfo.sexId
+  }, [genderInfo])
 
   return(
     <>
       <div className={`${styles.mainMenu} ${showMainMenu ? styles.mainMenuOpen : styles.mainMenuClose}`}>
-        <Header sexId={sexId === null ? 0 : sexId}/>
+        <Header sexId={sexId}/>
 
         <div className={styles.iconMenu}>
           <MenuIcon/>

@@ -16,10 +16,8 @@ export const template = (
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta name="format-detection" content="telephone=no">
-    
-       ${helmet.title.toString()}
-       ${helmet.meta.toString()}
-    
+    ${helmet.title.toString()}
+    ${helmet.meta.toString()}
     <link rel="shortcut icon" href="/icons/favicon.ico">
     <link rel="shortcut icon" href="/icons/favicon.png">
     <link rel="shortcut icon" href="/icons/favicon.jpg">
@@ -28,15 +26,13 @@ export const template = (
     <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
     <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#818890">
-  
-  ${styleTags}
+    ${styleTags}
 </head>
 
 <body>
     <noscript>Пожалуйста, включите JavaScript в настройках браузера для корректного отображения контента сайта.</noscript>
     <script>
         window.INITIAL_STATE = ${JSON.stringify(preloadedState)}
-       
     </script>
     ${scripts}
   

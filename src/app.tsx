@@ -30,6 +30,7 @@ function Main() {
   const fetchUser = useEvent($fetchUser)
   const setUrlInfo = useEvent($setUrlInfo)
   
+  
   useEffectSafe(() => {
     if (config.local) {
       fetchUser()
@@ -40,7 +41,6 @@ function Main() {
     setUrlInfo({ path: pathname, search })
   }, [ pathname, search ])
   
-
   
   return (
     <>

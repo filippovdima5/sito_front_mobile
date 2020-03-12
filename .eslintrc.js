@@ -1,25 +1,19 @@
 module.exports = {
-    plugins: ["react-hooks", "import", "jsx-a11y", "unicorn", "@typescript-eslint",  "react"],
-
+    plugins: ["react-hooks", "import", "jsx-a11y", "unicorn", "@typescript-eslint"],
+    parser: "@typescript-eslint/parser",
+    parserOptions: {
+        ecmaVersion: 2017
+    },
     env: {
-        "browser": true,
-        "es6": true
+        browser: true,
+        es6: true
     },
     extends: [
-        "eslint:recommended",
-        "plugin:react/recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:react/recommended",
         "plugin:import/typescript",
     ],
-
-    parserOptions: {
-        ecmaFeatures: { "jsx": true },
-        ecmaVersion: 2018,
-        sourceType: "module"
-    },
-
-    "rules": {
+    rules: {
         "@typescript-eslint/ban-ts-ignore": "off",
         "@typescript-eslint/camelcase": "off",
         "@typescript-eslint/explicit-function-return-type": "off",
@@ -68,6 +62,10 @@ module.exports = {
             }
         ],
         "consistent-return": "off",
+        "eol-last": [
+            "error",
+            "always"
+        ],
         "eqeqeq": [
             "error",
             "smart"
@@ -100,7 +98,8 @@ module.exports = {
                         "index"
                     ]
                 ],
-                "newlines-between": "ignore"
+                "newlines-between": "ignore",
+                "alphabetize": { "order": "ignore" }
             }
         ],
         "indent": "off",
@@ -167,5 +166,21 @@ module.exports = {
         "react/display-name": "off",
         "react/prop-types": "off",
         "semi": "off",
+        "unicorn/filename-case": [
+            "error",
+            {
+                "case": "kebabCase"
+            }
+        ]
+    },
+    settings: {
+        "import/parsers": {
+            "@typescript-eslint/parser": [".ts", ".tsx"]
+        },
+        "import/resolver": {
+            "typescript": {
+                "alwaysTryTypes": true // always try to resolve types under `<root>/@types` directory even it doesn't contain any source code, like `@types/unist`
+            }
+        }
     }
-};
+}

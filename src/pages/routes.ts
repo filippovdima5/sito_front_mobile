@@ -10,7 +10,6 @@ export const ROUTES = [
     path: '/',
     exact: true,
     component: Home,
-    
   },
   {
     path: '/home/:sex?',
