@@ -1,11 +1,9 @@
-
-
-interface Args {
+type Args = {
   html?: string,
   preloadedState?: any,
   styleTags?: string,
   scripts?: string,
-  helmet?: any
+  helmet?: any,
 }
 
 export const template = (
@@ -31,17 +29,10 @@ export const template = (
 
 <body>
     <noscript>Пожалуйста, включите JavaScript в настройках браузера для корректного отображения контента сайта.</noscript>
-    <script>
-        window.INITIAL_STATE = ${JSON.stringify(preloadedState)}
-    </script>
+    <script>window.INITIAL_STATE = ${JSON.stringify(preloadedState)}</script>
     ${scripts}
-  
-  <div id="root">${html}</div>
-  
-
+    <div id="root">${html}</div>
 </body>
 </html>
 `
 export default template
-
-// //.replace(/</g, '\\u003c')
