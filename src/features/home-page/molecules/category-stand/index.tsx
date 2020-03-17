@@ -1,11 +1,11 @@
 import React, { useMemo } from 'react'
 import { Link } from 'react-router-dom'
+import { useEvent } from 'effector-react/ssr'
 import { Title } from '../../atoms/title'
-import styles from './styles.module.scss'
 import { namesCategory } from '../../../../constants/category-keys'
 import { sexIdToStr } from '../../../../helpers/lib'
 import { setCategories } from '../../../products-page/features/filters/store'
-import { useEvent } from 'effector-react/ssr'
+import styles from './styles.module.scss'
 
 
 // todo: Потом что то подобное должно хранится у юзера
@@ -22,16 +22,10 @@ type Props = {
 }
 
 export function CategoryStand({ height, sexId, index }: Props) {
+  
   const setCategoriesEv = useEvent(setCategories)
-  
-  const categoryId = useMemo(() => {
-    return category[sexId][index]
-  }, [sexId, index])
-  
-  const title = useMemo(() => {
-    return namesCategory[sexId][categoryId]
-  }, [ categoryId, sexId ])
-  
+  const categoryId = useMemo(() => category[sexId][index], [sexId, index])
+  const title = useMemo(() => namesCategory[sexId][categoryId], [ categoryId, sexId ])
   
   return (
     <div>
