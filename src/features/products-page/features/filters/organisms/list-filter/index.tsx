@@ -1,8 +1,8 @@
 import React, { useState, useMemo, useEffect } from 'react'
+import { useEvent } from 'effector-react/ssr'
 import { FiltersItemNumber, FiltersItemString, FiltersRequest } from '../../../../../../api/types'
 import { namesCategory } from '../../../../../../constants/category-keys'
 
-import { useEvent } from 'effector-react/ssr'
 import { setFilter } from '../../../../store'
 import { setShowFilters, skipThisFilter } from '../../store'
 
@@ -12,6 +12,7 @@ import { BtnDone } from '../../atoms/btn-done'
 import { BtnHelp } from '../../atoms/btn-help'
 
 import styles from '../filter-layout.module.scss'
+
 
 type Props = {
   storeData: FiltersRequest['brands' | 'categories' | 'colors' | 'sizes'],
