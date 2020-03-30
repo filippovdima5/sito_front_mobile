@@ -3,7 +3,7 @@ import React from 'react'
 import { useEvent } from 'effector-react/ssr'
 import { skipAllFilters } from '../features/filters/store'
 
-import {Button} from '../../../commons/atoms/button'
+import { Button } from '../../../commons/atoms/button'
 import styles from '../../../media/css/info-page.module.scss'
 
 
@@ -24,9 +24,9 @@ export function EmptyList() {
         
           <div className={styles.buttons}>
         
-              <div onClick={() => skipAllFiltersEv()} className={styles.link}>
-                <Button title={'Сбросить все фильтры'}/>
-              </div>
+            <div onClick={() => skipAllFiltersEv()} className={styles.link}>
+              <Button onClick={() => skipAllFilters()} title={'Сбросить все фильтры'}/>
+            </div>
      
           </div>
         </div>
