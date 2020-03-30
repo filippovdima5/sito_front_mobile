@@ -4,7 +4,7 @@ import { setShowFilters } from '../../store'
 import styles from '../filter-layout.module.scss'
 import { Input } from '../../../../../../commons/atoms/input'
 import { setFilter } from '../../../../store'
-import {BtnDone} from '../../atoms/btn-done'
+import { BtnDone } from '../../atoms/btn-done'
 
 
 type Props = {
