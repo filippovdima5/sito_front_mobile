@@ -55,7 +55,7 @@ const setupKoa = () => {
     }
   })
   
-  app.listen(9000, () => {console.log('app started: 9000')})
+  app.listen({ port: 9000, host: '127.0.0.1' }, () => {console.log('app started: 9000')})
 }
 
 setupKoa()
