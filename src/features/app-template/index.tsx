@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { GlobalStyle } from '../../assets/styles/global-styled'
 import config from '../../config'
 import BackToTop from '../../commons/molecules/back-to-top'
+import { Header } from '../header'
 import { Pages } from '../../pages'
 
 
@@ -14,7 +15,7 @@ export function AppTemplate() {
         <S.Content>
           <div className='header-space'/>
           <S.Header>
-            HEADER
+            <Header/>
           </S.Header>
           
           <S.Container>
@@ -25,6 +26,8 @@ export function AppTemplate() {
             </S.Main>
             <S.Footer>
               footer
+              
+              <div className='footer-space'/>
             </S.Footer>
           </S.Container>
         </S.Content>
@@ -52,16 +55,17 @@ const S = {
      
       & .header-space {
         box-sizing: border-box;
-        height: 65px;
+        height: 50px;
       }
 `,
   
   Header: styled.header`
     position: fixed;
+    z-index: 99999;
     top: 0;
     left: 0;
     width: 100vw;
-    height: 65px;
+    height: 50px;
     box-sizing: border-box;
     background-color: #FFFFFF;
     box-shadow: 0 0 20px rgba(189, 189, 189, 0.25);
@@ -69,7 +73,7 @@ const S = {
   
   Container: styled.div`
     display: flex;
-    min-height: calc(100vh - 67px);
+    min-height: calc(100vh - 52px);
     flex-flow: column;
     box-sizing: border-box;
 `,
@@ -86,7 +90,7 @@ const S = {
         width: 100%;
         height: 100%;
         box-sizing: border-box;
-        border: 1px solid green;
+        //border: 1px solid green;
       }
 `,
   
@@ -96,5 +100,15 @@ const S = {
       box-sizing: border-box;
       height: 200px;
       background-color: black;
+      
+      & .footer-space {
+        background-color: black;
+        height: 200px;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        z-index: -1;
+      }
 `
 }

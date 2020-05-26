@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { useEvent } from 'effector-react/ssr'
-import { Title } from '../../atoms/title'
+// import { Title } from '../../atoms/title'
 import { namesCategory } from '../../../../constants/category-keys'
 import { sexIdToStr } from '../../../../helpers/lib'
 import { setCategories } from '../../../products-page/features/filters/store'
@@ -32,7 +32,7 @@ export function CategoryStand({ height, sexId, index }: Props) {
       <div style={{ paddingTop: `${height}%` }} className={styles.wrap}>
         <img className={styles.img} src={`/cdn/mobile/home/${sexId}/${categoryId}.jpg`} alt={title}/>
         <div className={styles.title}>
-          <Title title={title}/>
+          {/*<Title title={title}/>*/}
         </div>
         <Link
           className={styles.link}
