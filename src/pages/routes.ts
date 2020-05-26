@@ -1,34 +1,35 @@
+import { GenderDetected } from '../features/gender-detected'
 import { Home } from './home'
+import { NotFound } from './not-found'
 import { Products } from './products'
 import { Brands } from './brands'
-import { Likes } from './likes'
-import { NotFound } from './not-found'
+
+
 
 
 export const ROUTES = [
-  {
-    path: '/',
-    exact: true,
-    component: Home,
-  },
-  {
-    path: '/home/:sex?',
-    component: Home,
-  },
-  {
-    path: '/products/:sex?',
-    component: Products,
-  },
-  {
-    path: '/brands/:sex?',
-    component: Brands,
-  },
-  {
-    path: '/likes',
-    component: Likes,
-  },
-  {
-    path: '*',
-    component: NotFound,
-  },
+  { path: '/', exact: true, component: GenderDetected },
+  
+  { path: '/men/home', exact: true, component: Home },
+  { path: '/women/home', exact: true, component: Home },
+  
+  { path: '/men/products', exact: true, component: Products },
+  { path: '/women/products', exact: true, component: Products },
+  
+  { path: '/men/brands', exact: true, component: Brands },
+  { path: '/women/brands', exact: true, component: Brands },
+  
+
+  
+  { path: '*', exact: true, component: NotFound },
 ]
+
+
+//   // { path: '/about', exact: true, component: AboutAs },
+//   // { path: '/men/about', exact: true, component: AboutAs },
+//   // { path: '/women/about', exact: true, component: AboutAs },
+//   //
+//   //
+//   // { path: '/private-office', exact: true, component: PrivateOffice },
+//   // { path: '/men/private-office', exact: true, component: PrivateOffice },
+//   // { path: '/women/private-office', exact: true, component: PrivateOffice },

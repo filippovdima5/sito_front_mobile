@@ -16,27 +16,20 @@ const data = [
 ] as const
 
 
-type Props = {
-  height: number,
-}
 
 
-export function GenderDetected({ height }: Props) {
-  const {  linkParams: { baseRoute, search } } = useStore($baseLink)
-  const setGender = useEvent($setGender)
-  
+export function GenderDetected() {
   
   return (
     <div className={styles.main}>
       <div className={styles.wrap}>
         {data.map(({ index, title }) => (
           <Link
-            onClick={() => setGender(index)}
-            to={`/${baseRoute}/${sexIdToStr(index)}${search ? `?${search}` : ''}`}
+            to={`/`}
             key={index}
             className={styles.genderWrap}
           >
-            <div style={{ paddingTop: `${height}%` }} className={styles.gender}>
+            <div style={{ paddingTop: '66%' }} className={styles.gender}>
               <img src={`/cdn/mobile/gender-detected/${index}.jpg`} alt={title} className={styles.img}/>
 
               <div className={styles.titleWrap}>
