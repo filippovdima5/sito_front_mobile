@@ -1,7 +1,7 @@
 import React  from 'react'
 import {Link} from 'react-router-dom'
-import { useEffectSafe } from '../../helpers/hooks/use-effect-safe'
-import { sexIdToStr } from '../../helpers/lib'
+import { useEffectSafe } from '../../hooks/use-effect-safe'
+import { sexIdToStr } from '../../lib'
 
 import { BrandItem } from '../../api/types'
 import { useStore, useEvent } from 'effector-react/ssr'

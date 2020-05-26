@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import {sexIdToStr} from '../../../../helpers/lib'
+import {sexIdToStr} from '../../../../lib'
 
 import { useStore, useEvent } from 'effector-react/ssr'
 import { createEvent, createStore } from 'lib/effector'

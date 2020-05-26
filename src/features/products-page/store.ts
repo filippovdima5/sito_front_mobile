@@ -9,7 +9,7 @@ import config from '../../config'
 import { parseQueryProducts, parseSearch } from '../../ssr/lib'
 
 import { FilterReqParams, FiltersRequest, PaginateInfo, ProductsReqParams, ProductsRequest } from '../../api/types'
-import { sexIdToStr, sexStrToId } from '../../helpers/lib'
+import { sexIdToStr, sexStrToId } from '../../lib'
 import { MainState, StatusPage, TypeSet } from './types'
 
 

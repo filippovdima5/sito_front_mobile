@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react'
-import { useEffectSafe } from '../../../helpers/hooks/use-effect-safe'
+import { useEffectSafe } from '../../../hooks/use-effect-safe'
 
 import { useStore, useEvent } from 'effector-react/ssr'
 import { setPhrase, $modSearch } from '../store'

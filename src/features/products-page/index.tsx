@@ -1,5 +1,5 @@
 import React, {  useRef } from 'react'
-import {useEffectSafe} from '../../helpers/hooks/use-effect-safe'
+import {useEffectSafe} from '../../hooks/use-effect-safe'
 import { useHistory } from 'react-router'
 
 import { useStore, useEvent } from 'effector-react/ssr'

@@ -99,10 +99,10 @@ const S = {
       width: 100%;
       box-sizing: border-box;
       height: 200px;
-      background-color: black;
+      background-color: #383838;
       
       & .footer-space {
-        background-color: black;
+        background-color: #383838;
         height: 200px;
         position: fixed;
         bottom: 0;

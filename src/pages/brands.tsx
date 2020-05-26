@@ -1,5 +1,5 @@
 import React  from 'react'
-import { useBodyScrollTop } from '../helpers/hooks/use-body-scroll-top'
+import { useBodyScrollTop } from '../hooks/use-body-scroll-top'
 import { $mountBrandsPage } from '../features/brands-page/store'
 import { BrandsPage } from '../features/brands-page'
 import { START } from '../lib/effector'

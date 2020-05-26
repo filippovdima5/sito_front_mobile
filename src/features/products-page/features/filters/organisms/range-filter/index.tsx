@@ -1,5 +1,5 @@
 import React, { useCallback,  useState }  from 'react'
-import { useEffectSafe } from '../../../../../../helpers/hooks/use-effect-safe'
+import { useEffectSafe } from '../../../../../../hooks/use-effect-safe'
 import { setShowFilters } from '../../store'
 import styles from '../filter-layout.module.scss'
 import { Input } from '../../../../../../commons/atoms/input'

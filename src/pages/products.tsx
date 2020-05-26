@@ -1,6 +1,6 @@
 import React  from 'react'
 import { START } from 'lib/effector'
-import { useBodyScrollTop } from '../helpers/hooks/use-body-scroll-top'
+import { useBodyScrollTop } from '../hooks/use-body-scroll-top'
 import { ProductsPage } from '../features/products-page'
 
 

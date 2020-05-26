@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { SexId } from '../../../types'
-import {sexIdToStr} from '../../../helpers/lib'
+import {sexIdToStr} from '../../../lib'
 
 
 const banner = {

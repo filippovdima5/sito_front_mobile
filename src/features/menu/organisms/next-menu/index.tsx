@@ -7,7 +7,7 @@ import { setCategories } from '../../../products-page/features/filters/store'
 import { setSignalWithoutSexId } from '../../molecules/header'
 
 import { subId, categories, subcategories } from '../../constants'
-import { sexIdToStr } from '../../../../helpers/lib'
+import { sexIdToStr } from '../../../../lib'
 
 import { Arrow } from '../../../../media/img/svg/icons'
 import styles from './styles.module.scss'

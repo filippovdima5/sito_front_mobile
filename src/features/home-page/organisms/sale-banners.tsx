@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { SexId } from '../../../types'
 import { namesCategory } from '../../../constants/category-keys'
-import { sexIdToStr } from '../../../helpers/lib'
+import { sexIdToStr } from '../../../lib'
 
 
 const saleBanners = [

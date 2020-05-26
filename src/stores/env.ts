@@ -1,6 +1,6 @@
 import { createStore, createEvent,  combine, createEffect, guard } from 'lib/effector'
 import { $sexLine } from './user'
-import { sexStrToId } from '../helpers/lib'
+import { sexStrToId } from '../lib'
 import { SeoReqParams, SeoRequest } from '../api/types'
 import { api } from '../api'
 
