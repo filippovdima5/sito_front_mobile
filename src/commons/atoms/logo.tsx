@@ -32,10 +32,10 @@ const S = {
   Text: styled.div<{ color?: string }>`
     height: 100%;
     font-weight: 700;
-    line-height: 60px;
+    line-height: 50px;
     text-transform: uppercase;
     letter-spacing: 4.5px;
-    font-size: 45px;
+    font-size: 36px;
     color: ${({ color }) => color ?? '#060a0f'}
 `
 }

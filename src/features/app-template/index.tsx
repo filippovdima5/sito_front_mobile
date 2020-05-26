@@ -5,6 +5,7 @@ import config from '../../config'
 import BackToTop from '../../commons/molecules/back-to-top'
 import { Header } from '../header'
 import { Pages } from '../../pages'
+import { Footer } from '../footer'
 
 
 export function AppTemplate() {
@@ -25,8 +26,7 @@ export function AppTemplate() {
               </div>
             </S.Main>
             <S.Footer>
-              footer
-              
+              <Footer/>
               <div className='footer-space'/>
             </S.Footer>
           </S.Container>
@@ -98,12 +98,11 @@ const S = {
       margin-top: auto;
       width: 100%;
       box-sizing: border-box;
-      height: 200px;
       background-color: #383838;
       
       & .footer-space {
         background-color: #383838;
-        height: 200px;
+        height: 300px;
         position: fixed;
         bottom: 0;
         left: 0;
