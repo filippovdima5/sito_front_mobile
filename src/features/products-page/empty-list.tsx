@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from '../../../media/css/info-page.module.scss'
+import styles from '../../media/css/info-page.module.scss'
 
 
 export function EmptyList() {

@@ -76,6 +76,7 @@ const S = {
     min-height: calc(100vh - 52px);
     flex-flow: column;
     box-sizing: border-box;
+   
 `,
   
   Main: styled.main`
@@ -86,11 +87,12 @@ const S = {
       display: flex;
       box-sizing: border-box;
       
+  
+      
       & .content-box {
         width: 100%;
         height: 100%;
         box-sizing: border-box;
-        //border: 1px solid green;
       }
 `,
   

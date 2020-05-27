@@ -1,8 +1,8 @@
 import { createStore, createEvent,  combine, createEffect, guard } from 'lib/effector'
-import { $sexLine } from './user'
 import { sexStrToId } from '../lib'
 import { SeoReqParams, SeoRequest } from '../api/v1/types'
 import { api } from '../api/v1'
+import { $sexLine } from './user'
 
 
 type BaseRoute = 'home' | 'products' | 'brands'
@@ -27,18 +27,18 @@ $baseRoute.on($setUrlInfo, (_, { path }) => {
 
 
 export const $baseLink = combine({ $search, $baseRoute, $sexLine }, ({ $search, $baseRoute, $sexLine }) => {
- const path = `/${$baseRoute}`;
- const search =  Boolean($search) ? `?${$search}` : '';
- const sex = Boolean($sexLine) ? `/${$sexLine}` : '';
+  const path = `/${$baseRoute}`
+  const search =  Boolean($search) ? `?${$search}` : ''
+  const sex = Boolean($sexLine) ? `/${$sexLine}` : ''
  
- return ({
-   readyLink: path + sex + search,
-   linkParams: {
-     baseRoute: $baseRoute,
-     sexLine: $sexLine,
-     search: $search
-   }
- })
+  return ({
+    readyLink: path + sex + search,
+    linkParams: {
+      baseRoute: $baseRoute,
+      sexLine: $sexLine,
+      search: $search
+    }
+  })
 })
 
 
@@ -55,7 +55,7 @@ $seo.on(fetchSeo.done, (state, { result: { data } }) => data)
 const seoParams =  $baseLink.map(clock => {
   const sexId = clock.linkParams.sexLine !== null ? sexStrToId(clock.linkParams.sexLine) : null
   const path = clock.linkParams.baseRoute as string
-  const search = clock.linkParams.search
+  const { search } = clock.linkParams
   
   return ({ sexId, path, search })
 })
