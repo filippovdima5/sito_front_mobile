@@ -1,9 +1,7 @@
 import React, { useCallback,  useState }  from 'react'
 import { useEffectSafe } from '../../../../hooks/use-effect-safe'
-import { setShowFilters } from '../../store'
 import styles from '../filter-layout.module.scss'
 import { Input } from '../../../../commons/atoms/input'
-import { setFilter } from '../../../products-page/store'
 import { BtnDone } from '../../atoms/btn-done'
 
 
@@ -54,9 +52,9 @@ export function RangeFilter({ storeData, stateData, filter_from, filter_to }: Pr
     if (min === null || min <= storeData[0]) {
       setMin(storeData[0])
       setIsHolderMin(true)
-      setFilter({ key: filter_from, value: null })
+
     } else {
-      setFilter({ key: filter_from, value: min })
+
     }
   }, [min, filter_from, storeData])
 
@@ -64,9 +62,9 @@ export function RangeFilter({ storeData, stateData, filter_from, filter_to }: Pr
     if (max === null || max >= storeData[1]) {
       setMax(storeData[1])
       setIsHolderMax(true)
-      setFilter({ key: filter_to, value: null })
+
     } else {
-      setFilter({ key: filter_to, value: max })
+
     }
   }, [max, filter_to, storeData])
 
@@ -112,7 +110,7 @@ export function RangeFilter({ storeData, stateData, filter_from, filter_to }: Pr
 
 
       <div className={styles.space}/>
-      <BtnDone onClick={() => setShowFilters(false)} title={'Готово'}/>
+      {/*<BtnDone onClick={() => setShowFilters(false)} title={'Готово'}/>*/}
     </>
   )
 }

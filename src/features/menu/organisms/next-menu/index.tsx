@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 
 import { useStore, useEvent } from 'effector-react/ssr'
 import { $showNextMenu, setShowNextMenu, $showMainMenu, setShowMainMenu } from '../../store'
-import { setCategories } from '../../../filters/store'
 import { setSignalWithoutSexId } from '../../molecules/header'
 
 import { subId, categories, subcategories } from '../../constants'
@@ -18,7 +17,6 @@ export function NextMenu({ sexId }: {sexId: 1 | 2 | 0}) {
   const showMainMenu = useStore($showMainMenu)
   const setShowMainMenuEv = useEvent(setShowMainMenu)
   const setShowNextMenuEv = useEvent(setShowNextMenu)
-  const setCategoriesEv = useEvent(setCategories)
   const setSignalWithoutSexIdEv = useEvent(setSignalWithoutSexId)
 
   const [ title, setTitle ] = useState(showNextMenu === null ? '' : subcategories[showNextMenu])
@@ -65,7 +63,6 @@ export function NextMenu({ sexId }: {sexId: 1 | 2 | 0}) {
                   to={`/products/${sexId === 0 ? '' : sexIdToStr(sexId)}?categories=${key}`}
                   onClick={() => {
                     if (sexId !== 0){
-                      setCategoriesEv({ value: Number(key), sexId })
                       setShowMainMenuEv()
                     } else {
                       setSignalWithoutSexIdEv()
@@ -83,7 +80,6 @@ export function NextMenu({ sexId }: {sexId: 1 | 2 | 0}) {
               className={styles.li}
               onClick={() => {
                 if (sexId !== 0){
-                  setCategoriesEv({ value: Number(subId[sub]), sexId })
                   setShowMainMenuEv()
                 } else {
                   setSignalWithoutSexIdEv()

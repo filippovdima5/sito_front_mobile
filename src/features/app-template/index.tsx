@@ -64,7 +64,7 @@ const S = {
     z-index: 99999;
     top: 0;
     left: 0;
-    width: 100vw;
+    width: 100%;
     height: 50px;
     box-sizing: border-box;
     background-color: #FFFFFF;
@@ -102,12 +102,12 @@ const S = {
       
       & .footer-space {
         background-color: #383838;
-        height: 300px;
+        height: 50vh;
         position: fixed;
         bottom: 0;
-        left: 0;
-        width: 100vw;
+        width: 100%;
         z-index: -1;
+        box-sizing: border-box;
       }
 `
 }

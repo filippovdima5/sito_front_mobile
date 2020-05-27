@@ -1,10 +1,8 @@
 import React  from 'react'
-import { useStore } from 'effector-react/ssr'
-import { $productsStore, $loadingProducts, $statusPageProducts, $lengthSkeletonData } from '../store'
+import { StatusLoad } from '../../../types'
 import { ProductCard, SkeletonCard } from '../../../commons/organisms/product-card'
 import config from '../../../config'
-import { StatusPage } from '../types'
-import { Loader } from '../../../commons/templates/loader'
+import { ShortProduct } from '../../../api/v1/types'
 import { EmptyList } from './empty-list'
 import styles from './styles.module.scss'
 
@@ -15,7 +13,7 @@ function SkeletonsList({ length }: { length: number }) {
 }
 
 function ProductsList() {
-  const data = useStore($productsStore)
+  const data = [] as Array<ShortProduct>
   return (
     <>
       {data.map(item => (
@@ -25,7 +23,7 @@ function ProductsList() {
   )
 }
 
-function Controller({ status, lengthSkeleton, loading }: { status: StatusPage, loading: boolean, lengthSkeleton: number }) {
+function Controller({ status, lengthSkeleton, loading }: { status: StatusLoad, loading: boolean, lengthSkeleton: number }) {
   switch (status) {
     case 'EMPTY': return (<EmptyList/>)
     case 'FAIL': return (<div>ОШИБКА</div>)
@@ -39,14 +37,11 @@ function Controller({ status, lengthSkeleton, loading }: { status: StatusPage, l
 }
 
 function List() {
-  const status = useStore($statusPageProducts)
-  const loading = useStore($loadingProducts)
-  const lengthSkeleton = useStore($lengthSkeletonData)
   
   return (
     <div className={styles.wrap}>
-      {loading && <Loader/>}
-      <Controller status={status} lengthSkeleton={lengthSkeleton} loading={loading}/>
+      {/*{loading && <Loader/>}*/}
+      {/*<Controller status={status} lengthSkeleton={lengthSkeleton} loading={loading}/>*/}
     </div>
   )
 }

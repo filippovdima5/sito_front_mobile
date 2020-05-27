@@ -1,4 +1,12 @@
 import { SexId } from '../types'
+import { sizes } from '../constants'
+
+
+// region exports
+export { getMetaTagsLink } from './get-meta-tags-link'
+export { parseUrl } from './parse-url'
+export { encodeProductsUrl } from './encode-url'
+// endregion
 
 
 export const sexIdToStr = function sexIdToStr (sexId: 1 | 2 | 0): 'men' | 'women' {
@@ -30,5 +38,17 @@ export const findSexIdInPathNotStrict = (pathname: string): SexId | undefined =>
 }
 
 
+export const sortByChar = (char: string): number => {
+  if (!isNaN(Number(char.charAt(0)))) return 2e4 + Number(char.charAt(0))
+  return char.toLowerCase().charCodeAt(0)
+}
+
+export const sortBrands = (arr: Array<string>): Array<string> => arr.sort((a, b) => sortByChar(a) - sortByChar(b))
 
 
+const getIndex = (str: string): number => {
+  const index = sizes.findIndex(size => size === str)
+  if (index === -1) return sortByChar(str)
+  return index
+}
+export const sortSizes = (arr: Array<string>): Array<string> => arr.sort((a, b) => getIndex(a) - getIndex(b))

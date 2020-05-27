@@ -1,40 +1,28 @@
 import React, { useMemo } from 'react'
-
 import { useStore, useEvent } from 'effector-react/ssr'
-import { $productsInfoStore, productsState, setProductsState } from '../store'
-
 import styles from './styles.module.scss'
 
 
 
 export function LoadMore() {
-  const { total } = useStore($productsInfoStore)
-  const { page } = useStore(productsState)
+
   
-  const setProductsStateEv = useEvent(setProductsState)
-  
-  const viewedProducts = useMemo(() => 20 * (page ? page : 1), [page])
+
+  //     `Вы просмотрели ${viewedProducts} товаров из ${total}` :
+  //             `Вы просмотрели все ${total} товаров по данным параметрам`
+
   
   return(
     <div className={styles.loadMore}>
       <span className={styles.text}>
-        {
-          //TODO Написать хелпер, для изменения окончаний в славах (1-товар, 2 - товара, 5 - товаров)
-          viewedProducts < total ?
-            `Вы просмотрели ${viewedProducts} товаров из ${total}` :
-            `Вы просмотрели все ${total} товаров по данным параметрам`
-        }
+     d
       </span>
 
 
-      {
-        viewedProducts < total &&
-          <button
-            onClick = {() => {setProductsStateEv({ key: 'page', value: page !== null ? page + 1 : 2 })}}
-            className={styles.button}>
-            Показать ещё
-          </button>
-      }
+      {/*<button*/}
+      {/*  onClick = {() => {setProductsStateEv({ key: 'page', value: page !== null ? page + 1 : 2 })}}*/}
+      {/*  className={styles.button}>*/}
+      {/*  Показать ещё*/}
     </div>
   )
 }

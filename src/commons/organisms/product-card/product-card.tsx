@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { ShortProduct } from '../../../api/types'
+import { ShortProduct } from '../../../api/v1/types'
 import { ProductImage } from './product-image/ProductImage'
 import styles from './styles.module.scss'
 import { Like } from '../../../features/products-page/features/like'

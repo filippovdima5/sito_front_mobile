@@ -1,8 +1,8 @@
 import { createStore, createEvent,  combine, createEffect, guard } from 'lib/effector'
 import { $sexLine } from './user'
 import { sexStrToId } from '../lib'
-import { SeoReqParams, SeoRequest } from '../api/types'
-import { api } from '../api'
+import { SeoReqParams, SeoRequest } from '../api/v1/types'
+import { api } from '../api/v1'
 
 
 type BaseRoute = 'home' | 'products' | 'brands'

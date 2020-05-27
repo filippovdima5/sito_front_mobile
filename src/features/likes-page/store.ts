@@ -1,6 +1,6 @@
 import { createEffect, createEvent, createStore, merge, sample, guard } from 'lib/effector'
-import { ShortProduct } from '../../api/types'
-import { api } from '../../api'
+import { ShortProduct } from '../../api/v1/types'
+import { api } from '../../api/v1'
 
 import { $likes } from '../../stores/user'
 

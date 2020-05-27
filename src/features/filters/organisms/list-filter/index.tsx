@@ -1,10 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react'
-import { useEvent } from 'effector-react/ssr'
-import { FiltersItemNumber, FiltersItemString, FiltersRequest } from '../../../../api/types'
+import { FiltersItemNumber, FiltersItemString, FiltersRequest } from '../../../../api/v1/types'
 import { namesCategory } from '../../../../constants/category-keys'
 
-import { setFilter } from '../../../products-page/store'
-import { setShowFilters, skipThisFilter } from '../../store'
 
 import { CheckRow } from '../../molecules/check-row'
 import { Input } from '../../../../commons/atoms/input'
@@ -35,9 +32,7 @@ export function ListFilter({ sexId, stateData, storeData, filter }: Props) {
   const [showAll, setShowAll] = useState<boolean>(storeData.length < maxItemsView)
   const [ searchPhrase, setSearchPhrase ] = useState<string | null>(null)
   
-  const setFilterEv = useEvent(setFilter)
-  const setShowFiltersEv = useEvent(setShowFilters)
-  const skipThisFilterEv = useEvent(skipThisFilter)
+
 
   useEffect(() => {
     if (searchPhrase !== null) setShowAll(true)
@@ -92,20 +87,16 @@ export function ListFilter({ sexId, stateData, storeData, filter }: Props) {
               title={titleVew(value, sexId)}
               check={stateData === null ? false : stateData.includes(value)}
               disabled={!available}
-              event={() => (setFilterEv({ key: filter, value }))}/>
+              event={() => {}}
+            />
           </div>
         ))}
       </div>
 
 
       <BtnHelp title={'Показать ещё'} onClick={() => (setShowAll(true))} visible={!showAll}/>
-
-      <BtnHelp title={'Сбросить'} onClick={() => skipThisFilterEv({ key: filter })}/>
-
+      
       <div className={styles.space}/>
-
-      <BtnDone onClick={() => setShowFiltersEv(false)} title={'Готово'}/>
-
     </>
   )
 }

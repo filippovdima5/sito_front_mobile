@@ -1,13 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { filtersMap, ViewFilter } from '../../types'
-
 import { useStore, useEvent } from 'effector-react/ssr'
-import { $countHelpsHint, setContHelpHint } from './store'
-import { setShowFilter } from '../../store'
-import { setFilter } from '../../../products-page/store'
-
+import { filtersMap, ViewFilter } from '../../types'
 import { namesCategory } from '../../../../constants/category-keys'
 import rightArrowSVG from '../../../../media/img/svg/rightArrow.svg'
+import { $countHelpsHint, setContHelpHint } from './store'
 import styles from './styles.module.scss'
 
 
@@ -16,8 +12,7 @@ export { UnuseFilterRow } from './unuse-filter-row'
 
 export function FilterRow(props: ViewFilter) {
   const setContHelpHintEv = useEvent(setContHelpHint)
-  const setShowFilterEv = useEvent(setShowFilter)
-  const setFilterEv = useEvent(setFilter)
+
   
   
   const activeFiltersString = useMemo(() => {
@@ -103,30 +98,30 @@ export function FilterRow(props: ViewFilter) {
   }, [handleTouchStart, handleTouchMove, handleTouchEnd])
 
 
-  const skipFilter = useCallback(() => {
-    switch (props.title) {
-      case 'prices': {
-        setFilterEv({ key: 'price_from', value: null })
-        setFilterEv({ key: 'price_to', value: null })
-        break
-      }
-      case 'sales': {
-        setFilterEv({ key: 'sale_from', value: null })
-        setFilterEv({ key: 'sale_to', value: null })
-        break
-      }
-      default: setFilterEv({ key: props.title, value: null })
-    }
-  }, [props.title, setFilterEv])
+  // const skipFilter = useCallback(() => {
+  //   switch (props.title) {
+  //     case 'prices': {
+  //       setFilterEv({ key: 'price_from', value: null })
+  //       setFilterEv({ key: 'price_to', value: null })
+  //       break
+  //     }
+  //     case 'sales': {
+  //       setFilterEv({ key: 'sale_from', value: null })
+  //       setFilterEv({ key: 'sale_to', value: null })
+  //       break
+  //     }
+  //     default: setFilterEv({ key: props.title, value: null })
+  //   }
+  // }, [props.title, setFilterEv])
 
 
 
-  useEffect(() => {
-    if (skipLength === rowRef.current?.clientWidth ){
-      const timer = setTimeout(skipFilter, 150)
-      return () => clearTimeout(timer)
-    }
-  }, [ props.title, skipLength, skipFilter ])
+  // useEffect(() => {
+  //   if (skipLength === rowRef.current?.clientWidth ){
+  //     const timer = setTimeout(skipFilter, 150)
+  //     return () => clearTimeout(timer)
+  //   }
+  // }, [ props.title, skipLength, skipFilter ])
 
 
   return (
@@ -135,7 +130,7 @@ export function FilterRow(props: ViewFilter) {
       className={`${styles.filterRow} ${skipStyle}`}
     >
       <div
-        onClick={() => setShowFilterEv(props.title)}
+        // onClick={() => setShowFilterEv(props.title)}
         ref = { skipRowRef }
         style={{ left: `-${skipLength}px` }}
         className={`${styles.item_wrap} ${skipAnimate && styles.skipAnimate}`}
@@ -157,7 +152,7 @@ export function FilterRow(props: ViewFilter) {
       </div>
 
       <button
-        onClick={() => skipFilter()}
+        // onClick={() => skipFilter()}
         style={{ width: `${skipLength}px` }}
         className={`${styles.skip_one} ${skipAnimate && styles.skipAnimateButton}`}
       >

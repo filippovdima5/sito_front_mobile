@@ -1,10 +1,8 @@
 import React from 'react'
-import { useEffectSafe } from '../../hooks/use-effect-safe'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
 import { useStore, useEvent } from 'effector-react/ssr'
-import { $filtersStore  } from '../products-page/store'
-import { $showFilter, setShowFilter, $filtersViewRecord, $showFilters } from './store'
+import { useEffectSafe } from '../../hooks/use-effect-safe'
 
 import { useTransitionNames } from '../../hooks/use-transition-names'
 import { filtersMap } from './types'
@@ -19,45 +17,40 @@ import styles from './styles.module.scss'
 
 
 function FilterBody({ name, sexId }: {name: keyof typeof filtersMap, sexId: 1 | 2 }) {
-  const filtersSate = useStore($filtersViewRecord)
-  const filterStore = useStore($filtersStore)
-
-  
-  
-  if (filterStore === null) return null
-
-  switch (name) {
-    case 'brands':
-    case 'categories':
-    case 'colors':
-    case 'sizes': return (
-      <ListFilter storeData = { filterStore[name] }  stateData = { filtersSate[name] } filter = { name } sexId = {sexId} />
-    )
-    case 'prices': return (
-      <RangeFilter
-        storeData={[filterStore['price_from'], filterStore['price_to']]}
-        stateData={filtersSate[name]}
-        filter_to={'price_to'}
-        filter_from={'price_from'}/>
-    )
-    case 'sales': return (
-      <RangeFilter
-        storeData={[filterStore['sale_from'], filterStore['sale_to']]}
-        stateData={filtersSate[name]}
-        filter_to={'sale_to'}
-        filter_from={'sale_from'}/>
-    )
-    default: return null
-  }
+  return <div>filters</div>
+  //
+  // switch (name) {
+  //   case 'brands':
+  //   case 'categories':
+  //   case 'colors':
+  //   case 'sizes': return (
+  //     <ListFilter storeData = { filterStore[name] }  stateData = { filtersSate[name] } filter = { name } sexId = {sexId} />
+  //   )
+  //   case 'prices': return (
+  //     <RangeFilter
+  //       storeData={[filterStore['price_from'], filterStore['price_to']]}
+  //       stateData={filtersSate[name]}
+  //       filter_to={'price_to'}
+  //       filter_from={'price_from'}/>
+  //   )
+  //   case 'sales': return (
+  //     <RangeFilter
+  //       storeData={[filterStore['sale_from'], filterStore['sale_to']]}
+  //       stateData={filtersSate[name]}
+  //       filter_to={'sale_to'}
+  //       filter_from={'sale_from'}/>
+  //   )
+  //   default: return null
+  // }
 }
 
 
 function Filter({ sexId, name }: { sexId: 1 | 2, name: keyof typeof filtersMap}) {
-  const setShowFilterEv = useEvent(setShowFilter)
+  const setShowFilterEv = false
   
   return (
     <div className={`${styles.wrap} ${styles.filter}`}>
-      <Header title={filtersMap[name]} event={() => setShowFilterEv(null)} type={'back'}/>
+      {/*<Header title={filtersMap[name]} event={() => setShowFilterEv(null)} type={'back'}/>*/}
       <div style={{ background: 'white' }} className={styles.body}>
         <FilterBody sexId={sexId} name={name}/>
       </div>
@@ -67,18 +60,18 @@ function Filter({ sexId, name }: { sexId: 1 | 2, name: keyof typeof filtersMap})
 
 
 function ShowFilter({ sexId }: { sexId: 1 | 2 }) {
-  const showFilter = useStore($showFilter)
+
+  const showFilter = false
   const classNames = useTransitionNames(animateStyles)
-  const showFilters = useStore($showFilters)
-  const setShowFilterEv = useEvent(setShowFilter)
 
 
-  useEffectSafe(() => {
-    let timer: any
-    if (!showFilters) timer = setTimeout(() => setShowFilterEv(null), 300)
-    if (showFilters) clearTimeout(timer)
 
-  }, [showFilters])
+  // useEffectSafe(() => {
+  //   let timer: any
+  //   if (!showFilters) timer = setTimeout(() => setShowFilterEv(null), 300)
+  //   if (showFilters) clearTimeout(timer)
+  //
+  // }, [showFilters])
 
 
   return (
@@ -89,7 +82,7 @@ function ShowFilter({ sexId }: { sexId: 1 | 2 }) {
             timeout={300}
             classNames={classNames}
           >
-            <Filter name = {showFilter} sexId={sexId}/>
+            {/*<Filter name = {showFilter} sexId={sexId}/>*/}
           </CSSTransition>
       }
     </TransitionGroup>

@@ -4,6 +4,9 @@ import config from '../config'
 
 export const useBodyScrollTop = (): void => {
   useEffect(() => {
-    if (!config.ssr) document.body.scrollTo(0, 0)
+    if (!config.ssr) {
+      window.scrollTo(0, 0)
+      document.body.scrollTo(0, 0)
+    }
   }, [])
 }

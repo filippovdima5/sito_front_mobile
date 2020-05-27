@@ -1,16 +1,10 @@
 import React  from 'react'
-import {Link} from 'react-router-dom'
-import { useEffectSafe } from '../../hooks/use-effect-safe'
-import { sexIdToStr } from '../../lib'
-
-import { BrandItem } from '../../api/types'
 import { useStore, useEvent } from 'effector-react/ssr'
-
-import { $filteredBrands, $fetchBrands, $setFilterString, $loadingBrands } from './store'
-import { $setBrands } from '../filters/store'
-
+import { useEffectSafe } from '../../hooks/use-effect-safe'
+import { BrandItem } from '../../api/v1/types'
 import { Input } from '../../commons/atoms/input'
 import { Loader } from '../../commons/templates/loader'
+import { $filteredBrands, $fetchBrands, $setFilterString, $loadingBrands } from './store'
 
 import styles from './styles.module.scss'
 
@@ -21,18 +15,18 @@ type Props = {
 
 
 function BrandsGroup({ brands, sexId }: {brands: Array<BrandItem>, sexId: 1 | 2}) {
-  const setBrands = useEvent($setBrands)
   return(
     <>
       {brands.map(({ _id }) => (
-        <li>
-          <Link
-            to={`/products/${sexIdToStr(sexId)}?brands=${_id}`}
-            onClick={() => setBrands(_id)}
-          >
-            {_id}
-          </Link>
-        </li>
+        <div key={_id}/>
+        // <li>
+        //   <Link
+        //     to={`/products/${sexIdToStr(sexId)}?brands=${_id}`}
+        //     onClick={() => setBrands(_id)}
+        //   >
+        //     {_id}
+        //   </Link>
+        // </li>
       ))}
     </>
   )
