@@ -1,5 +1,6 @@
 import { SexId } from '../types'
 import { sizes } from '../constants'
+import {strict} from 'assert'
 
 
 // region exports
@@ -52,3 +53,22 @@ const getIndex = (str: string): number => {
   return index
 }
 export const sortSizes = (arr: Array<string>): Array<string> => arr.sort((a, b) => getIndex(a) - getIndex(b))
+
+
+// words[0] - модель
+// words [1] - модели
+// words [2] - моделей
+
+export const numeralEnding = (words: [string, string, string], number: number): string => {
+  if (number >= 5 && number <= 20 || (number % 10) === 0) return words[2]
+  
+  const strNumber = number.toString()
+  if (Number(strNumber.substring(strNumber.length - 2)) % 11 === 0) return words[2]
+  
+  const lastTwoNumber = Number(strNumber.substring(strNumber.length -1 ))
+  if (lastTwoNumber === 1) return words[0]
+  if (lastTwoNumber === 2 || lastTwoNumber === 3 || lastTwoNumber === 4) return words[1]
+  
+  
+  return words[2]
+}

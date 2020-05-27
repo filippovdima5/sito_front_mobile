@@ -32,6 +32,7 @@ $allFields.on($setFields, (state, payload) => {
 export const $statusPageProducts = createStore<StatusLoad>('START')
 export const $products = createStore<Array<ShortProduct>>([])
 export const $totalPages = createStore<number>(0)
+export const $totalItems = createStore<number>(0)
 export const $loading = createStore<boolean>(false)
 
 export const $brandFilters = createStore<Array<string>>([])
@@ -63,6 +64,7 @@ guard({
 
 $products.on(fetchProductsList.done, (_, { result: { data: { items } } }) => items)
 $totalPages.on(fetchProductsList.done, (_, { result: { data: { pagination: { totalPages } } } }) => totalPages)
+$totalItems.on(fetchProductsList.done, (_, { result: { data: { pagination: { totalItems } } } }) => totalItems)
 $loading.on(fetchProductsList.pending, (_, p) => p)
 $statusPageProducts.on(fetchProductsList.done, (_, { result: { data: { items } } }) => {
   if (items.length === 0) return 'EMPTY'
