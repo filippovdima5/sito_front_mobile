@@ -7,7 +7,7 @@ import { BrandItem } from '../../api/types'
 import { useStore, useEvent } from 'effector-react/ssr'
 
 import { $filteredBrands, $fetchBrands, $setFilterString, $loadingBrands } from './store'
-import { $setBrands } from '../products-page/features/filters/store'
+import { $setBrands } from '../filters/store'
 
 import { Input } from '../../commons/atoms/input'
 import { Loader } from '../../commons/templates/loader'

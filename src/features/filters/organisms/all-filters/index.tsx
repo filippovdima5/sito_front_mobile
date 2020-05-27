@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 
 import { useStore, useEvent } from 'effector-react/ssr'
 import { $filtersView, skipAllFilters, setShowFilter, setShowFilters, $showFilters } from '../../store'
-import { setFilter, $productsInfoStore } from '../../../../store'
+import { setFilter, $productsInfoStore } from '../../../products-page/store'
 
 import { FilterRow, UnuseFilterRow } from '../../molecules/filter-row'
 import { CheckRow } from '../../molecules/check-row'

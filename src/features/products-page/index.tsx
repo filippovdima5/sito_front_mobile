@@ -1,23 +1,23 @@
 import React, {  useRef } from 'react'
-import {useEffectSafe} from '../../hooks/use-effect-safe'
 import { useHistory } from 'react-router'
-
 import { useStore, useEvent } from 'effector-react/ssr'
-import { $initRouteHistory, $toggleSex } from './store'
-import { $statusPageProducts } from './store'
+import { useEffectSafe } from '../../hooks/use-effect-safe'
+
+import { Filters } from '../filters'
+import { $initRouteHistory, $toggleSex , $statusPageProducts } from './store'
+
 
 
 import { ControlProducts } from './features/control-products'
 import { ProductsList } from './products-list'
 import { LoadMore } from './load-more'
-import { Filters } from './features/filters'
 
 import styles from './styles.module.scss'
 
 
 
 type Props = {
-  sexId: 1 | 2
+  sexId: 1 | 2,
 }
 
 export function ProductsPage({ sexId }: Props) {

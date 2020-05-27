@@ -1,5 +1,5 @@
 import React from 'react'
-import rightArrowSVG from '../../../../../../media/img/svg/rightArrow.svg'
+import rightArrowSVG from '../../../../media/img/svg/rightArrow.svg'
 import styles from './styles.module.scss'
 
 

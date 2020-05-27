@@ -1,12 +1,12 @@
 import React from 'react'
-import { useEffectSafe } from '../../../../hooks/use-effect-safe'
+import { useEffectSafe } from '../../hooks/use-effect-safe'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
 import { useStore, useEvent } from 'effector-react/ssr'
-import { $filtersStore  } from '../../store'
+import { $filtersStore  } from '../products-page/store'
 import { $showFilter, setShowFilter, $filtersViewRecord, $showFilters } from './store'
 
-import { useTransitionNames } from '../../../../hooks/use-transition-names'
+import { useTransitionNames } from '../../hooks/use-transition-names'
 import { filtersMap } from './types'
 
 import { Header } from './atoms/header'

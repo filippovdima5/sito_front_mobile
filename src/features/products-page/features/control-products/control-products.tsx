@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { setShowFilters } from '../filters/store'
+import { setShowFilters } from '../../../filters/store'
 import { useEvent } from 'effector-react/ssr'
 
 import { SetSort } from './set-sort'

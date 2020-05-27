@@ -4,10 +4,10 @@ import { filtersMap, ViewFilter } from '../../types'
 import { useStore, useEvent } from 'effector-react/ssr'
 import { $countHelpsHint, setContHelpHint } from './store'
 import { setShowFilter } from '../../store'
-import { setFilter } from '../../../../store'
+import { setFilter } from '../../../products-page/store'
 
-import { namesCategory } from '../../../../../../constants/category-keys'
-import rightArrowSVG from '../../../../../../media/img/svg/rightArrow.svg'
+import { namesCategory } from '../../../../constants/category-keys'
+import rightArrowSVG from '../../../../media/img/svg/rightArrow.svg'
 import styles from './styles.module.scss'
 
 

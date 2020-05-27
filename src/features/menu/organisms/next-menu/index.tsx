@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { useStore, useEvent } from 'effector-react/ssr'
 import { $showNextMenu, setShowNextMenu, $showMainMenu, setShowMainMenu } from '../../store'
-import { setCategories } from '../../../products-page/features/filters/store'
+import { setCategories } from '../../../filters/store'
 import { setSignalWithoutSexId } from '../../molecules/header'
 
 import { subId, categories, subcategories } from '../../constants'

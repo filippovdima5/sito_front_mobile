@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { useEvent } from 'effector-react/ssr'
-import { skipAllFilters } from '../features/filters/store'
+import { skipAllFilters } from '../../filters/store'
 
 import { Button } from '../../../commons/atoms/button'
 import styles from '../../../media/css/info-page.module.scss'

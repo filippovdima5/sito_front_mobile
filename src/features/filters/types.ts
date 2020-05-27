@@ -1,4 +1,4 @@
-import { namesCategory } from '../../../../constants/category-keys'
+import { namesCategory } from '../../constants/category-keys'
 
 
 export const filtersMap = {

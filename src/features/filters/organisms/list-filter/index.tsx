@@ -1,13 +1,13 @@
 import React, { useState, useMemo, useEffect } from 'react'
 import { useEvent } from 'effector-react/ssr'
-import { FiltersItemNumber, FiltersItemString, FiltersRequest } from '../../../../../../api/types'
-import { namesCategory } from '../../../../../../constants/category-keys'
+import { FiltersItemNumber, FiltersItemString, FiltersRequest } from '../../../../api/types'
+import { namesCategory } from '../../../../constants/category-keys'
 
-import { setFilter } from '../../../../store'
+import { setFilter } from '../../../products-page/store'
 import { setShowFilters, skipThisFilter } from '../../store'
 
 import { CheckRow } from '../../molecules/check-row'
-import { Input } from '../../../../../../commons/atoms/input'
+import { Input } from '../../../../commons/atoms/input'
 import { BtnDone } from '../../atoms/btn-done'
 import { BtnHelp } from '../../atoms/btn-help'
 
