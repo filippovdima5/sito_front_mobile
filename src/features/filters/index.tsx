@@ -1,12 +1,12 @@
 import React from 'react'
-import { useEvent, useStore } from 'effector-react/ssr'
+import { useStore } from 'effector-react/ssr'
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
 import { Animate } from '../../wrappers/animate'
 import { useEffectSafe } from '../../hooks/use-effect-safe'
 import { FiltersWrap } from './templates'
 import styles from './styles/filters-wrap.module.scss'
-import { $showFilters , $setShowFilters, $setShowFilter } from './store'
-import { Filter } from './organisms'
+import { $showFilters } from './store'
+import {AllFilters, Filter} from './organisms'
 
 
 export function Filters() {
@@ -15,9 +15,6 @@ export function Filters() {
     if (!showFilters) enableBodyScroll(document.getElementById('all-filters') as HTMLElement)
   }, [showFilters])
   
-  
-  const setShowFilters = useEvent($setShowFilters)
-  const setShowFilter = useEvent($setShowFilter)
   
   return (
     <Animate
@@ -32,12 +29,7 @@ export function Filters() {
           isWrap={true}
           header={<div>HEADER</div>}
         >
-          BODY
-          <div onClick={() => setShowFilters(false)}>edddddddddddddf</div>
-          BODY
-          
-          <br/>
-          <div onClick={() => setShowFilter(true)}>OPEN FILTER</div>
+          <AllFilters/>
         </FiltersWrap>
         
         
