@@ -30,6 +30,7 @@ function FiltersList({ sexId }: {sexId: 1 | 2}) {
 export function Filters({ sexId }: {sexId: 1 | 2}) {
   const showFilters = false
   const classNames = useTransitionNames(animateStyles)
+
   
   return (
     <TransitionGroup

@@ -8,6 +8,7 @@ import { $mountProductsPage, $products, $totalItems } from './store'
 import { ProductsList } from './organisms'
 import { LoadMore } from './atoms'
 import { Controls } from './organisms/control-products'
+import {Filters} from '../filters'
 
 
 export function ProductsPage({ sexId }: { sexId: SexId }) {
@@ -23,12 +24,16 @@ export function ProductsPage({ sexId }: { sexId: SexId }) {
   }, [sexId])
   
   return (
-    <S.Wrap>
-      <Controls/>
-      <S.Controls/>
-      <ProductsList/>
-      { showLoadMore &&  <LoadMore/> }
-    </S.Wrap>
+    <>
+      <S.Wrap>
+        <Controls/>
+        <S.Controls/>
+        <ProductsList/>
+        { showLoadMore &&  <LoadMore/> }
+      </S.Wrap>
+      
+      <Filters/>
+    </>
   )
 }
 

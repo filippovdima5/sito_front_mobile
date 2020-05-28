@@ -1,7 +1,5 @@
-
 ._enter{
   left: 100%;
-
 }
 
 ._enter_active{
@@ -15,13 +13,11 @@
 
 ._exit{
   left: 0;
-
 }
 
 ._exit_active{
   left: 100%;
   transition: left 300ms;
-
 }
 
 ._exit_is_done{
