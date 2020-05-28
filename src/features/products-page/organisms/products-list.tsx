@@ -1,36 +1,32 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { useStore } from 'effector-react/ssr'
 import { ReadyList, LoadingList } from '../molecules'
-import { $statusPageProducts, $allFields, $totalItems } from '../store'
-import {numeralEnding} from '../../../lib'
-
-
+import { $statusPageProducts, $allFields, $totalItems, $countMoreProducts } from '../store'
+import { numeralEnding } from '../../../lib'
 
 
 function List() {
-  // const loading = useStore($loading)
   const status = useStore($statusPageProducts)
-  const { limit } = useStore($allFields)
+  const { limit, page } = useStore($allFields)
+  const countMoreProducts = useStore($countMoreProducts)
   
-  if ((status === 'START')) return (
+  
+  if ((status === 'START' || (status === 'LOADING' && page === 1))) return (
     <LoadingList count={limit}/>
   )
   
   return (
     <>
       <ReadyList/>
-      
+      { countMoreProducts !== null && <LoadingList count={countMoreProducts}/> }
     </>
   )
 }
 
 
 export function ProductsList() {
-  const { limit } = useStore($allFields)
   const totalItems = useStore($totalItems)
-  
-  
   
   
   return (

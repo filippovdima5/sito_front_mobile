@@ -1,0 +1,52 @@
+.show {
+  top: 50px;
+  opacity: 1;
+}
+
+.unShow{
+  top: 5px;
+  opacity: 0;
+}
+
+.base {
+  height: 45px;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 998;
+  left: 0;
+  right: 0;
+  background-color: #E9E9E9;
+  transition: top 300ms, opacity 200ms;
+  position: fixed;
+}
+
+.wrap{
+  display: flex;
+  position: relative;
+  box-sizing: border-box;
+
+
+  .btn{
+    width: 50%;
+    height: 45px;
+    box-sizing: border-box;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: rgba(39, 39, 39, 0.8);
+  }
+
+  .btn:last-child{
+    margin-right: 1px;
+  }
+}
+
+.wrap:after{
+  content: '';
+  width: 1px;
+  height: 45px;
+  background-color: #272727;
+  opacity: 0.2;
+  position: absolute;
+  left: 50%;
+}

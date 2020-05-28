@@ -3,11 +3,11 @@ import { createDebounce } from 'effector-debounce'
 import { GetFiltersParams, GetProductsParams, ShortProduct } from '../../api/v2/types'
 import config from '../../config'
 import { apiV2 } from '../../api'
-import { SexId , StatusLoad } from '../../types'
+import {  StatusLoad } from '../../types'
 import { categoryKeys } from '../../constants'
 import { encodeProductsUrl, sortBrands, sortSizes, parseUrl } from '../../lib'
 import { QueryFields } from './types'
-import { defaultFields, sortTypes, valuesOfFilterButtons } from './constants'
+import { defaultFields, sortTypes } from './constants'
 
 
 
@@ -49,8 +49,10 @@ export const $loadingBrandFilters = createStore<boolean>(false)
 /**При передачи любого поля будет загрузка:*/
 const $setFetchProducts = createEvent<QueryFields | null>()
 const $debounceFetchProducts = createEvent<QueryFields | null>()
-
 const fetchProductsList = createEffect({ handler: (params: GetProductsParams) => apiV2.getProductsList(params) })
+
+const $setFetchMoreProducts = createEvent<QueryFields | null>()
+const fetchMoreProducts = createEffect({ handler: (params: GetProductsParams) => apiV2.getProductsList(params) })
 
 guard({
   source: sample(
@@ -61,8 +63,16 @@ guard({
   target: fetchProductsList
 })
 
+guard({
+  source: sample($allFields, $setFetchMoreProducts, (fields, query) => ({ ...fields, ...query })),
+  filter: (value => value !== null),
+  target: fetchMoreProducts
+})
+
 
 $products.on(fetchProductsList.done, (_, { result: { data: { items } } }) => items)
+$products.on(fetchMoreProducts.done, (state, { result: { data: { items } } }) => [...state, ...items])
+
 $totalPages.on(fetchProductsList.done, (_, { result: { data: { pagination: { totalPages } } } }) => totalPages)
 $totalItems.on(fetchProductsList.done, (_, { result: { data: { pagination: { totalItems } } } }) => totalItems)
 $loading.on(fetchProductsList.pending, (_, p) => p)
@@ -266,63 +276,6 @@ guard({
 
 
 
-// region filter buttons view:
-type ViewFilterButton = { key: keyof Pick<QueryFields, 'sex_id'>, value: SexId, label: string } |
-{ key: keyof Pick<QueryFields, 'sort'>, value: keyof typeof sortTypes, label: string} |
-{ key: keyof Pick<QueryFields, 'brands' | 'sizes'>, value: string, label: string} |
-{ key: keyof Omit<QueryFields, 'sex_id' | 'sort' | 'brands' | 'sizes'>, value: number, label: string}
-
-
-const pushButton = (key: string, value: any, buttons: Array<ViewFilterButton>) => {
-  if (value === defaultFields[key as keyof QueryFields]) return
-  // @ts-ignore
-  buttons.push({ key, value: value, label: valuesOfFilterButtons[key](value) })
-}
-
-export const $viewFilterButtons = createStore<Array<ViewFilterButton>>([])
-
-const $filtersFields = $allFields
-  .map(({ price_to, sex_id, brands, categories, price_from, sale_from, sale_to, sizes }) =>
-    ({ price_to, sex_id, brands, categories, price_from, sale_from, sale_to, sizes }))
-
-$viewFilterButtons.on($filtersFields, (state, payload) => {
-  const buttons: Array<ViewFilterButton> = []
-  
-  Object.entries(payload).forEach(([ key, value ]) => {
-    switch (key as keyof QueryFields) {
-      case 'price_from':
-      case 'price_to':
-      case 'sale_from':
-      case 'sale_to': return pushButton(key, value, buttons)
-      case 'brands':
-      case 'sizes': {
-        // @ts-ignore
-        payload[key].forEach(item => buttons.push({ key, value: item, label: valuesOfFilterButtons[key](item) }))
-        return
-      }
-      case 'categories': {
-        // @ts-ignore
-        payload[key].forEach(item => buttons.push({ key, value: item, label: valuesOfFilterButtons[key](item, payload.sex_id) }))
-        return
-      }
-    }
-  })
-  
-  const lastButtons = state
-    .filter(item => !!buttons.find(({ label }) => label === item.label))
-    .map(item => JSON.stringify(item))
-  
-  const newButtons = Array.from(new Set([
-    ...lastButtons,
-    ...buttons.map(item => JSON.stringify(item))
-  ]))
-  
-  return newButtons.map(item => JSON.parse(item))
-})
-// endregion
-
-
-
 // region addFilterValue
 export const $addOneFilterValue = createEvent<{ key: keyof QueryFields, value: string | number | boolean}>()
 forward({
@@ -369,18 +322,29 @@ forward({
 export const $setSort = createEvent<keyof typeof sortTypes>()
 
 forward({
-  from: sample($allFields, $setSort, (query, typeSort) => ({ ...query, sort: typeSort })),
+  from: sample($allFields, $setSort, (query, typeSort) => ({ ...query, sort: typeSort, page: 1 })),
   to: [ $setFetchProducts, $setFields, $setPushUrl ]
 })
 // endregion
 
 
 // region set page
-export const $setPage = createEvent<number>()
+export const $setMoreProducts = createEvent<{ viewProductsCount: number, totalProducts: number }>()
+export const $countMoreProducts = createStore<null | number>(null)
+
+const setMoreProducts = sample($allFields, $setMoreProducts, ({ limit }, { totalProducts, viewProductsCount }) => {
+  const restCount = totalProducts - viewProductsCount
+  if (restCount >= limit) return limit
+  if (restCount <= 0) return null
+  return restCount
+})
+$countMoreProducts.on(setMoreProducts, (_, p) => p)
+$countMoreProducts.on(fetchMoreProducts.finally, () => null)
+
 
 forward({
-  from: sample($allFields, $setPage, (query, page) => ({ ...query, page })),
-  to: [ $setFetchProducts, $setFields, $setPushUrl ]
+  from: sample($allFields, $setMoreProducts, (query) => ({ ...query, page: query.page + 1 })),
+  to: [ $setFetchMoreProducts, $setFields, $setPushUrl ]
 })
 // endregion
 
