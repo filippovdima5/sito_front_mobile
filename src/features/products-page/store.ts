@@ -8,6 +8,7 @@ import { categoryKeys } from '../../constants'
 import { encodeProductsUrl, sortBrands, sortSizes, parseUrl } from '../../lib'
 import { QueryFields } from './types'
 import { defaultFields, sortTypes } from './constants'
+import {formViewFilterList, ViewFilterItem} from './lib'
 
 
 
@@ -346,6 +347,19 @@ forward({
   from: sample($allFields, $setMoreProducts, (query) => ({ ...query, page: query.page + 1 })),
   to: [ $setFetchMoreProducts, $setFields, $setPushUrl ]
 })
+// endregion
+
+
+
+// region view filter list:
+export const $viewFiltersList = createStore<Array<ViewFilterItem>>([])
+$viewFiltersList.on($allFields.updates, (_, payload) => {
+  if (config.ssr) return []
+  return formViewFilterList(payload)
+})
+
+
+$viewFiltersList.watch(state => console.log(state))
 // endregion
 
 
