@@ -6,7 +6,8 @@ import { useEffectSafe } from '../../hooks/use-effect-safe'
 import { FiltersWrap } from './templates'
 import styles from './styles/filters-wrap.module.scss'
 import { $showFilters } from './store'
-import {AllFilters, Filter} from './organisms'
+import { AllFiltersHeader } from './atoms/all-filters-header'
+import { AllFilters, Filter } from './organisms'
 
 
 export function Filters() {
@@ -27,7 +28,7 @@ export function Filters() {
         <FiltersWrap
           idElement={'all-filters'}
           isWrap={true}
-          header={<div>HEADER</div>}
+          header={<AllFiltersHeader />}
         >
           <AllFilters/>
         </FiltersWrap>

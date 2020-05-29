@@ -22,9 +22,9 @@ const WrapFiltersList: FC<{ filters: Array<ViewFilterItem> }> = (props) => (
     
     <div className={styles.filters}>
       <div className={styles.list}>
-        {props.filters.map(({ label, title, index }) => (
-          <div key = {index} className={styles.itemList}>
-            <FilterRow/>
+        {props.filters.map((props, i) => (
+          <div key = {props.index} className={styles.itemList}>
+            <FilterRow isFirst={Boolean(props.label) && i === 0} {...props}/>
           </div>
         ))}
       </div>

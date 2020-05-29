@@ -145,6 +145,7 @@ export function FilterRow(props: ViewFilter) {
               <div>{activeFiltersString}</div>
             </div>
           </div>
+          
           <div className={styles.item_arrow_wrap}>
             <img src={rightArrowSVG} alt={'go'} className={styles.svg}/>
           </div>

@@ -359,6 +359,14 @@ $viewFiltersList.on($allFields.updates, (_, payload) => {
 })
 
 
+export const $skipFilter = createEvent<string>()
+$viewFiltersList.on($skipFilter, (state, payload) => {
+  return state.map(i => {
+    if (i.index === payload) return ({ ...i, label: '' })
+    return i
+  })
+})
+
 $viewFiltersList.watch(state => console.log(state))
 // endregion
 

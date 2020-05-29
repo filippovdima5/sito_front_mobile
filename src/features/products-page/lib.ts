@@ -4,7 +4,7 @@ import { QueryFields } from './types'
 import { defaultFields } from './constants'
 
 
-export type ViewFilterItem = { title: string, index: string, label: string }
+export interface ViewFilterItem { title: string, index: string, label: string }
 
 export const formViewFilterList = (query: Required<QueryFields>): Array<ViewFilterItem> => {
   const { price_to, price_from, sale_to, sale_from, brands, categories, sizes, not_size, sex_id } = query
