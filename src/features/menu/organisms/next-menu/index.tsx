@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { useStore, useEvent } from 'effector-react/ssr'
-import { $showNextMenu, setShowNextMenu, $showMainMenu } from '../../store'
+import { $showNextMenu, $setShowNextMenu, $showMainMenu } from '../../store'
 
 
 import { subId, categories, subcategories } from '../../constants'
@@ -15,7 +15,7 @@ import styles from './styles.module.scss'
 export function NextMenu({ sexId }: {sexId: 1 | 2 | 0}) {
   const showNextMenu = useStore($showNextMenu)
   const showMainMenu = useStore($showMainMenu)
-  const setShowNextMenuEv = useEvent(setShowNextMenu)
+  const setShowNextMenu = useEvent($setShowNextMenu)
 
 
   const [ title, setTitle ] = useState(showNextMenu === null ? '' : subcategories[showNextMenu])
@@ -30,10 +30,10 @@ export function NextMenu({ sexId }: {sexId: 1 | 2 | 0}) {
 
   useEffect(() => {
     let timer: any
-    if (!showMainMenu) timer = setTimeout(() => setShowNextMenuEv(null), 300)
+    if (!showMainMenu) timer = setTimeout(() => setShowNextMenu(null), 300)
 
     return () => {clearTimeout(timer)}
-  }, [showMainMenu, setShowNextMenuEv])
+  }, [showMainMenu, setShowNextMenu])
 
   return (
     <>
@@ -42,7 +42,7 @@ export function NextMenu({ sexId }: {sexId: 1 | 2 | 0}) {
       >
 
         <h2
-          onClick={() => setShowNextMenuEv(null)}
+          onClick={() => setShowNextMenu(null)}
           className={styles.header}
         >
           <Arrow className={styles.img}/>

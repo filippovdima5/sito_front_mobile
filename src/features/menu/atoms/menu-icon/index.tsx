@@ -1,19 +1,19 @@
 import React from 'react'
-import styles from './styles.module.scss'
-import { setShowMainMenu, $showMainMenu } from '../../store'
 import { useStore, useEvent } from 'effector-react/ssr'
+import { $setShowMainMenu, $showMainMenu } from '../../store'
+import styles from './styles.module.scss'
 
 
 export function MenuIcon() {
   const showMainMenu = useStore($showMainMenu)
-  const setShowMainMenuEv = useEvent(setShowMainMenu)
+  const setShowMainMenu = useEvent($setShowMainMenu)
 
   return (
     <div className={`${styles.Menu} ${showMainMenu ? styles.menu_open : styles.menu_close}`}>
       <input
         checked={showMainMenu}
         readOnly={true}
-        onChange={() => setShowMainMenuEv()}
+        onChange={() => setShowMainMenu()}
         id = 'checkbox3'
         type="checkbox"
         className={`${styles.checkbox3} ${styles.visuallyHidden}`}
