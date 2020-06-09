@@ -13,7 +13,7 @@ export const sortTypes = {
 
 export const defaultFields = {
   sex_id: (1 as SexId),
-  limit: 4,
+  limit: 36,
   sort: ('create_up' as keyof typeof sortTypes),
   page: 1,
   categories: ([] as Array<keyof typeof unisexCategoryKeys> | Array<number>),

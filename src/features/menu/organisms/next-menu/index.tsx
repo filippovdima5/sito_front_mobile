@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { useStore, useEvent } from 'effector-react/ssr'
-import { $showNextMenu, setShowNextMenu, $showMainMenu, setShowMainMenu } from '../../store'
-import { setSignalWithoutSexId } from '../../molecules/header'
+import { $showNextMenu, setShowNextMenu, $showMainMenu } from '../../store'
+
 
 import { subId, categories, subcategories } from '../../constants'
 import { sexIdToStr } from '../../../../lib'
@@ -15,9 +15,8 @@ import styles from './styles.module.scss'
 export function NextMenu({ sexId }: {sexId: 1 | 2 | 0}) {
   const showNextMenu = useStore($showNextMenu)
   const showMainMenu = useStore($showMainMenu)
-  const setShowMainMenuEv = useEvent(setShowMainMenu)
   const setShowNextMenuEv = useEvent(setShowNextMenu)
-  const setSignalWithoutSexIdEv = useEvent(setSignalWithoutSexId)
+
 
   const [ title, setTitle ] = useState(showNextMenu === null ? '' : subcategories[showNextMenu])
   const [ sub, setSub ] = useState(showNextMenu === null ? 'clothes' : showNextMenu)
@@ -61,13 +60,6 @@ export function NextMenu({ sexId }: {sexId: 1 | 2 | 0}) {
                   key={key}
                   className={styles.li}
                   to={`/products/${sexId === 0 ? '' : sexIdToStr(sexId)}?categories=${key}`}
-                  onClick={() => {
-                    if (sexId !== 0){
-                      setShowMainMenuEv()
-                    } else {
-                      setSignalWithoutSexIdEv()
-                    }
-                  }}
                 >
                   <span className={styles.link}>
                     {value}
@@ -78,13 +70,6 @@ export function NextMenu({ sexId }: {sexId: 1 | 2 | 0}) {
             <Link
               to={`/products/${sexId === 0 ? '' : sexIdToStr(sexId)}?categories=${subId[sub]}`}
               className={styles.li}
-              onClick={() => {
-                if (sexId !== 0){
-                  setShowMainMenuEv()
-                } else {
-                  setSignalWithoutSexIdEv()
-                }
-              }}
             >
               <span className={styles.link}>Прочее</span>
             </Link>

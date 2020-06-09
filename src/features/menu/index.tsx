@@ -1,4 +1,2 @@
-import { Menu } from './main-menu'
+export { Menu } from './main-menu'
 
-
-export { Menu }

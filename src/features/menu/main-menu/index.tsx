@@ -1,19 +1,15 @@
-import React, {useMemo} from 'react'
-import { Link } from 'react-router-dom'
+import React, { useMemo } from 'react'
+import {Link, useLocation} from 'react-router-dom'
 import { useStore,  useEvent } from 'effector-react/ssr'
-import { sexIdToStr } from '../../../lib'
+import {findSexIdInPath, sexIdToStr} from '../../../lib'
 import { categories, menuLinks } from '../constants'
-
-import { $genderInfo } from '../../../stores/user'
 import { $showMainMenu, setShowMainMenu, setShowNextMenu } from '../store'
-
 import { MenuIcon } from '../atoms/menu-icon'
 import { NextMenu } from '../organisms/next-menu'
 import { Header } from '../molecules/header'
 import { Arrow } from '../../../media/img/svg/icons'
-
 import styles from './styles.module.scss'
-//import { Footer } from '../molecules/footer'
+
 
 
 
@@ -41,17 +37,15 @@ const infoList: Array<LinkItem> = [
 ]
 
 export function Menu() {
-  const genderInfo = useStore($genderInfo)
   const showMainMenu = useStore($showMainMenu)
   const setShowMainMenuEv = useEvent(setShowMainMenu)
   const setShowNextMenuEv = useEvent(setShowNextMenu)
   
-  const sexId = useMemo(() => {
-    if (genderInfo === null) return 0
-    if (genderInfo.sexId === null) return 0
-    return genderInfo.sexId
-  }, [genderInfo])
-
+  
+  const { pathname } = useLocation()
+  const sexId = useMemo(() => findSexIdInPath(pathname), [pathname])
+  
+  
   return(
     <>
       <div className={`${styles.mainMenu} ${showMainMenu ? styles.mainMenuOpen : styles.mainMenuClose}`}>
