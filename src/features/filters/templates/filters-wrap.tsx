@@ -19,6 +19,7 @@ export const FiltersWrap: FC<Props> = (props) => (
     <S.Body id={props.idElement} >
       {props.children}
     </S.Body>
+    
   </S.Wrap>
 )
 
@@ -48,11 +49,16 @@ const S = {
   
   
   Body: styled.div`
+    position: relative;
     height: calc(100% - 55px);
     overflow-y: scroll;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
     padding: 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 3px rgba(0, 0, 0, 0.12);
+`,
+  
+  Space: styled.div`
+    padding-bottom: 70px;
 `
 }

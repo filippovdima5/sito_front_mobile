@@ -2,7 +2,6 @@ import React  from 'react'
 import { useStore, useEvent } from 'effector-react/ssr'
 import { useEffectSafe } from '../../hooks/use-effect-safe'
 import { BrandItem } from '../../api/v1/types'
-import { Input } from '../../commons/atoms/input'
 import { Loader } from '../../commons/templates/loader'
 import { $filteredBrands, $fetchBrands, $setFilterString, $loadingBrands } from './store'
 
@@ -51,11 +50,12 @@ export function BrandsPage({ sexId }: Props) {
       <div className={styles.wrap}>
       
         <div className={styles.search}>
-          <Input
-            onChange={(event => setFilterString(event.currentTarget.value))}
-            placeholder={'Поиск по названию бренда'}
-            type={'text'}
-          />
+          INPUT
+          {/*<Input*/}
+          {/*  onChange={(event => setFilterString(event.currentTarget.value))}*/}
+          {/*  placeholder={'Поиск по названию бренда'}*/}
+          {/*  type={'text'}*/}
+          {/*/>*/}
         </div>
         
         <div className={styles.scrollContainer}>

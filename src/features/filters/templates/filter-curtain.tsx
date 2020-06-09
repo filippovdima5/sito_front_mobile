@@ -26,14 +26,15 @@ export const FilterCurtain: FC<Props> = (props) => {
 const S = {
   Wrap: styled.div`
     user-select: none;
-    //border: 1px solid green;
     background-color: #FFFFFF;
     padding: 18px 25px 0;
+    min-height: 100%;
+    box-sizing: border-box;
 `,
   
   Body: styled.div`
     & .space {
-      padding-bottom: 20px;
+      padding-bottom: 90px;
     }
 `,
   

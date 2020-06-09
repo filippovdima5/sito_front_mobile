@@ -360,12 +360,40 @@ $viewFiltersList.on($allFields.updates, (_, payload) => {
 
 
 export const $skipFilter = createEvent<string>()
+export const $skipAllFilters = createEvent()
+
+$viewFiltersList.on($skipAllFilters, state => state.map(item => ({ ...item, label: '' })))
+
+forward({
+  from: sample($allFields, $skipAllFilters, query => ({
+    ...query,
+    price_from: defaultFields.price_from, price_to: defaultFields.price_to,
+    sale_from: defaultFields.sale_from, sale_to: defaultFields.sale_to,
+    brands: [], sizes: [], categories: []
+  
+  
+  })),
+  to: [ $setFields, fetchProductsList, $setPushUrl, $debounceFetchFilters ]
+})
+
 $viewFiltersList.on($skipFilter, (state, payload) => state.map(i => {
   if (i.index === payload) return ({ ...i, label: '' })
   return i
 }))
 
-$viewFiltersList.watch(state => console.log(state))
+forward({
+  from: sample($allFields, $skipFilter, (query, index) => {
+    switch (index) {
+      case 'price': return ({ ...query, price_from: defaultFields.price_from, price_to: defaultFields.price_to })
+      case 'sale': return ({ ...query, sale_from: defaultFields.sale_from, sale_to: defaultFields.sale_to })
+      case 'brands': return ({ ...query, brands: [] })
+      case 'sizes': return ({ ...query, sizes: [] })
+      case 'categories': return ({ ...query, categories: [] })
+      default: return null
+    }
+  }),
+  to: [ $setFields, $debounceFetchProducts, $setPushUrl, $debounceFetchFilters ]
+})
 // endregion
 
 

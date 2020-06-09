@@ -9,6 +9,7 @@ type Props = {
   wrapStyles?: React.CSSProperties,
   timeout?: number,
   onEntered?: () => void,
+  onExited?: () => void,
 }
 
 export const Animate: FC<Props> = (props) => {
@@ -18,6 +19,7 @@ export const Animate: FC<Props> = (props) => {
     <TransitionGroup {...{ style: props.wrapStyles }}>
       { props.flag && (
         <CSSTransition
+          onExited={props.onExited}
           onEntered={props.onEntered}
           timeout={props.timeout ?? 300}
           classNames={classNames}

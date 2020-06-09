@@ -4,15 +4,18 @@ import { useEvent } from 'effector-react/ssr'
 import styles from '../header.module.scss'
 import { ArrowLong } from '../../../../assets/svg'
 import { $setShowFilter } from '../../store'
+import { $skipFilter } from '../../../products-page/store'
 
 
 type Props = {
   title?: string,
+  index?: string,
 }
 
 
-export function OneFilterHeader({ title }: Props) {
+export function OneFilterHeader({ title, index }: Props) {
   const setShowFilter = useEvent($setShowFilter)
+  const skipFilter = useEvent($skipFilter)
   
   return (
     <div className={styles.header}>
@@ -23,7 +26,9 @@ export function OneFilterHeader({ title }: Props) {
           />
         </S.BackBtn>
         <S.Title>{title}</S.Title>
-        <S.SkipAll>Очистить все</S.SkipAll>
+        <S.SkipAll onClick={() => {
+          index && skipFilter(index)
+        }}>Очистить все</S.SkipAll>
       </div>
     </div>
   )

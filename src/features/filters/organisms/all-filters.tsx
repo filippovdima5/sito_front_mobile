@@ -1,6 +1,6 @@
 import React, { useMemo, FC } from 'react'
-import { useStore } from 'effector-react/ssr'
-import { $viewFiltersList } from '../../products-page/store'
+import { useEvent, useStore } from 'effector-react/ssr'
+import { $skipAllFilters, $viewFiltersList } from '../../products-page/store'
 import { FilterRow } from '../molecules/filter-row'
 import { ViewFilterItem } from '../../products-page/lib'
 import styles from './all-filters.module.scss'
@@ -35,6 +35,7 @@ const WrapFiltersList: FC<{ filters: Array<ViewFilterItem> }> = (props) => (
 
 export function AllFilters() {
   const viewFilters = useStore($viewFiltersList)
+  const skipAllFilters = useEvent($skipAllFilters)
   
   const usedFilters = useMemo(() => viewFilters.filter(i => Boolean(i.label)), [viewFilters])
   const unUsedFilters = useMemo(() => viewFilters.filter(i => !i.label), [viewFilters])
@@ -44,7 +45,7 @@ export function AllFilters() {
       <WrapFiltersList filters={usedFilters}>
         <TitleTypeList count={usedFilters.length} title={'Используются сейчас'}/>
         {usedFilters.length > 1 && (
-          <button className={styles.skipAll}>Сбросить всё</button>
+          <button onClick={() => skipAllFilters()} className={styles.skipAll}>Сбросить всё</button>
         )}
       </WrapFiltersList>
 
@@ -52,14 +53,7 @@ export function AllFilters() {
       <WrapFiltersList filters={unUsedFilters}>
         <TitleTypeList count={unUsedFilters.length} title={'Остальные'}/>
       </WrapFiltersList>
-  
-      <WrapFiltersList filters={unUsedFilters}>
-        <TitleTypeList count={unUsedFilters.length} title={'Остальные'}/>
-      </WrapFiltersList>
-  
-      <WrapFiltersList filters={unUsedFilters}>
-        <TitleTypeList count={unUsedFilters.length} title={'Остальные'}/>
-      </WrapFiltersList>
+
     </div>
   )
 }
