@@ -33,7 +33,9 @@ export function ProductsList() {
     <div>
       <S.Info>
         <span>
-          Найдено <span className='num'> {totalItems} </span> {numeralEnding(['модель', 'модели', 'моделей'], totalItems)}
+          {numeralEnding(['Найдена', 'Найдено', 'Найдено'], totalItems)} 
+          <span className='num'> {totalItems} </span>
+          {numeralEnding(['модель', 'модели', 'моделей'], totalItems)}
         </span>
       </S.Info>
       <S.Wrap>

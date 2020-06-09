@@ -3,6 +3,7 @@ import { useEvent, useStore } from 'effector-react/ssr'
 import { ViewFilterItem } from '../../../products-page/lib'
 import { Arrow } from '../../../../assets/svg'
 import { $skipFilter } from '../../../products-page/store'
+import { $setShowFilter } from '../../store'
 import { $countHelpsHint, $setContHelpHint } from './store'
 import styles from './styles.module.scss'
 
@@ -12,6 +13,8 @@ interface Props extends ViewFilterItem{
 }
 
 export function FilterRow({ label, title, isFirst, index }: Props ) {
+  const setShowFilter = useEvent($setShowFilter)
+  
   const setContHelpHint = useEvent($setContHelpHint)
   const skipFilter = useEvent($skipFilter)
   
@@ -106,6 +109,7 @@ export function FilterRow({ label, title, isFirst, index }: Props ) {
       className={`${styles.filterRow} ${skipStyle}`}
     >
       <div
+        onClick={() => setShowFilter({ index, title })}
         style={{ left: `-${skipLength}px` }}
         ref={skipRowRef}
         className={`${styles.item_wrap} ${skipAnimate && styles.skipAnimate}`}

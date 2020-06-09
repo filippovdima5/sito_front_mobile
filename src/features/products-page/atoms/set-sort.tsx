@@ -3,6 +3,7 @@ import { useEvent, useStore } from 'effector-react/ssr'
 import styled from 'styled-components'
 import { $setSort, $allFields } from '../store'
 import { sortTypes } from '../constants'
+import { handleScrollTop } from '../../../lib'
 
 
 type Props = {
@@ -23,6 +24,7 @@ export function SetSort({ showSort, setShowSort }: Props) {
         <S.SortOption
           active={key === sort}
           onClick={() => {
+            handleScrollTop()
             setSort(key as keyof typeof sortTypes)
             setShowSort(false)
           }}

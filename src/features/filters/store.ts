@@ -5,5 +5,7 @@ export const $setShowFilters = createEvent<boolean>()
 export const $showFilters = restore($setShowFilters, false)
 
 
-export const $setShowFilter = createEvent<boolean>()
-export const $showFilter = restore($setShowFilter, false)
+export const $setShowFilter = createEvent<{ index: string, title: string } | null>()
+export const $showFilter = restore($setShowFilter, null)
+
+$showFilter.watch(state => console.log(state))

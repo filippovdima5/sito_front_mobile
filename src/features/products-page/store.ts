@@ -8,7 +8,7 @@ import { categoryKeys } from '../../constants'
 import { encodeProductsUrl, sortBrands, sortSizes, parseUrl } from '../../lib'
 import { QueryFields } from './types'
 import { defaultFields, sortTypes } from './constants'
-import {formViewFilterList, ViewFilterItem} from './lib'
+import { formViewFilterList, ViewFilterItem } from './lib'
 
 
 
@@ -360,12 +360,10 @@ $viewFiltersList.on($allFields.updates, (_, payload) => {
 
 
 export const $skipFilter = createEvent<string>()
-$viewFiltersList.on($skipFilter, (state, payload) => {
-  return state.map(i => {
-    if (i.index === payload) return ({ ...i, label: '' })
-    return i
-  })
-})
+$viewFiltersList.on($skipFilter, (state, payload) => state.map(i => {
+  if (i.index === payload) return ({ ...i, label: '' })
+  return i
+}))
 
 $viewFiltersList.watch(state => console.log(state))
 // endregion

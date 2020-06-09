@@ -1,5 +1,6 @@
 import { SexId } from '../types'
 import { sizes } from '../constants'
+import config from '../config'
 
 
 // region exports
@@ -69,4 +70,11 @@ export const numeralEnding = (words: [string, string, string], number: number): 
   if (lastTwoNumber === 2 || lastTwoNumber === 3 || lastTwoNumber === 4) return words[1]
   
   return words[2]
+}
+
+
+export const handleScrollTop = (): null => {
+  if (config.ssr) return null
+  window.scrollTo(0, 0)
+  return null
 }

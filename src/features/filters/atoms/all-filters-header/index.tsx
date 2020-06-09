@@ -1,10 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useEvent } from 'effector-react/ssr'
 import { Close } from '../../../../assets/svg'
 import styles from '../header.module.scss'
+import { $setShowFilters } from '../../store'
 
 
 export function AllFiltersHeader() {
+  const setShowFilters = useEvent($setShowFilters)
+  
   return (
     <S.Wrap className={styles.header}>
       <div className={styles.headerWrap}>
@@ -13,7 +17,7 @@ export function AllFiltersHeader() {
           <div className={styles.title}>Фильтры</div>
         </div>
         
-        <div className={`${styles.btn} ${styles.btn_right}`}>
+        <div onClick={() => setShowFilters(false)} className={`${styles.btn} ${styles.btn_right}`}>
           <div className='icon-wrap'>
             <Close className='close-icon' />
           </div>

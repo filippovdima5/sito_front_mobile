@@ -4,6 +4,7 @@ import { Animate } from '../../../wrappers/animate'
 import styles from '../styles/filter.module.scss'
 import { $showFilter, $setShowFilter } from '../store'
 import { FiltersWrap } from '../templates'
+import { OneFilterHeader } from '../atoms/one-filter-header'
 
 
 export function Filter() {
@@ -12,16 +13,16 @@ export function Filter() {
   
   return (
     <Animate 
-      flag={showFilter}
+      flag={Boolean(showFilter)}
       styles={styles}
     >
       <FiltersWrap 
         idElement={'filter-wrap'}
-        header={<div>FILTER-HEADER</div>}
+        header={(<OneFilterHeader title={showFilter?.title}/>)}
       >
         FILTER BODY!!!
         <br/>
-        <div onClick={() => setShowFilter(false)}>close</div>
+        <div onClick={() => setShowFilter(null)}>close</div>
         <div
           style={{ width: '100%', height: '100%', backgroundColor: 'red' }}
         />
