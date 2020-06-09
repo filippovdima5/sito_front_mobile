@@ -57,8 +57,7 @@ const S = {
   
   SkipAll: styled.div`
     margin-left: auto;
-    margin-right: 11px;
-    padding: 0 10px;
+    padding: 0 21px 0 10px;
     line-height: 48px;
     font-weight: 500;
     font-size: 16px;

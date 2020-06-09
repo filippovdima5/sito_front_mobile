@@ -10,13 +10,13 @@ type Props = {
 }
 
 export const FiltersWrap: FC<Props> = (props) => (
-  <S.Wrap id={props.idElement}  className={props.isWrap ? styles.filtersList : styles.filter}>
+  <S.Wrap  className={props.isWrap ? styles.filtersList : styles.filter}>
     <S.Header>
       <div className='header'>
         {props.header}
       </div>
     </S.Header>
-    <S.Body>
+    <S.Body id={props.idElement} >
       {props.children}
     </S.Body>
   </S.Wrap>

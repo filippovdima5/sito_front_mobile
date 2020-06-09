@@ -52,6 +52,14 @@ export function AllFilters() {
       <WrapFiltersList filters={unUsedFilters}>
         <TitleTypeList count={unUsedFilters.length} title={'Остальные'}/>
       </WrapFiltersList>
+  
+      <WrapFiltersList filters={unUsedFilters}>
+        <TitleTypeList count={unUsedFilters.length} title={'Остальные'}/>
+      </WrapFiltersList>
+  
+      <WrapFiltersList filters={unUsedFilters}>
+        <TitleTypeList count={unUsedFilters.length} title={'Остальные'}/>
+      </WrapFiltersList>
     </div>
   )
 }

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 
 type Props = {
-  title: string,
+  title?: string,
   search?: React.ReactNode,
 }
 
@@ -32,8 +32,6 @@ const S = {
 `,
   
   Body: styled.div`
-    padding-top: 20px;
-    
     & .space {
       padding-bottom: 20px;
     }
@@ -44,8 +42,6 @@ const S = {
 `,
   
   ScrollContainer: styled.div`
-    max-height: 300px;
-    overflow-x: hidden;
-    overflow-y: auto;
+    min-height: 100%;
 `
 }
