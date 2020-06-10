@@ -51,7 +51,8 @@ export const parseUrl = (pathname: string, search: string ): QueryFields => {
     )
   } catch (e) {
     console.error(e)
-    return query
+    // @ts-ignore
+    return { ...query, err: `fromEntries:${JSON.stringify(e)}` }
   }
   
   Object.entries(foundFields).forEach(([key, value]) => {

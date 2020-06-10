@@ -1,14 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-
 import { loadableReady } from '@loadable/component'
 import { fork, hydrate } from 'effector/fork'
 import { rootDomain } from 'lib/effector'
 import { BrowserRouter } from 'react-router-dom'
+import { polyfills } from './polyfills'
 import { App } from './app'
 
 
-
+polyfills()
 
 
 Promise.all([
