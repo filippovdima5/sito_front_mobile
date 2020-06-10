@@ -25,6 +25,7 @@ export function Input() {
     setSearch({ phrase, sex_id: sexId })
   }, [setSearch, sexId])
   
+  if (!sexId) return null
   
   return (
     <input
