@@ -29,9 +29,8 @@ export const ROUTES = [
 ]
 
 
-//   // { path: '/about', exact: true, component: AboutAs },
-//   // { path: '/men/about', exact: true, component: AboutAs },
-//   // { path: '/women/about', exact: true, component: AboutAs },
-//   //
-//   //
+// { path: '/about', exact: true, component: AboutAs },
+// { path: '/men/about', exact: true, component: AboutAs },
+// { path: '/women/about', exact: true, component: AboutAs },
+
 
