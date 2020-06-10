@@ -1,4 +1,4 @@
-import { GenderDetected } from '../features/gender-detected'
+import { GenderDetected } from './start-page'
 import { PrivateOffice } from './private-office'
 import { Home } from './home'
 import { NotFound } from './not-found'

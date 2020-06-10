@@ -4,7 +4,7 @@ import { useLocation } from 'react-router'
 import { useBodyScrollTop } from '../hooks/use-body-scroll-top'
 import { ProductsPage } from '../features/products-page'
 import { findSexIdInPath } from '../lib'
-
+import { $mountProductsPage } from '../features/products-page/store'
 
 
 export function Products() {
@@ -15,4 +15,4 @@ export function Products() {
   return <ProductsPage sexId={sexId}/>
 }
 
-Products[START] = ''
+Products[START] = $mountProductsPage

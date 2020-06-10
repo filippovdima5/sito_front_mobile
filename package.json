@@ -1,6 +1,6 @@
 {
   "name": "sito_front_mobile",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "private": true,
   "dependencies": {
     "@babel/plugin-proposal-export-default-from": "^7.8.3",
@@ -51,9 +51,10 @@
   },
   "scripts": {
     "build:client": "react-app-rewired build",
-    "build:ssr": "webpack --config src/ssr/webpack-server.config.js",
+    "build:ssr": "NODE_ENV=production webpack --config src/ssr/webpack-server.config.js",
+    "build:ssr:dev": "NODE_ENV=development webpack --config src/ssr/webpack-server.config.js",
     "start:client": "react-scripts start",
-    "start:ssr": "node run build/server.js"
+    "start:ssr": "node  build/server.js"
   },
   "proxy": "http://localhost:8080",
   "browserslist": {
