@@ -43,25 +43,27 @@
       margin-bottom: 30px;
 
       .li:first-child{
-        border-top: 1px solid #f0f0f0;;
+        border-bottom: 1px solid #C4C4C4;
       }
 
       .li{
-        font-weight: 200;
-        font-size: 16px;
-        padding: 8px 20px;
-        border-bottom: 1px solid #f0f0f0;
+        padding: 22px 20px;
+        border-bottom: 1px solid #C4C4C4;
+        color: rgba(39, 39, 39, 0.8);
 
         .link{
           position: relative;
           display: block;
+          color: rgba(39, 39, 39, 0.8);
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 19px;
 
-          .img{
+          .arrow {
+            fill: #272727;
             position: absolute;
-            right: 0;
+            right: -2px;
             top: 50%;
-            width: 20px;
-            transform: translateY(-50%) rotate(180deg);
           }
         }
       }

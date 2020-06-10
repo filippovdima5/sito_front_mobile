@@ -1,43 +1,34 @@
 import React, { useMemo } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation , Link } from 'react-router-dom'
 import { useStore,  useEvent } from 'effector-react/ssr'
+import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock'
 import { findSexIdInPath, sexIdToStr } from '../../../lib'
-import { categories, menuLinks } from '../constants'
-import { $showMainMenu, $setShowMainMenu, $setShowNextMenu } from '../store'
+import { $showMainMenu, $setShowMainMenu, $setShowNextMenu, $showNextMenu } from '../store'
 import { MenuIcon } from '../atoms/menu-icon'
-import { NextMenu } from '../organisms/next-menu'
+import {  NEXT_MENU_ID } from '../organisms/next-menu'
 import { Header } from '../molecules/header'
-import { Arrow } from '../../../media/img/svg/icons'
+import { useEffectSafe } from '../../../hooks/use-effect-safe'
+import { Arrow } from '../../../assets/svg'
 import styles from './styles.module.scss'
 
 
 
-
-type LinkItem = {
-  link: '/about' | '/brands' | '/likes' | '/blog',
-  index: keyof typeof menuLinks,
-}
-
-type ListItem = {
-  title: string,
-  index: keyof typeof categories[0 | 1 | 2],
-}
+const MAIN_MENU_ID = 'MAIN_MENU_ID'
 
 
-const catalogList: Array<ListItem> = [
-  { title: 'Одежда', index: 'clothes' },
-  { title: 'Обувь', index: 'shoes' },
-  { title: 'Аксессуары', index: 'accessories' }
-]
-
-
-const infoList: Array<LinkItem> = [
-  { index: 'blog', link: '/blog' },
-  { index: 'about', link: '/about' }
-]
+const menuItems = [
+  { title: 'Одежда', index: 'clothes', link: false, arrow: true },
+  { title: 'Обувь', index: 'shoes', link: false, arrow: true },
+  { title: 'Аксессуары', index: 'accessories', link: false, arrow: true },
+  { title: 'Бренды', index: 'brands', link: true, arrow: false },
+  { title: 'Избранное', index: 'private-office', link: true, arrow: false },
+  { title: 'О нас', index: 'about', link: true, arrow: false }
+] as const
 
 export function Menu() {
   const showMainMenu = useStore($showMainMenu)
+  const showNextMenu = useStore($showNextMenu)
+  
   const setShowMainMenu = useEvent($setShowMainMenu)
   const setShowNextMenu = useEvent($setShowNextMenu)
   
@@ -45,6 +36,17 @@ export function Menu() {
   const { pathname } = useLocation()
   const sexId = useMemo(() => findSexIdInPath(pathname), [pathname])
   
+  useEffectSafe(() => {
+    if (!showMainMenu) clearAllBodyScrollLocks()
+    else disableBodyScroll(document.getElementById(MAIN_MENU_ID) as HTMLElement)
+  }, [showMainMenu])
+  
+  useEffectSafe(() => {
+    if (Boolean(showNextMenu)) disableBodyScroll(document.getElementById(NEXT_MENU_ID) as HTMLElement)
+    // else enableBodyScroll(document.getElementById(NEXT_MENU_ID) as HTMLElement)
+  }, [showNextMenu])
+  
+  if (pathname === '/') return null
   
   return(
     <>
@@ -54,62 +56,43 @@ export function Menu() {
         <div className={styles.iconMenu}>
           <MenuIcon/>
         </div>
-
-        <nav className={styles.nav}>
+        
+        
+        <nav id={MAIN_MENU_ID}  className={styles.nav}>
           {sexId !== null && <h2 className={styles.h2}>{sexId === 1 ? 'Для него' : 'Для неё'}</h2>}
-
-
           <ul className={styles.ul}>
-            {catalogList.map(({ title, index }) => (
-              <li
-                onClick={() => setShowNextMenu(index)}
-                key={index}
-                className={styles.li}
-              >
-                <span className={styles.link}>
-                  {title}
-                  <Arrow className={styles.img} rotate={180}/>
-                </span>
-              </li>
-            ))}
+            { menuItems.map(({ arrow, link, index, title }) => {
+              if (link) return (
+                (
+                  <li onClick={() => setShowMainMenu()} key={index} className={styles.li}>
+                    <Link 
+                      to={`/${sexIdToStr(sexId)}/${index}`}
+                      className={styles.link}
+                    >
+                      {title}
+                      { arrow && <Arrow rotate={-90} className={styles.arrow}/> }
+                    </Link>
+                  </li>
+                )
+              )
+              return (
+                (
+                  <li onClick={() => setShowNextMenu({ index, title })} key={index} className={styles.li}>
+                    <span className={styles.link}>
+                      {title}
+                      { arrow && <Arrow rotate={-90} className={styles.arrow}/> }
+                    </span>
+                  </li>
+                )
+              )
+            }) }
+            
           </ul>
-
-
-          <ul className={styles.ul}>
-            <Link
-              to={`/brands/${sexId !== null ? sexIdToStr(sexId) : ''}`}
-              onClick={() => setShowMainMenu()}
-              className={styles.li}
-            >
-              <span className={styles.link}>{menuLinks['brands']}</span>
-            </Link>
-  
-            <Link
-              to={'/likes'}
-              onClick={() => setShowMainMenu()}
-              className={styles.li}
-            >
-              <span className={styles.link}>{menuLinks['likes']}</span>
-            </Link>
-          </ul>
-
-          <ul className={styles.ul}>
-            {infoList.map(({ index, link }) => (
-              <Link
-                key = {index}
-                to={link}
-                onClick={() => setShowMainMenu()}
-                className={styles.li}
-              >
-                <span className={styles.link}>{menuLinks[index]}</span>
-              </Link>
-            ))}
-          </ul>
-
+      
+          
           <div className={styles.space}/>
-          <NextMenu sexId={sexId === null ? 0 : sexId}/>
         </nav>
-
+       
       </div>
 
       <div

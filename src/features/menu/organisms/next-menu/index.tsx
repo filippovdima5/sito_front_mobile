@@ -1,40 +1,38 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-
+import React, {  useMemo } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { useStore, useEvent } from 'effector-react/ssr'
-import { $showNextMenu, $setShowNextMenu, $showMainMenu } from '../../store'
-
-
-import { subId, categories, subcategories } from '../../constants'
-import { sexIdToStr } from '../../../../lib'
-
+import { $showNextMenu, $setShowNextMenu, $showMainMenu, $setShowMainMenu } from '../../store'
+import { categories } from '../../constants'
+import { findSexIdInPath, sexIdToStr } from '../../../../lib'
 import { Arrow } from '../../../../media/img/svg/icons'
+import { SexId } from '../../../../types'
+import { useEffectSafe } from '../../../../hooks/use-effect-safe'
+import { $mountProductsPage } from '../../../products-page/store'
 import styles from './styles.module.scss'
 
 
-export function NextMenu({ sexId }: {sexId: 1 | 2 | 0}) {
+export const NEXT_MENU_ID = 'NEXT_MENU_ID'
+
+export function NextMenu() {
+  const { pathname } = useLocation()
+  const sexId = useMemo(() => findSexIdInPath(pathname), [pathname])
+  const lineSex = useMemo(() => sexIdToStr(sexId), [sexId])
+  const mountProductsPage = useEvent($mountProductsPage)
+  
   const showNextMenu = useStore($showNextMenu)
   const showMainMenu = useStore($showMainMenu)
+  const setShowMainMenu = useEvent($setShowMainMenu)
   const setShowNextMenu = useEvent($setShowNextMenu)
-
-
-  const [ title, setTitle ] = useState(showNextMenu === null ? '' : subcategories[showNextMenu])
-  const [ sub, setSub ] = useState(showNextMenu === null ? 'clothes' : showNextMenu)
   
-  useEffect(() => {
-    if (showNextMenu !== null) {
-      setTitle(subcategories[showNextMenu])
-      setSub(showNextMenu)
-    }
-  }, [showNextMenu])
-
-  useEffect(() => {
-    let timer: any
-    if (!showMainMenu) timer = setTimeout(() => setShowNextMenu(null), 300)
-
-    return () => {clearTimeout(timer)}
+  
+  const categoryItems = useMemo(() =>
+    Object.entries(categories[sexId][!showNextMenu ? 'clothes' : showNextMenu.index as keyof typeof categories[SexId]]), [sexId, showNextMenu])
+  
+  useEffectSafe(() => {
+    if (!showMainMenu) setShowNextMenu(null)
   }, [showMainMenu, setShowNextMenu])
 
+  
   return (
     <>
       <div
@@ -47,19 +45,23 @@ export function NextMenu({ sexId }: {sexId: 1 | 2 | 0}) {
         >
           <Arrow className={styles.img}/>
           <span className={styles.span}>
-            {title}
+            {showNextMenu?.title}
           </span>
         </h2>
         
         
-        <div className={styles.body}>
+        <div id={NEXT_MENU_ID} className={styles.body}>
           <ul className={styles.ul}>
             {
-              Object.entries(categories[sexId][sub]).map(([key, value]) => (
+              categoryItems.map(([key, value]) => (
                 <Link
                   key={key}
+                  onClick={() => {
+                    setShowMainMenu()
+                    mountProductsPage({ pathname: `/${lineSex}/products`, search: `?categories=${key}` })
+                  }}
                   className={styles.li}
-                  to={`/products/${sexId === 0 ? '' : sexIdToStr(sexId)}?categories=${key}`}
+                  to={`/${lineSex}/products?categories=${key}`}
                 >
                   <span className={styles.link}>
                     {value}
@@ -67,21 +69,11 @@ export function NextMenu({ sexId }: {sexId: 1 | 2 | 0}) {
                 </Link>
               ))
             }
-            <Link
-              to={`/products/${sexId === 0 ? '' : sexIdToStr(sexId)}?categories=${subId[sub]}`}
-              className={styles.li}
-            >
-              <span className={styles.link}>Прочее</span>
-            </Link>
           </ul>
-
           <div className={styles.space}/>
         </div>
-
       </div>
-
-
-      <div className={`${styles.backLogNextMenu} ${showNextMenu !== null ? styles.backLogNextMenuOpen : styles.backLogNextMenuClose}`}/>
+      
     </>
   )
 }

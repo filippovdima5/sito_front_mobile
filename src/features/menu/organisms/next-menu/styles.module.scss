@@ -1,10 +1,10 @@
 .nextMenu{
-  position: absolute;
-  top: 0;
+  position: fixed;
+  top: 50px;
   box-sizing: border-box;
   height: calc(100% - 50px);
-  width: 100%;
-  z-index: 2;
+  width: calc(100vw - 50px);
+  z-index: 3;
   background-color: white;
 
 
@@ -44,18 +44,20 @@
       margin-bottom: 30px;
 
       .li:first-child{
-        border-top: 1px solid #f0f0f0;;
+        border-bottom: 1px solid #C4C4C4;
       }
 
       .li{
-        font-weight: 200;
-        font-size: 16px;
-        padding: 8px 20px;
-        border-bottom: 1px solid #f0f0f0;
+        padding: 15px 20px;
+        border-bottom: 1px solid #C4C4C4;
 
         .link{
           position: relative;
           display: block;
+          color: rgba(39, 39, 39, 0.8);
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 19px;
 
           .img{
             position: absolute;
@@ -82,16 +84,14 @@
   width: 100%;
 }
 
-
-
-
 .nextMenuOpen{
   left: 0;
   transition: left 300ms;
 }
 
+
 .nextMenuClose{
-  left: 100%;
+  left: -100%;
   transition: left 300ms;
 }
 
