@@ -1,10 +1,9 @@
 import { GenderDetected } from '../features/gender-detected'
+import { PrivateOffice } from './private-office'
 import { Home } from './home'
 import { NotFound } from './not-found'
 import { Products } from './products'
 import { Brands } from './brands'
-
-
 
 
 export const ROUTES = [
@@ -19,6 +18,11 @@ export const ROUTES = [
   { path: '/men/brands', exact: true, component: Brands },
   { path: '/women/brands', exact: true, component: Brands },
   
+  
+  { path: '/private-office', exact: true, component: PrivateOffice },
+  { path: '/men/private-office', exact: true, component: PrivateOffice },
+  { path: '/women/private-office', exact: true, component: PrivateOffice },
+  
 
   
   { path: '*', exact: true, component: NotFound },
@@ -30,6 +34,4 @@ export const ROUTES = [
 //   // { path: '/women/about', exact: true, component: AboutAs },
 //   //
 //   //
-//   // { path: '/private-office', exact: true, component: PrivateOffice },
-//   // { path: '/men/private-office', exact: true, component: PrivateOffice },
-//   // { path: '/women/private-office', exact: true, component: PrivateOffice },
+
