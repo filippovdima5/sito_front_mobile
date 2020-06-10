@@ -1,48 +1,40 @@
 import React  from 'react'
 import { useStore, useEvent } from 'effector-react/ssr'
+import { Link } from 'react-router-dom'
 import { useEffectSafe } from '../../hooks/use-effect-safe'
-import { BrandItem } from '../../api/v1/types'
 import { Loader } from '../../commons/templates/loader'
-import { $filteredBrands, $fetchBrands, $setFilterString, $loadingBrands } from './store'
-
+import { SexId } from '../../types'
+import { sexIdToStr } from '../../lib'
+import { $brands, $loadingBrands, $mountBrandsPage } from './store'
 import styles from './styles.module.scss'
+import { SearchInput } from './search-input'
 
 
-type Props = {
-  sexId: 1 | 2,
-}
-
-
-function BrandsGroup({ brands, sexId }: {brands: Array<BrandItem>, sexId: 1 | 2}) {
+function BrandsGroup({ brands, sexId }: {brands: Array<string>, sexId: SexId}) {
   return(
     <>
-      {brands.map(({ _id }) => (
-        <div key={_id}/>
-        // <li>
-        //   <Link
-        //     to={`/products/${sexIdToStr(sexId)}?brands=${_id}`}
-        //     onClick={() => setBrands(_id)}
-        //   >
-        //     {_id}
-        //   </Link>
-        // </li>
+      {brands.map(item  => (
+        <div key={item}>
+          <li>
+            <Link to={`/${sexIdToStr(sexId)}/products?brands=${item}`}>
+              {item}
+            </Link>
+          </li>
+        </div>
       ))}
     </>
-  )
-}
+  )}
 
-export function BrandsPage({ sexId }: Props) {
+export function BrandsPage({ sexId }: { sexId: SexId }) {
   const loader = useStore($loadingBrands)
-  const charGroups = useStore($filteredBrands)
-  
-  const fetchBrands = useEvent($fetchBrands)
-  const setFilterString = useEvent($setFilterString)
-  
+  const charGroups = useStore($brands)
+  const mountBrandsPage = useEvent($mountBrandsPage)
   
   useEffectSafe(() => {
-    fetchBrands({ sexId })
+    mountBrandsPage({ sex_id: sexId })
   }, [sexId])
-
+  
+  
   
   return (
     <div className={styles.brands}>
@@ -50,12 +42,7 @@ export function BrandsPage({ sexId }: Props) {
       <div className={styles.wrap}>
       
         <div className={styles.search}>
-          INPUT
-          {/*<Input*/}
-          {/*  onChange={(event => setFilterString(event.currentTarget.value))}*/}
-          {/*  placeholder={'Поиск по названию бренда'}*/}
-          {/*  type={'text'}*/}
-          {/*/>*/}
+          <SearchInput sexId={sexId}/>
         </div>
         
         <div className={styles.scrollContainer}>

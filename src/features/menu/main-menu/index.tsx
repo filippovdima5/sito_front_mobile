@@ -64,15 +64,12 @@ export function Menu() {
             { menuItems.map(({ arrow, link, index, title }) => {
               if (link) return (
                 (
-                  <li onClick={() => setShowMainMenu()} key={index} className={styles.li}>
-                    <Link 
-                      to={`/${sexIdToStr(sexId)}/${index}`}
-                      className={styles.link}
-                    >
+                  <Link to={`/${sexIdToStr(sexId)}/${index}`} onClick={() => setShowMainMenu()} key={index} className={styles.li}>
+                    <span className={styles.link}>
                       {title}
                       { arrow && <Arrow rotate={-90} className={styles.arrow}/> }
-                    </Link>
-                  </li>
+                    </span>
+                  </Link>
                 )
               )
               return (
