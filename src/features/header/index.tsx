@@ -1,10 +1,9 @@
 import React  from 'react'
-import { Link } from 'react-router-dom'
 import { Menu } from '../menu'
 import { NextMenu } from '../menu/organisms/next-menu'
 import { Search } from '../search'
+import { Logo } from '../../commons/atoms'
 import styles from './styles.module.scss'
-import {Logo} from '../../commons/atoms'
 
 
 export function Header() {
