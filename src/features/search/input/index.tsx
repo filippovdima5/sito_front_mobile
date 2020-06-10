@@ -1,37 +1,34 @@
-import React, { useCallback, useRef, useState } from 'react'
-import { useEffectSafe } from '../../../hooks/use-effect-safe'
-
+import React, { useCallback, useRef, useState, useMemo } from 'react'
 import { useStore, useEvent } from 'effector-react/ssr'
-import { setPhrase, $modSearch } from '../store'
-
+import { useLocation } from 'react-router'
+import { useEffectSafe } from '../../../hooks/use-effect-safe'
+import { $modSearch, $setSearch } from '../store'
+import { findSexIdInPathNotStrict } from '../../../lib'
 import styles from './styles.module.scss'
 
 
 export function Input() {
-  const inputRef = useRef<HTMLInputElement | null>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
   const modSearch = useStore($modSearch)
+  const setSearch = useEvent($setSearch)
   
-  const setPhraseEv = useEvent(setPhrase)
-
-
-
-  useEffectSafe(() => {
-    if (modSearch) (inputRef.current as HTMLInputElement).focus()
-    else (inputRef.current as HTMLInputElement).blur()
-  }, [ modSearch ])
-
+  const { pathname } = useLocation()
+  const sexId = useMemo(() => findSexIdInPathNotStrict(pathname), [pathname])
+  
   const [value, setValue] = useState<string>('')
-
+  useEffectSafe(() => {setValue('')}, [sexId])
+  
+  
   const handleChange = useCallback((event: any) => {
     const phrase = event.currentTarget.value
     setValue(phrase)
-    setPhraseEv(phrase)
-  }, [setPhraseEv])
-
-
+    setSearch({ phrase, sex_id: sexId })
+  }, [setSearch, sexId])
+  
+  
   return (
     <input
-      value = { value }
+      value = {modSearch ? value : 'Поиск по ключевому слову'}
       onChange = { handleChange }
       ref = { inputRef }
       placeholder={ 'Поиск по ключевому слову' }

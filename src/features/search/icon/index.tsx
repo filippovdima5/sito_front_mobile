@@ -1,19 +1,25 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 
-import { useEvent } from 'effector-react/ssr'
-import { setModSearch } from '../store'
-
+import { useEvent, useStore } from 'effector-react/ssr'
+import { useLocation } from 'react-router'
+import { $setModSearch, $modSearch } from '../store'
 import { SearchIcon } from '../../../media/img/svg/icons'
-
+import {  findSexIdInPathNotStrict } from '../../../lib'
 import styles from './styles.module.scss'
 
 
 export function Icon() {
-  const setModSearchEv = useEvent(setModSearch)
+  const setModSearch = useEvent($setModSearch)
+  const modSearch = useStore($modSearch)
+  
+  const { pathname } = useLocation()
+  const sexId = useMemo(() => findSexIdInPathNotStrict(pathname), [pathname])
+  
+  if (!sexId) return null
   
   return (
     <div
-      onClick={() => setModSearchEv()}
+      onClick={() => setModSearch({ sex_id: sexId, mod: !modSearch })}
       className={styles.icon}
     >
       <SearchIcon  fill={'rgba(0, 0, 0, 1)'} className={styles.img}/>

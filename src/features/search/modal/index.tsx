@@ -1,23 +1,22 @@
 import React, { useEffect, useMemo, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { Link , useLocation } from 'react-router-dom'
 import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock'
-
 import { useStore, useEvent } from 'effector-react/ssr'
-import { $searchResult, $showResults, setModSearch } from '../store'
-import { $genderInfo } from '../../../stores/user'
-
-
+import { $searchResult, $setModSearch, $modSearch } from '../store'
+import { $mountProductsPage } from '../../products-page/store'
+import { findSexIdInPathNotStrict, sexIdToStr } from '../../../lib'
 import styles from './styles.module.scss'
 
 
 
 function  SearchResult() {
   const modalSearchRef = useRef<HTMLDivElement | null>(null)
+  const mountProductsPage = useEvent($mountProductsPage)
   const searchResults = useStore($searchResult)
-  const genderInfo = useStore($genderInfo)
+  const setModSearch = useEvent($setModSearch)
   
-  const setModSearchEv = useEvent(setModSearch)
-
+  const { pathname } = useLocation()
+  const sexId = useMemo(() => findSexIdInPathNotStrict(pathname), [pathname])
 
 
   useEffect(() => {
@@ -28,11 +27,7 @@ function  SearchResult() {
   }, [])
   
   
-  const sexLine = useMemo(() => {
-    if (genderInfo === null) return ''
-    if (genderInfo.sexLine === null) return ''
-    return genderInfo.sexLine
-  }, [genderInfo])
+
 
 
   return (
@@ -47,9 +42,10 @@ function  SearchResult() {
             <li key={title} className={styles.title}>
               <Link
                 onClick={() => {
-                  setModSearchEv()
+                  setModSearch({ mod: false, sex_id: sexId })
+                  mountProductsPage({ pathname: (sexId ? `/${sexIdToStr(sexId)}` : '/women' ), search: `?brands=${title}` })
                 }}
-                to={`/products/${sexLine}?brands=${title}`}
+                to={sexId ? `/${sexIdToStr(sexId)}/products?brands=${title}` : `/women/products?brands=${title}`}
                 className={styles.link}
               >
                 {title}
@@ -72,8 +68,8 @@ function  SearchResult() {
 
 
 function ShowResults() {
-  const showResults = useStore($showResults)
-  if (!showResults) return null
+  const modSearch = useStore($modSearch)
+  if (!modSearch) return null
 
 
   return <SearchResult/>
