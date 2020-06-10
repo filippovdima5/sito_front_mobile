@@ -1,8 +1,10 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+import { useEvent } from 'effector-react/ssr'
 import styles from '../../media/css/info-page.module.scss'
 import { LikeIcon } from '../../media/img/svg/icons'
 import { Button } from '../../commons/atoms/button'
-import { Link } from 'react-router-dom'
+import { $mountProductsPage } from '../products-page/store'
 
 
 const links = [
@@ -11,6 +13,8 @@ const links = [
 ] as const
 
 export function EmptyPage() {
+  const mountProductPage = useEvent($mountProductsPage)
+  
   return (
     <div className={styles.wrap}>
       <div>
@@ -21,7 +25,8 @@ export function EmptyPage() {
             <span>
               Нажимайте на кнопку
               <span className={styles.span}>
-                 <LikeIcon style={{ stroke: 'rgba(170, 170, 170, 0.54)', fill: 'rgba(170, 170, 170, 0.54)' }}/>
+                <LikeIcon 
+                  style={{ stroke: 'rgba(170, 170, 170, 0.54)', fill: 'rgba(170, 170, 170, 0.54)' }}/>
               </span>
               , чтобы сохранять товары в избранные
             </span>
@@ -30,8 +35,10 @@ export function EmptyPage() {
           <div className={styles.buttons}>
             {links.map(({ link, title }) => (
               <Link
+                onClick={() => mountProductPage({ pathname:`/${link}/products`, search: '' })}
+                key={link}
                 className={styles.link}
-                to={`/products/${link}`}
+                to={`/${link}/products`}
               >
                 <Button title={title}/>
               </Link>

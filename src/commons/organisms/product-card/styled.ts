@@ -60,11 +60,22 @@ export const styledProductCard = {
         position: relative;
         
         & .svg-heart{
+        z-index: -1;
           position: absolute;
           top: 50%;
           left: 50%;
           fill: ${({ isLike }) => isLike ? 'white' : 'rgba(0,0,0,0.3)'};
         }
+      }
+      
+      & .like-container .click {
+        width: 150%;
+        height: 150%;
+        transform: translate(-25%,-18%);
+        z-index: 999;
+        background-color: transparent;
+        
+        
       }
     }
     
@@ -100,9 +111,6 @@ export const styledProductCard = {
        font-family: 'Open Sans', sans-serif;
        font-style: normal;
        text-align: center;
-       //width: 62.464183%;
-       //left: 50%;
-       //transform: translateX(-50%);
        color:  #272727;
     }
 `,

@@ -4,12 +4,17 @@ import { useStore } from 'effector-react/ssr'
 import { ReadyList, LoadingList } from '../molecules'
 import { $statusPageProducts, $allFields, $totalItems, $countMoreProducts } from '../store'
 import { numeralEnding } from '../../../lib'
+import { EmptyList } from '../empty-list'
 
 
 function List() {
   const status = useStore($statusPageProducts)
   const { limit, page } = useStore($allFields)
   const countMoreProducts = useStore($countMoreProducts)
+  
+  if (status === 'EMPTY') return (
+    <EmptyList/>
+  )
   
   
   if ((status === 'START' || (status === 'LOADING' && page === 1))) return (
@@ -32,11 +37,13 @@ export function ProductsList() {
   return (
     <div>
       <S.Info>
-        <span>
-          {numeralEnding(['Найдена', 'Найдено', 'Найдено'], totalItems)} 
-          <span className='num'> {totalItems} </span>
-          {numeralEnding(['модель', 'модели', 'моделей'], totalItems)}
-        </span>
+        { totalItems > 0 && (
+          <span>
+            {numeralEnding(['Найдена', 'Найдено', 'Найдено'], totalItems)}
+            <span className='num'> {totalItems} </span>
+            {numeralEnding(['модель', 'модели', 'моделей'], totalItems)}
+          </span>
+        ) }
       </S.Info>
       <S.Wrap>
         <S.List>

@@ -27,8 +27,10 @@ export function ProductCard({ id, brand, images,  oldPrice, price, sale, title, 
       <S.CardContainer isLike={isLike}>
         <a href={url} target='_blank' rel='noreferrer noopener' className='link'>sito</a>
         <div className='sale flag'>-{sale}%</div>
-        <div onClickCapture={(e) => {e.stopPropagation(); setLike(id)} } className='like flag'>
+        
+        <div  className='like flag'>
           <div className='like-container'>
+            <div onClick={(e) => {e.stopPropagation(); setLike(id)} } className='click'/>
             <Heart className='svg-heart'/>
           </div>
         </div>
