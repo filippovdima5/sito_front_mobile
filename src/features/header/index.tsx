@@ -4,6 +4,7 @@ import { Menu } from '../menu'
 import { NextMenu } from '../menu/organisms/next-menu'
 import { Search } from '../search'
 import styles from './styles.module.scss'
+import {Logo} from '../../commons/atoms'
 
 
 export function Header() {
@@ -12,11 +13,9 @@ export function Header() {
       <Menu/>
       <NextMenu/>
 
-      <Link to = {'/'} className={`${styles.logo} ${styles.header_item}`}>
-        <span className={styles.a}>
-          <span className={styles.text}>Sito</span>
-        </span>
-      </Link>
+      <div className={`${styles.logo} ${styles.header_item}`}>
+        <Logo/>
+      </div>
 
       <Search/>
     </div>
