@@ -4,6 +4,7 @@ import { Home } from './home'
 import { NotFound } from './not-found'
 import { Products } from './products'
 import { Brands } from './brands'
+import { AboutAs } from './about-us'
 
 
 export const ROUTES = [
@@ -23,14 +24,14 @@ export const ROUTES = [
   { path: '/men/private-office', exact: true, component: PrivateOffice },
   { path: '/women/private-office', exact: true, component: PrivateOffice },
   
-
+  { path: '/about', exact: true, component: AboutAs },
+  { path: '/men/about', exact: true, component: AboutAs },
+  { path: '/women/about', exact: true, component: AboutAs },
   
   { path: '*', exact: true, component: NotFound },
 ]
 
 
-// { path: '/about', exact: true, component: AboutAs },
-// { path: '/men/about', exact: true, component: AboutAs },
-// { path: '/women/about', exact: true, component: AboutAs },
+
 
 
