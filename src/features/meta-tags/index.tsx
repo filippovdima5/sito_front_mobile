@@ -14,8 +14,8 @@ export function MetaTags() {
         name="description"
         content={description}
       />
-      <link rel="canonical" href={`https://sito.store${link}`} />
-      <link rel="alternate" hrefLang="rus" href={`https://m.sito.store${link}`}/>
+      <link rel="canonical" href={`https://m.sito.store${link}`} />
+      <link rel="alternate" hrefLang="rus" href={`https://sito.store${link}`}/>
     </Helmet>
   )
 }
